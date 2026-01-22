@@ -1,0 +1,268 @@
+﻿<body style="background-color: #1D5F89;">
+
+    <div class="wrapper">
+        <div id="overlay"></div>
+        <div class="imageContainer2">
+            <header>
+                <div id="topHeader">
+                    <div>Raphael Tobar <span class="multi">Multimedia Design</span></div>
+                    <div>©2019</div>
+                </div>
+            </header>
+            <main>
+                <section>
+                    <div class="portfolioblocks"></div>
+                    <div id="lightbox"><div id="closelightbox">PRESS WINDOW TO CLOSE</div><img id="changeImg" /><div id="inform"></div></div>
+                    <div id="close">CLOSE WINDOW</div>
+                    <iframe id="videobox" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                    <div class="birth"><img style="cursor:pointer;" class="workimg" id="birth" src="images/birth.png" /></div>
+                    <div class="ances"><img style="cursor:pointer;" class="workimg" id="ances" src="images/ances.png" /></div>
+                    <div class="jelly"><img style="cursor:pointer;" class="workimg" id="jelly" src="images/jelly.png" /></div>
+                    <div class="min"><img style="cursor:pointer;" class="workimg" id="min" src="images/30min.png" /></div>
+                    <div class="axis"><img style="cursor:pointer;" class="workimg" id="axis" src="images/axis.png" /></div>
+                    <div class="beaver"><img style="cursor:pointer;" class="workimg" id="beaver" src="images/beaver.png" /></div>
+                    <div class="essence"><img style="cursor:pointer;" class="workimg" id="essence" src="images/essence.png" /></div>
+                    <div class="experi"><img style="cursor:pointer;" class="workimg" id="experi" src="images/experi.png" /></div>
+                    <div class="fish"><img style="cursor:pointer;" class="workimg" id="fish" src="images/fish.png" /></div>
+                    <div class="ford"><img style="cursor:pointer;" class="workimg" id="ford" src="images/ford.png" /></div>
+                    <div class="lifeisjazz"><img style="cursor:pointer;" class="workimg" id="lifeisjazz" src="images/lifeisjazz.png" /></div>
+                    <div class="m"><img style="cursor:pointer;" class="workimg" id="m" src="images/M.png" /></div>
+                    <div class="mirror"><img style="cursor:pointer;" class="workimg" id="mirror" src="images/mirror.png" /></div>
+                    <div class="onelev"><img style="cursor:pointer;" class="workimg" id="onelev" src="images/onelev.png" /></div>
+                    <div class="rw"><img style="cursor:pointer;" class="workimg" id="rw" src="images/rw.png" /></div>
+                    <div class="skittles"><img style="cursor:pointer;" class="workimg" id="skittles" src="images/skittles.png" /></div>
+                    <div class="surgeons"><img style="cursor:pointer;" class="workimg" id="surgeons" src="images/surgeons.png" /></div>
+                    <div class="vaniads"><img style="cursor:pointer;" class="workimg" id="vaniads" src="images/vaniads.png" /></div>
+                    <div class="logod"><img style="cursor:pointer;" class="workimg" id="logod" src="images/logodesigns.png" /></div>
+                    <div class="gelfenstein"><img style="cursor:pointer;" class="workimg" id="gelfenstein" src="images/gelfenstein.png" /></div>
+                </section>
+            </main>
+        </div>
+        <nav class="nav_page2">
+            <ul>
+                <li><a class="genesis">genesis</a></li>
+                <li><a style="color: #F3E60F;cursor:default;">session</a></li>
+                <li><a class="narrative">narrative</a></li>
+                <li><a class="connect">connect</a></li>
+            </ul>
+        </nav>
+        <div id="demoreel"><a id="demoreellink">2013 Motion Graphics Demo Reel</a></div>
+    </div>
+    <script>
+        $(document).ready(function () {
+
+            //Site navigation and animation
+
+            $('.genesis').on('click', function (e) {
+                $('body').css('backgroundColor', '#F5E10E');
+                ajaxLoader_b();
+                $('body').load('genesis.html');
+            });
+
+            $('.narrative').on('click', function (e) {
+                $('body').css('backgroundColor', '#26273D');
+                ajaxLoader();
+                $('body').load('narrative.html');
+            });
+
+            $('.connect').on('click', function (e) {
+                $('body').css('backgroundColor', '#EA0C94');
+                ajaxLoader();
+                $('body').load('connect.html');
+            });
+        });
+        // portfolio windows and ajax
+
+        var info =
+        {
+            "information": [
+                { "birth": "Birth of the Universe, 2011" },
+                { "ances": "Ancestor, 2014" },
+                { "jelly": "Jellyfish (Technical Study), 2013" },
+                { "min": "30 Minute Interview with Dr. Hasan on WSVN7 (Highlights Reel), 2012" },
+                { "axis": "Axis Labs Logo Development and Branding (Study), 2013" },
+                { "beaver": "Beaver Walking Across Water, 2011" },
+                { "essence": "The Essence of Morals, 2013" },
+                { "experi": "Typographical Posters, 2002-03" },
+                { "fish": "Injured Fish(Technical Study), 2013" },
+                { "ford": "Ford Infographic of Yearly Revenue (Study), 2014" },
+                { "lifeisjazz": "Life is Jazz, 2007" },
+                { "gelfenstein": "Gelfenstein Farm Promo, 2014" },
+                { "m": "Futura Posters (Study), 2013" },
+                { "mirror": "Vanity Cosmetic Surgery - 30 Second Spot on NBC6 and ABC10, 2012" },
+                { "onelev": "OneLevel Studios Promo, 2013" },
+                { "rw": "Realty Estate Flyers for Realty World REC, 2013" },
+                { "skittles": "Skittles Re-Branding (Study), 2013" },
+                { "surgeons": "Surgeon's Cosmetic Med & Spa, 2012" },
+                { "vaniads": "Vanity Cosmetic Surgery Designs, 2012" },
+                { "logod": "Logo Designs, 2015" }
+            ]
+        };
+
+        $('#demoreel').on('click', function () {
+            $('#close').css('display', 'block');
+            $('#videobox').css('display', 'block').attr({ 'src': '//player.vimeo.com/video/88704801?title=0&amp;byline=0&amp;portrait=0', 'width': '500', 'height': 281, 'frameborder': 0 });
+            $('#overlay').css('display', 'block');
+        });
+        $('#close').on('click', function () {
+            $(this).css('display', 'none').removeAttr('src');
+            $('#videobox').css('display', 'none').attr('src', '');
+            $('#overlay').css('display', 'none');
+        });
+
+        $('.workimg').on('click', function () {
+            switch ($(this).attr('id')) {
+                case "birth":
+                    $('#lightbox').css({ 'display': 'block', 'width': '598px', 'height': '804px', 'left': '195px', 'top': '45px' });
+                    $('#changeImg').attr("src", "");
+                    $('#changeImg').attr("src", "images/portfolio/BirthoftheUniverse_RaphaelTobar_2011.png");
+                    $('#inform').text(info.information[0].birth);
+                    $('#overlay').css('display', 'block');
+                    break;
+                case "ances":
+                    $('#lightbox').css({ 'display': 'block', 'width': '922px', 'height': '452px', 'left': '19px', 'top': '90px' });
+                    $('#changeImg').attr("src", "");
+                    $('#changeImg').attr("src", "images/portfolio/ancestor_by_raphaeltobar.png");
+                    $('#inform').text(info.information[1].ances);
+                    $('#overlay').css('display', 'block');
+                    break;
+                case "jelly":
+                    $('#lightbox').css({ 'display': 'block', 'width': '701px', 'height': '463px', 'left': '133px', 'top': '90px' });
+                    $('#changeImg').attr("src", "");
+                    $('#changeImg').attr("src", "images/portfolio/jellyfish2013.png");
+                    $('#inform').text(info.information[2].jelly);
+                    $('#overlay').css('display', 'block');
+                    break;
+                case "min":
+                    $('#close').css('display', 'block');
+                    $('#changeImg').attr("src", "");
+                    $('#videobox').css('display', 'block').attr({ 'src': '//player.vimeo.com/video/52028294?title=0&amp;byline=0&amp;portrait=0', 'width': '500', 'height': 281, 'frameborder': 0 });
+                    $('#overlay').css('display', 'block');
+                    break;
+                case "axis":
+                    $('#lightbox').css({ 'display': 'block', 'width': '669px', 'height': '813px', 'left': '147px', 'top': '50px' });
+                    $('#changeImg').attr("src", "");
+                    $('#changeImg').attr("src", "images/portfolio/axislabs_branding.jpg");
+                    $('#inform').text(info.information[4].axis);
+                    $('#overlay').css('display', 'block');
+                    break;
+                case "beaver":
+                    $('#lightbox').css({ 'display': 'block', 'width': '675px', 'height': '548px', 'left': '154px' });
+                    $('#changeImg').attr("src", "");
+                    $('#changeImg').attr("src", "images/portfolio/beaver_walking_across_water.png");
+                    $('#inform').text(info.information[5].beaver);
+                    $('#overlay').css('display', 'block');
+                    break;
+                case "essence":
+                    $('#lightbox').css({ 'display': 'block', 'width': '683px', 'height': '752px', 'left': '155px' });
+                    $('#changeImg').attr("src", "");
+                    $('#changeImg').attr("src", "images/portfolio/the_essence_of_morals.png");
+                    $('#inform').text(info.information[6].essence);
+                    $('#overlay').css('display', 'block');
+                    break;
+                case "experi":
+                    $('#lightbox').css({ 'display': 'block', 'width': '846px', 'height': '619px', 'left': '61px' });
+                    $('#changeImg').attr("src", "");
+                    $('#changeImg').attr("src", "images/portfolio/typeposters.jpg");
+                    $('#inform').text(info.information[7].experi);
+                    $('#overlay').css('display', 'block');
+                    break;
+                case "fish":
+                    $('#lightbox').css({ 'display': 'block', 'width': '569px', 'height': '638px', 'left': '220px' });
+                    $('#changeImg').attr("src", "");
+                    $('#changeImg').attr("src", "images/portfolio/fish.png");
+                    $('#inform').text(info.information[8].fish);
+                    $('#overlay').css('display', 'block');
+                    break;
+                case "ford":
+                    $('#lightbox').css({ 'display': 'block', 'width': '744px', 'height': '805px', 'left': '115px', 'top': '50px' });
+                    $('#changeImg').attr("src", "");
+                    $('#changeImg').attr("src", "images/portfolio/ford.jpg");
+                    $('#inform').text(info.information[9].ford);
+                    $('#overlay').css('display', 'block');
+                    break;
+                case "lifeisjazz":
+                    $('#lightbox').css({ 'display': 'block', 'width': '565px', 'height': '801px', 'left': '205px', 'top': '50px' });
+                    $('#changeImg').attr("src", "");
+                    $('#changeImg').attr("src", "images/portfolio/life_is_jazz.png");
+                    $('#inform').text(info.information[10].lifeisjazz);
+                    $('#overlay').css('display', 'block');
+                    break;
+                case "gelfenstein":
+                    $('#close').css('display', 'block');
+                    $('#videobox').css('display', 'block').attr({ 'src': '//player.vimeo.com/video/88657994?title=0&amp;byline=0&amp;portrait=0', 'width': '500', 'height': 281, 'frameborder': 0 });
+                    $('#overlay').css('display', 'block');
+                    break;
+                case "m":
+                    $('#lightbox').css({ 'display': 'block', 'width': '855px', 'height': '1389px', 'left': '51px', 'top': '50px' });
+                    $('#changeImg').attr("src", "");
+                    $('#changeImg').attr("src", "images/portfolio/space.jpg");
+                    $('#inform').text(info.information[12].m);
+                    $('#overlay').css('display', 'block');
+                    $('.wrapper').css('height', '1487px');
+                    break;
+                case "mirror":
+                    $('#close').css('display', 'block');
+                    $('#videobox').css('display', 'block').attr({ 'src': '//player.vimeo.com/video/56375759?title=0&amp;byline=0&amp;portrait=0', 'width': '500', 'height': 281, 'frameborder': 0 });
+                    $('#overlay').css('display', 'block');
+                    break;
+                case "onelev":
+                    $('#close').css('display', 'block');
+                    $('#changeImg').attr("src", "");
+                    $('#videobox').css('display', 'block').attr({ 'src': '//player.vimeo.com/video/78442277?title=0&amp;byline=0&amp;portrait=0', 'width': '500', 'height': 281, 'frameborder': 0 });
+                    $('#overlay').css('display', 'block');
+                    break;
+                case "rw":
+                    $('#lightbox').css({ 'display': 'block', 'width': '855px', 'height': '1087px', 'left': '58px', 'top': '50px' });
+                    $('#changeImg').attr("src", "");
+                    $('#changeImg').attr("src", "images/portfolio/rwwork.jpg");
+                    $('#inform').text(info.information[15].rw);
+                    $('#overlay').css('display', 'block');
+                    $('.wrapper').css('height', '1185px');
+                    break;
+                case "skittles":
+                    $('#lightbox').css({
+                        'display': 'block',
+                        'width': '767px',
+                        'height': '887px',
+                        'left': '105px',
+                        'top': '50px'
+                    });
+                    $('#changeImg').attr("src", "");
+                    $('#changeImg').attr("src", "images/portfolio/skittelsad.jpg");
+                    $('#inform').text(info.information[16].skittles);
+                    $('#overlay').css('display', 'block');
+                    break;
+                case "surgeons":
+                    $('#close').css('display', 'block');
+                    $('#videobox').css('display', 'block').attr({ 'src': '//player.vimeo.com/video/48152700?title=0&amp;byline=0&amp;portrait=0', 'width': '500', 'height': 281, 'frameborder': 0 });
+                    $('#overlay').css('display', 'block');
+                    break;
+                case "vaniads":
+                    $('#lightbox').css({ 'display': 'block', 'width': '620px', 'height': '2586px', 'left': '174px', 'top': '50px' });
+                    $('#changeImg').attr("src", "");
+                    $('#changeImg').attr("src", "images/portfolio/vanitystuff.jpg");
+                    $('#inform').text(info.information[18].vaniads);
+                    $('#overlay').css('display', 'block');
+                    $('.wrapper').css('height', '2674px');
+                    break;
+                case "logod":
+                    $('#lightbox').css({ 'display': 'block', 'width': '820px', 'height': '1099px', 'left': '86px', 'top': '50px' });
+                    $('#changeImg').attr("src", "");
+                    $('#changeImg').attr("src", "images/portfolio/logos2.jpg");
+                    $('#inform').text(info.information[19].logod);
+                    $('#overlay').css('display', 'block');
+                    $('.wrapper').css('height', '1198px');
+                    break;
+            }
+            $('#lightbox').on('click', function () {
+                ($(this).css('display', 'none'));
+                $('#overlay').css('display', 'none');
+                $('.wrapper').css('height', '1014px');
+
+            });
+
+        });
+        $('.imageContainer1').css('opacity', '1');
+    </script>
+</body>

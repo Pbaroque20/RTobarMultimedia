@@ -1,0 +1,141 @@
+﻿<body style="background-color:#EA0C94">
+    <div class="wrapper">
+        <div class="imageContainer4">
+            <header>
+                <div id="topHeader">
+                    <div>Raphael Tobar <span class="multi">Multimedia Design</span></div>
+                    <div>©2019</div>
+                </div>
+            </header>
+            <main>
+                <section>
+                    <div class="formplatform">
+                    </div>
+                    <div><img id="chatbubble" src="images/chat.png"></div>
+                    <div><img id="chatbubble2" src="images/chat.png"></div>
+                    <div><img id="chatbubble3" src="images/chat.png"></div>
+                    <div><img id="chatbubble4" src="images/chat.png"></div>
+                    <div><img id="chatbubble5" src="images/chat.png"></div>
+                    <div><img id="chatbubble6" src="images/chat.png"></div>
+                </section>
+                <form id="contact_form" method="POST" action="sendform.php">
+                    <table>
+                        <tr>
+                            <td>
+                                <sup>*</sup><label for="firstname">First Name</label>
+                            </td>
+                            <td>
+                                <input type="text" id="firstname" required placeholder="required" name="firstname"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="lastname">Last Name</label>
+                            </td>
+                            <td>
+                                <input type="text" name="lastname" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="number">Phone Number</label>
+                            </td>
+                            <td>
+                                <input type="text" name="number" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <sup>*</sup><label for="email">E-Mail</label>
+                            </td>
+                            <td>
+                                <input type="text" id="email" required placeholder="required" name="email" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <sup>*</sup><label for="message">Message</label>
+                            </td>
+                            <td>
+                                <textarea id="messagebox" required placeholder="required" class="maxlength" maxlength="300" name="message"></textarea>
+                            </td>
+                        </tr>
+                    </table>
+                    <button type="submit" id="submitbutton" name="submit">Send</button>
+                    <button type="reset">Reset Form</button>
+                </form>
+            </main>
+            <script>
+                $(document).ready(function () {
+
+                    $('#chatbubble').css('display', 'block').addClass('chatbubble_animate');
+                    $('#chatbubble2').css('display', 'block').addClass('chatbubble2_animate');
+                    $('#chatbubble3').css('display', 'block').addClass('chatbubble3_animate');
+                    $('#chatbubble4').css('display', 'block').addClass('chatbubble4_animate');
+                    $('#chatbubble5').css('display', 'block').addClass('chatbubble5_animate');
+                    $('#chatbubble6').css('display', 'block').addClass('chatbubble6_animate');
+
+                    //Site navigation and animation
+                    $('.nav_page1').css({ 'left': '-180px', 'opacity': '1' });
+                    $('.imageContainer1').css('opacity', '1');
+
+                    $('.genesis').on('click', function (e) {
+                        $('body').css('backgroundColor', '#F5E10E');
+                        ajaxLoader_b();
+                        $('body').load('genesis.html');
+                    });
+
+                    $('.session').on('click', function (e) {
+                        $('body').css('backgroundColor', '#1D5F89');
+                        ajaxLoader();
+                        $('body').load('session.html');
+                    });
+
+                    $('.narrative').on('click', function (e) {
+                        $('body').css('backgroundColor', '#26273D');
+                        ajaxLoader();
+                        $('body').load('narrative.html');
+                    });
+
+                    //remaining letters in message
+                    $('.maxlength').after('<span class="remaining">').next().hide().end().keydown(function (event) {
+                        var current = $(this).val().length;
+                        if (current >= 300) {
+                            if (event.which != 0 && event.which !== 8) {
+                                event.preventDefault();
+                            }
+                        }
+                        $(this).next().show().text('Rem.' + (300 - current));
+                    })
+
+                    //remaining counter hides when reset is activated
+                    $('button:reset').on('click', function () {
+                        $('.remaining').hide();
+                    });
+
+                    //eval
+
+                    $('#submitbutton').on('submit',function(){
+                        $.ajax({
+                            type: 'POST',
+                            url: 'validation.php',
+                            success: function(msg){
+console.log(msg);
+                            }
+                        })
+                    })
+
+
+                });
+            </script>
+        </div>
+        <nav class="nav_page4">
+            <ul>
+                <li><a class="genesis">genesis</a></li>
+                <li><a class="session">session</a></li>
+                <li><a class="narrative">narrative</a></li>
+                <li><a style="color: #553E95;cursor:default;">connect</a></li>
+            </ul>
+        </nav>
+    </div>
+</body>

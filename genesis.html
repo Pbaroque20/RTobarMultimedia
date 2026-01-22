@@ -1,0 +1,54 @@
+﻿<body style="background-color:#F5E10E;">
+    <div class="wrapper">
+        <div class="imageContainer1">
+            <header>
+                <div id="topHeader">
+                    <div>Raphael Tobar <span class="multi">Multimedia Design</span></div>
+                    <div>©2019</div>
+                </div>
+            </header>
+            <main>
+                <section>
+                    <p id="categories">
+                        <span>NURBS + Polygon</span> | <span>Parametric + Procedural</span> |
+                        <span>Vector + Raster</span> | <span>Syntax + Semantics</span>
+                    </p>
+                </section>
+                <!--  <div id="update"><span id="news">NEWS</span><br />11-3-2014: TobarMediaDesign.com has now launched! Stay tuned for more updates...</div>-->
+            </main>
+        </div>
+        <nav class="nav_page1">
+            <ul>
+                <li><a style="color:magenta;cursor:default;">genesis</a></li>
+                <li><a class="session">session</a></li>
+                <li><a class="narrative">narrative</a></li>
+                <li><a class="connect">connect</a></li>
+            </ul>
+        </nav>
+        <div id="visit">Also visit me here at:<br /><a href="http://www.facebook.com/raphael.tobar"><img src="images/fblogo.png" /></a>  <a href="http://www.behance.net/raphaeltobar"><img src="images/behancelogo.png" /></a>  <a href="http://www.linkedin.com/pub/raphael-tobar/62/1b2/993/"><img src="images/linkedinlogo.png" /></a>  <a href="https://twitter.com/rftobar"><img src="images/Twitter_logo_blue.png" /></a></div>
+        <script>
+            $(document).ready(function () {
+                //Site navigation and animation
+                //    $('.nav_page1').css({ 'left': '-180px', 'opacity': '1' });
+
+                $('.session').on('click', function (e) {
+                    $('body').css('backgroundColor', '#1D5F89');
+                    ajaxLoader();
+                    $('body').load('session.html');
+                });
+
+                $('.narrative').on('click', function (e) {
+                    $('body').css('backgroundColor', '#26273D');
+                    ajaxLoader();
+                    $('body').load('narrative.html');
+                });
+
+                $('.connect').on('click', function (e) {
+                    $('body').css('backgroundColor', '#EA0C94');
+                    ajaxLoader();
+                    $('body').load('connect.html');
+                });
+            });
+        </script>
+    </div>
+</body>

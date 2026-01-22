@@ -1,0 +1,412 @@
+﻿@import url("fontloader.css");
+
+body {
+    position: relative;
+}
+
+.loaderContainer {
+    position: relative;
+    margin: 0 auto;
+    width: 300px;
+    height: 300px;
+    text-align: center;
+    top: 150px;
+    color: white;
+    font-family: "Fedra Sans Light";
+}
+
+#loader {
+    -moz-transform: scale(.5);
+    -ms-transform: scale(.5);
+    -o-transform: scale(.5);
+    -webkit-transform: scale(.5);
+    transform: scale(.5);
+}
+
+#loading {
+    position: relative;
+    top: -25px;
+    left: 5px;
+    -moz-animation: pulse 0.3s infinite alternate;
+    -o-animation: pulse 0.3s infinite alternate;
+    -webkit-animation: pulse 0.3s infinite alternate;
+    -ms-animation: pulse 0.3s infinite alternate;
+    animation: pulse 0.3s infinite alternate;
+}
+
+@keyframes pulse {
+    from {
+        opacity: 0.25;
+    }
+
+    to {
+        opacity: 1.0;
+    }
+}
+
+.instruct {
+    position: absolute;
+    display: block;
+    width: 230px;
+    font-family: "Univers Oblique";
+    color: yellow;
+    top: 150px;
+    left: 366px;
+    padding: 10px;
+    font-size: 10pt;
+    text-align: center;
+}
+
+#bio {
+    position: absolute;
+    width: 500px;
+    left: 238px;
+    top: 88px;
+    padding: 15px;
+    color: white;
+    font-family: "Arial","sans-serif";
+    font-size: 9pt;
+    background-color: #070734;
+    line-height: 1em;
+    letter-spacing: 0.05em;
+    z-index: 25;
+}
+
+#history {
+    position: absolute;
+    width: 465px;
+    padding: 15px;
+    left: 260px;
+    top: 50px;
+    color: white;
+    font-family: "Arial","sans-serif";
+    font-size: 9pt;
+    background-color: #070734;
+    line-height: 1em;
+    letter-spacing: 0.1em;
+    z-index: 25;
+}
+
+    #history .header {
+        color: yellow;
+    }
+
+    #history table {
+        vertical-align: middle;
+    }
+
+#skillsedu {
+    display: none;
+    position: absolute;
+    width: 596px;
+    padding: 15px;
+    left: 214px;
+    top: 84px;
+    color: white;
+    font-family: "Arial","sans-serif";
+    font-size: 9pt;
+    background-color: #070734;
+    line-height: 1em;
+    letter-spacing: 0.1em;
+    z-index: 25;
+}
+
+    #skillsedu .header {
+        color: yellow;
+        text-align: left;
+    }
+
+    #skillsedu table {
+        border-spacing: 2em;
+    }
+
+    #skillsedu td {
+        text-align: left;
+    }
+
+.descrip {
+    text-align: left;
+}
+
+.name {
+    color: yellow;
+}
+
+.spacer {
+    padding-top: 20px;
+}
+
+.multi {
+    font-family: Fedra Sans Light Italic;
+}
+
+.imageContainer3 {
+    background-image: url("../images/page3.jpg");
+    z-index: -20;
+    height: 1114px;
+    background-repeat: no-repeat;
+    -ms-opacity: 1;
+    opacity: 1;
+}
+
+.biography {
+    color: white;
+    font-family: Univers Oblique;
+    position: absolute;
+    top: 428px;
+    left: 269px;
+    z-index: 20;
+}
+
+.skills {
+    color: white;
+    font-family: Univers Oblique;
+    position: absolute;
+    top: 387px;
+    left: 662px;
+    z-index: 20;
+}
+
+.download {
+    color: white;
+    font-family: Univers Oblique;
+    position: absolute;
+    top: 535px;
+    left: 621px;
+    z-index: 20;
+}
+
+.work {
+    color: white;
+    font-family: Univers Oblique;
+    position: absolute;
+    top: 458px;
+    left: 430px;
+    z-index: 20;
+}
+
+#broken1 > img {
+    position: absolute;
+    width: 168px;
+    height: 175px;
+    background-repeat: no-repeat;
+    left: 791px;
+    top: 290px;
+    -webkit-animation-duration: 1.5s;
+    -moz-animation-duration: 1.5s;
+    -ms-animation-duration: 1.5s;
+    -o-animation-duration: 1.5s;
+    animation-duration: 1.5s;
+    -webkit-animation-name: glow;
+    -moz-animation-name: glow;
+    -ms-animation-name: glow;
+    -o-animation-name: glow;
+    animation-name: glow;
+    -webkit-animation-iteration-count: infinite;
+    -moz-animation-iteration-count: infinite;
+    -ms-animation-iteration-count: infinite;
+    -o-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    -webkit-animation-direction: alternate;
+    -moz-animation-direction: alternate;
+    -ms-animation-direction: alternate;
+    -o-animation-direction: alternate;
+    animation-direction: alternate;
+}
+
+@-moz-keyframes glow {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes glow {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes glow {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+#broken2 > img {
+    position: absolute;
+    width: 323px;
+    height: 317px;
+    background-repeat: no-repeat;
+    left: 28px;
+    top: 386px;
+    -webkit-animation-duration: 1.5s;
+    -moz-animation-duration: 1.5s;
+    -ms-animation-duration: 1.5s;
+    -o-animation-duration: 1.5s;
+    animation-duration: 1.5s;
+    -webkit-animation-name: glow;
+    -moz-animation-name: glow;
+    -ms-animation-name: glow;
+    -o-animation-name: glow;
+    animation-name: glow;
+    -webkit-animation-iteration-count: infinite;
+    -moz-animation-iteration-count: infinite;
+    -ms-animation-iteration-count: infinite;
+    -o-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    -webkit-animation-direction: alternate;
+    -moz-animation-direction: alternate;
+    -ms-animation-direction: alternate;
+    -o-animation-direction: alternate;
+    animation-direction: alternate;
+}
+
+#broken3 > img {
+    position: absolute;
+    width: 93px;
+    height: 93px;
+    background-repeat: no-repeat;
+    top: 465px;
+    left: 351px;
+    -webkit-animation-duration: 1.5s;
+    -moz-animation-duration: 1.5s;
+    -ms-animation-duration: 1.5s;
+    -o-animation-duration: 1.5s;
+    animation-duration: 1.5s;
+    -webkit-animation-name: glow;
+    -moz-animation-name: glow;
+    -ms-animation-name: glow;
+    -o-animation-name: glow;
+    animation-name: glow;
+    -webkit-animation-iteration-count: infinite;
+    -moz-animation-iteration-count: infinite;
+    -ms-animation-iteration-count: infinite;
+    -o-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    -webkit-animation-direction: alternate;
+    -moz-animation-direction: alternate;
+    -ms-animation-direction: alternate;
+    -o-animation-direction: alternate;
+    animation-direction: alternate;
+}
+
+#broken4 > img {
+    position: absolute;
+    width: 310px;
+    height: 499px;
+    background-repeat: no-repeat;
+    left: 650px;
+    top: 465px;
+    -webkit-animation-duration: 1.5s;
+    -moz-animation-duration: 1.5s;
+    -ms-animation-duration: 1.5s;
+    -o-animation-duration: 1.5s;
+    animation-duration: 1.5s;
+    -webkit-animation-name: glow;
+    -moz-animation-name: glow;
+    -ms-animation-name: glow;
+    -o-animation-name: glow;
+    animation-name: glow;
+    -webkit-animation-iteration-count: infinite;
+    -moz-animation-iteration-count: infinite;
+    -ms-animation-iteration-count: infinite;
+    -o-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    -webkit-animation-direction: alternate;
+    -moz-animation-direction: alternate;
+    -ms-animation-direction: alternate;
+    -o-animation-direction: alternate;
+    animation-direction: alternate;
+}
+
+.hover {
+    position: relative;
+    font-family: Fedra Sans Light Italic;
+    color: white;
+    text-align: center;
+    width: 220px;
+    height: 20px;
+    -ms-border-radius: 5px;
+    border-radius: 5px;
+    -ms-opacity: 0;
+    background-color: #4a4a4a;
+    padding: 10px;
+    opacity: 0;
+    top: 460px;
+    left: 360px;
+}
+
+#topHeader {
+    width: 960px;
+    height: 19px;
+    background-color: black;
+    position: fixed;
+    top: 0;
+    border-bottom: 1px solid gray;
+    z-index: 500;
+}
+
+header div {
+    width: 350px;
+    color: white;
+    vertical-align: middle;
+}
+
+    header div:first-child {
+        text-align: left;
+        text-indent: 1em;
+        float: left;
+        top: 5px;
+        font-family: Fedra Sans Light;
+    }
+
+    header div:nth-child(2) {
+        text-align: right;
+        padding-right: 1em;
+        float: right;
+        top: 5px;
+        font-family: Fedra Sans Light;
+    }
+
+.nav_page3 {
+    position: absolute;
+    left: 76px;
+    top: 72px;
+    font-size: 20px;
+}
+
+ul {
+    clear: both;
+    text-decoration: none;
+}
+
+.nav_page3 a {
+    color: white;
+    font-family: Fedra Sans Light;
+}
+
+    .nav_page3 a:hover {
+        padding-left: 8px;
+        color: #F77A05;
+        cursor: pointer;
+        -moz-transition-property: color,padding-left;
+        -o-transition-property: color,padding-left;
+        -webkit-transition-property: color,padding-left;
+        transition-property: color,padding-left;
+        -moz-transition-duration: .25s,.25s;
+        -o-transition-duration: .25s,.25s;
+        -webkit-transition-duration: .25s,.25s;
+        transition-duration: .25s,.25s;
+    }

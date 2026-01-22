@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Raphael Tobar - Multimedia Design</title>
+    <link href="css/meyer_reset.css" rel="stylesheet" type="text/css" />
+    <link href="css/index.css" rel="stylesheet" type="text/css" />
+    <link href="css/fontloader.css" rel="stylesheet" type="text/css" />
+    <link href="css/genesis.css" rel="stylesheet" type="text/css" />
+    <link href="css/session.css" rel="stylesheet" type="text/css" />
+    <link href="css/narrative.css" rel="stylesheet" type="text/css" />
+    <link href="css/connect.css" rel="stylesheet" type="text/css" />
+    <script src="js/jquery-2.1.1.min.js"></script>
+    <script src="js/ajaxLoader.js"></script>
+</head>
+<body style="background-color:#F5E10E;">
+    <div class="loaderContainer">
+        <img id="loader" src="loader/black_loader.gif" /><br />
+        <span id="loading">loading...</span>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('body').load('genesis.html');
+
+        });
+    </script>
+</body>
+</html>

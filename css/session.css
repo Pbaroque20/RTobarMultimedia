@@ -1,0 +1,393 @@
+﻿@import url("fontloader.css");
+
+body {
+    position: relative;
+}
+
+.loaderContainer {
+    position: relative;
+    margin: 0 auto;
+    width: 300px;
+    height: 300px;
+    text-align: center;
+    top: 150px;
+    color: white;
+    font-family: "Fedra Sans Light";
+}
+
+#loader {
+    -moz-transform: scale(.5);
+    -ms-transform: scale(.5);
+    -o-transform: scale(.5);
+    -webkit-transform: scale(.5);
+    transform: scale(.5);
+}
+
+#loading {
+    position: relative;
+    top: -25px;
+    left: 5px;
+    -moz-animation: pulse 0.3s infinite alternate;
+    -o-animation: pulse 0.3s infinite alternate;
+    -webkit-animation: pulse 0.3s infinite alternate;
+    -ms-animation: pulse 0.3s infinite alternate;
+    animation: pulse 0.3s infinite alternate;
+}
+
+@-moz-keyframes pulse {
+    from {
+        opacity: 0.25;
+    }
+
+    to {
+        opacity: 1.0;
+    }
+}
+
+@-webkit-keyframes pulse {
+    from {
+        opacity: 0.25;
+    }
+
+    to {
+        opacity: 1.0;
+    }
+}
+
+@keyframes pulse {
+    from {
+        opacity: 0.25;
+    }
+
+    to {
+        opacity: 1.0;
+    }
+}
+
+#overlay {
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 2000px;
+    top: 0;
+    left: 0;
+    -ms-opacity: 0.5;
+    opacity: 0.5;
+    background-color: black;
+    z-index: 50;
+}
+
+.imageContainer2 {
+    background-image: url("../images/page2.jpg");
+    z-index: -20;
+    height: 2548px;
+    background-repeat: no-repeat;
+    -ms-opacity: 1;
+    opacity: 1;
+}
+
+.birth {
+    position: absolute;
+    top: 357px;
+    left: 270px;
+}
+
+.ances {
+    position: absolute;
+    top: 88px;
+    left: 659px;
+}
+
+.jelly {
+    position: absolute;
+    top: 148px;
+    left: 249px;
+}
+
+.min {
+    position: absolute;
+    top: 116px;
+    left: 221px;
+}
+
+.axis {
+    position: absolute;
+    top: 151px;
+    left: 370px;
+}
+
+.beaver {
+    position: absolute;
+    top: 356px;
+    left: 433px;
+}
+
+.essence {
+    position: absolute;
+    top: 349px;
+    left: 114px;
+}
+
+.experi {
+    position: absolute;
+    top: 124px;
+    left: 501px;
+}
+
+.fish {
+    position: absolute;
+    top: 174px;
+    left: 160px;
+}
+
+.ford {
+    position: absolute;
+    top: 343px;
+    left: 651px;
+}
+
+.lifeisjazz {
+    position: absolute;
+    top: 86px;
+    left: 408px;
+}
+
+.gelfenstein {
+    position: absolute;
+    top: 82px;
+    left: 536px;
+}
+
+.m {
+    position: absolute;
+    top: 116px;
+    left: 329px;
+}
+
+.mirror {
+    position: absolute;
+    top: 248px;
+    left: 90px;
+}
+
+.onelev {
+    position: absolute;
+    top: 231px;
+    left: 320px;
+}
+
+.rw {
+    position: absolute;
+    top: 78px;
+    left: 664px;
+}
+
+.skittles {
+    position: absolute;
+    top: 252px;
+    left: 495px;
+}
+
+.surgeons {
+    position: absolute;
+    top: 226px;
+    left: 656px;
+}
+
+.vaniads {
+    position: absolute;
+    top: 266px;
+    left: 219px;
+}
+
+.logod {
+    position: absolute;
+    top: 355px;
+    left: 14px;
+}
+
+.hover {
+    position: relative;
+    font-family: Fedra Sans Light Italic;
+    color: white;
+    text-align: center;
+    width: 220px;
+    height: 20px;
+    -ms-border-radius: 5px;
+    border-radius: 5px;
+    -ms-opacity: 0;
+    background-color: #4a4a4a;
+    padding: 10px;
+    opacity: 0;
+    top: 460px;
+    left: 360px;
+}
+
+#lightbox {
+    position: absolute;
+    -moz-transform-origin: center center;
+    -ms-transform-origin: center center;
+    -o-transform-origin: center center;
+    -webkit-transform-origin: center center;
+    transform-origin: center center;
+    text-align: center;
+    overflow: hidden;
+    border: 1px solid black;
+    width: 400px;
+    height: 200px;
+    top: 100px;
+    left: 0;
+    background-color: black;
+    z-index: 100;
+    display: none;
+}
+
+#topHeader {
+    width: 960px;
+    height: 19px;
+    background-color: black;
+    position: fixed;
+    top: 0;
+    border-bottom: 1px solid gray;
+    z-index: 500;
+}
+
+header div {
+    width: 350px;
+    color: white;
+    vertical-align: middle;
+}
+
+    header div:first-child {
+        text-align: left;
+        text-indent: 1em;
+        float: left;
+        top: 5px;
+        font-family: Fedra Sans Light;
+    }
+
+    header div:nth-child(2) {
+        text-align: right;
+        padding-right: 1em;
+        float: right;
+        top: 5px;
+        font-family: Fedra Sans Light;
+    }
+
+.nav_page2 {
+    position: absolute;
+    left: 76px;
+    top: 72px;
+    font-size: 20px;
+}
+
+ul {
+    clear: both;
+    text-decoration: none;
+}
+/* Nav Page Styling */
+
+.nav_page2 a {
+    text-decoration: none;
+    color: white;
+    font-family: Fedra Sans Light;
+}
+
+    .nav_page2 a:hover {
+        padding-left: 8px;
+        color: #F3E60F;
+        cursor: pointer;
+        -moz-transition-property: color,padding-left;
+        -o-transition-property: color,padding-left;
+        -webkit-transition-property: color,padding-left;
+        transition-property: color,padding-left;
+        -moz-transition-duration: .25s,.25s;
+        -o-transition-duration: .25s,.25s;
+        -webkit-transition-duration: .25s,.25s;
+        transition-duration: .25s,.25s;
+    }
+
+#videobox {
+    position: absolute;
+    display: none;
+    left: 225px;
+    top: 150px;
+    width: 500px;
+    height: 281px;
+    z-index: 51;
+}
+
+#demoreel {
+    position: absolute;
+    top: 605px;
+    left: 50px;
+    font-family: "Fedra Sans Light";
+}
+
+    #demoreel a {
+        text-decoration: none;
+        color: white;
+    }
+
+        #demoreel a:hover {
+            color: #F3E60F;
+            cursor: pointer;
+            -moz-transition-property: color;
+            -o-transition-property: color;
+            -webkit-transition-property: color;
+            transition-property: color;
+            -moz-transition-duration: .25s;
+            -o-transition-duration: .25s;
+            -webkit-transition-duration: .25s;
+            transition-duration: .25s;
+        }
+
+#close {
+    display: none;
+    position: absolute;
+    top: 119px;
+    left: 225px;
+    background-color: white;
+    font-family: "Fedra Sans Light";
+    font-size: 8pt;
+    z-index: 51;
+    padding: 10px;
+}
+
+    #close:hover {
+        color: red;
+        cursor: pointer;
+    }
+
+#closelightbox {
+    display: block;
+    position: relative;
+    top: 0;
+    left: 0;
+    background-color: black;
+    font-family: "Fedra Sans Light";
+    color: white;
+    font-size: 8pt;
+    z-index: 51;
+    padding: 10px;
+    text-align: left;
+}
+
+    #closelightbox:hover {
+        cursor: default;
+    }
+
+#inform {
+    display: block;
+    position: relative;
+    top: 0;
+    left: 0;
+    content: "";
+    background-color: black;
+    font-family: "Univers 55";
+    color: white;
+    font-size: 12pt;
+    z-index: 51;
+    padding: 10px;
+    text-align: right;
+}

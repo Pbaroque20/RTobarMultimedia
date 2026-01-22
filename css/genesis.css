@@ -1,0 +1,215 @@
+﻿@import url("fontloader.css");
+
+body {
+    position: relative;
+}
+
+.loaderContainer {
+    position: relative;
+    margin: 0 auto;
+    width: 300px;
+    height: 300px;
+    text-align: center;
+    top: 150px;
+    color: black;
+    font-family: "Fedra Sans Light";
+}
+
+#loader {
+    -moz-transform: scale(.5);
+    -ms-transform: scale(.5);
+    -o-transform: scale(.5);
+    -webkit-transform: scale(.5);
+    transform: scale(.5);
+}
+
+#loading {
+    position: relative;
+    top: -25px;
+    left: 5px;
+    -moz-animation: pulse 0.3s infinite alternate;
+    -o-animation: pulse 0.3s infinite alternate;
+    -webkit-animation: pulse 0.3s infinite alternate;
+    -ms-animation: pulse 0.3s infinite alternate;
+    animation: pulse 0.3s infinite alternate;
+}
+
+@-moz-keyframes pulse {
+    from {
+        opacity: 0.25;
+    }
+
+    to {
+        opacity: 1.0;
+    }
+}
+
+@-webkit-keyframes pulse {
+    from {
+        opacity: 0.25;
+    }
+
+    to {
+        opacity: 1.0;
+    }
+}
+
+@keyframes pulse {
+    from {
+        opacity: 0.25;
+    }
+
+    to {
+        opacity: 1.0;
+    }
+}
+
+#categories span {
+    color: #0E8CCC;
+    font-family: "Univers Oblique";
+}
+
+.imageContainer1 {
+    position: absolute;
+    background-image: url("../images/page1.jpg");
+    z-index: -20;
+    top: 0;
+    height: 1102px;
+    width: 960px;
+    background-repeat: no-repeat;
+    -ms-opacity: 1;
+    opacity: 1;
+}
+
+#categories {
+    position: relative;
+    text-align: center;
+    font-size: 24px;
+    top: 29px;
+    font-family: "Univers 55";
+    z-index: 50;
+}
+
+#visit {
+    position: absolute;
+    top: 476px;
+    left: 615px;
+    text-align: right;
+    font-family: "Fedra Sans Light";
+    font-size: 9pt;
+}
+
+#update {
+    position: absolute;
+    width: 250px;
+    height: 150px;
+    text-align: right;
+    background-color: #0E8CCC;
+    color: white;
+    padding: 10px;
+    -ms-border-radius: 5px;
+    border-radius: 5px;
+    font-family: "Univers 55";
+    font-size: 10pt;
+    left: 663px;
+    top: 476px;
+}
+
+#news {
+    color: yellow;
+}
+
+.hover {
+    position: relative;
+    font-family: Fedra Sans Light Italic;
+    color: white;
+    text-align: center;
+    width: 220px;
+    height: 20px;
+    -ms-border-radius: 5px;
+    border-radius: 5px;
+    -ms-opacity: 0;
+    background-color: #4a4a4a;
+    padding: 10px;
+    opacity: 0;
+    top: 460px;
+    left: 360px;
+}
+
+#topHeader {
+    width: 960px;
+    height: 19px;
+    background-color: black;
+    position: fixed;
+    top: 0;
+    border-bottom: 1px solid gray;
+    z-index: 500;
+}
+
+header div {
+    width: 350px;
+    color: white;
+    vertical-align: middle;
+}
+
+    header div:first-child {
+        text-align: left;
+        text-indent: 1em;
+        float: left;
+        top: 5px;
+        font-family: Fedra Sans Light;
+    }
+
+    header div:nth-child(2) {
+        text-align: right;
+        padding-right: 1em;
+        float: right;
+        top: 5px;
+        font-family: Fedra Sans Light;
+    }
+
+.nav_page1 {
+    position: absolute;
+    text-align: right;
+    left: 633px;
+    top: 306px;
+    font-size: 20px;
+    -ms-opacity: 1;
+    opacity: 1;
+    /* -webkit-transition-property: left,opacity;
+    -moz-transition-property: left,opacity;
+    -ms-transition-property: left,opacity;
+    -o-transition-property: left,opacity;
+    transition-property: left,opacity;
+    -webkit-transition-duration: 1.5s;
+    -moz-transition-duration: 1.5s;
+    -ms-transition-duration: 1.5s;
+    -o-transition-duration: 1.5s;
+    transition-duration: 1.5s;*/
+}
+
+ul {
+    clear: both;
+    text-decoration: none;
+    width: 150px;
+}
+/* Nav Page Styling */
+.nav_page1 a {
+    text-decoration: none;
+    color: black;
+    font-family: Fedra Sans Light;
+}
+
+    .nav_page1 a:hover {
+        color: magenta;
+        cursor: pointer;
+        margin-right: 8px;
+        -moz-transition-property: color,margin-right;
+        -o-transition-property: color,margin-right;
+        -webkit-transition-property: color,margin-right;
+        transition-property: color,margin-right;
+        -moz-transition-duration: .25s,.25s;
+        -o-transition-duration: .25s,.25s;
+        -webkit-transition-duration: .25s,.25s;
+        transition-duration: .25s,.25s;
+    }

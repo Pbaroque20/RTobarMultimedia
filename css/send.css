@@ -1,0 +1,46 @@
+﻿body {
+    background-color: #EA0C94;
+}
+
+@font-face {
+    font-family: "Fedra Sans Light";
+    src: url(../fonts/FedraSansStd-Light.OTF);
+}
+
+.notification {
+    position: relative;
+    margin: 0 auto;
+    top: 50px;
+    -ms-border-radius: 8px;
+    border-radius: 8px;
+    color: white;
+    background-color: #b10c75;
+    width: 350px;
+    height: 40px;
+    font-family: "Fedra Sans Light";
+    text-align: center;
+    padding-top: 20px;
+}
+
+
+.return {
+    font-size:88%;
+    position: relative;
+    top: 60px;
+    color: yellow;
+    text-align: center;
+    font-family: 'Fedra Sans Light';
+}
+
+a {
+    color: white;
+}
+
+a:link {
+    text-decoration: none;
+    color: white;
+}
+
+a:hover {
+    color: yellow;
+}

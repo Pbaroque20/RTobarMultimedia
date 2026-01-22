@@ -1,0 +1,503 @@
+﻿@import url("fontloader.css");
+
+body {
+    position: relative;
+}
+
+.loaderContainer {
+    position: relative;
+    margin: 0 auto;
+    width: 300px;
+    height: 300px;
+    text-align: center;
+    top: 150px;
+    color: white;
+    font-family: "Fedra Sans Light";
+}
+
+#loader {
+    -moz-transform: scale(.5);
+    -ms-transform: scale(.5);
+    -o-transform: scale(.5);
+    -webkit-transform: scale(.5);
+    transform: scale(.5);
+}
+
+#loading {
+    position: relative;
+    top: -25px;
+    left: 5px;
+    -moz-animation: pulse 0.3s infinite alternate;
+    -o-animation: pulse 0.3s infinite alternate;
+    -webkit-animation: pulse 0.3s infinite alternate;
+    -ms-animation: pulse 0.3s infinite alternate;
+    animation: pulse 0.3s infinite alternate;
+}
+
+@-moz-keyframes pulse {
+    from {
+        opacity: 0.25;
+    }
+
+    to {
+        opacity: 1.0;
+    }
+}
+
+@-webkit-keyframes pulse {
+    from {
+        opacity: 0.25;
+    }
+
+    to {
+        opacity: 1.0;
+    }
+}
+
+@keyframes pulse {
+    from {
+        opacity: 0.25;
+    }
+
+    to {
+        opacity: 1.0;
+    }
+}
+
+.imageContainer4 {
+    background-image: url("../images/page4.jpg");
+    z-index: -20;
+    background-repeat: no-repeat;
+    -ms-opacity: 1;
+    opacity: 1;
+    height: 1014px;
+}
+
+.hover {
+    position: relative;
+    font-family: "Fedra Sans Light Italic";
+    color: white;
+    text-align: center;
+    width: 220px;
+    height: 20px;
+    -ms-border-radius: 5px;
+    border-radius: 5px;
+    -ms-opacity: 0;
+    background-color: #4a4a4a;
+    padding: 10px;
+    opacity: 0;
+    top: 460px;
+    left: 360px;
+}
+
+.formplatform {
+    position: relative;
+    background-image: url("../images/form.png");
+    background-repeat: no-repeat;
+    width: 557px;
+    height: 536px;
+    top: 0;
+    right: -403px;
+    -ms-opacity: .75 !important;
+    opacity: .75 !important;
+    z-index: 10;
+}
+
+#chatbubble {
+    position: absolute;
+    display: none;
+    -webkit-transform-origin: center center;
+    -moz-transform-origin: center center;
+    -ms-transform-origin: center center;
+    -o-transform-origin: center center;
+    transform-origin: center center;
+    top: 714px;
+    left: 294px;
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    -ms-transform: scale(0);
+    -o-transform: scale(0);
+    transform: scale(0);
+}
+
+.chatbubble_animate {
+    -webkit-transform: scale(1, 1) !important;
+    -moz-transform: scale(1, 1) !important;
+    -ms-transform: scale(1, 1) !important;
+    -o-transform: scale(1, 1) !important;
+    transform: scale(1, 1) !important;
+    -webkit-transition-property: transform;
+    -moz-transition-property: transform;
+    -ms-transition-property: transform;
+    -o-transition-property: transform;
+    transition-property: transform;
+    -webkit-transition-duration: 1.5s;
+    -moz-transition-duration: 1.5s;
+    -ms-transition-duration: 1.5s;
+    -o-transition-duration: 1.5s;
+    transition-duration: 1.5s;
+    -webkit-transition-delay: 1s;
+    -moz-transition-delay: 1s;
+    -ms-transition-delay: 1s;
+    -o-transition-delay: 1s;
+    transition-delay: 1s;
+}
+
+#chatbubble2 {
+    position: absolute;
+    display: none;
+    -webkit-transform-origin: center center;
+    -moz-transform-origin: center center;
+    -ms-transform-origin: center center;
+    -o-transform-origin: center center;
+    transform-origin: center center;
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    -ms-transform: scale(0);
+    -o-transform: scale(0);
+    transform: scale(0);
+    top: 489px;
+    left: 117px;
+}
+
+.chatbubble2_animate {
+    position: absolute;
+    -webkit-transform-origin: center center;
+    -moz-transform-origin: center center;
+    -ms-transform-origin: center center;
+    -o-transform-origin: center center;
+    transform-origin: center center;
+    top: 489px;
+    left: 117px;
+    -webkit-transform: scale(0.9) !important;
+    -moz-transform: scale(0.9) !important;
+    -ms-transform: scale(0.9) !important;
+    -o-transform: scale(0.9) !important;
+    transform: scale(0.9) !important;
+    -webkit-transition-property: transform;
+    -moz-transition-property: transform;
+    -ms-transition-property: transform;
+    -o-transition-property: transform;
+    transition-property: transform;
+    -webkit-transition-duration: 1.5s;
+    -moz-transition-duration: 1.5s;
+    -ms-transition-duration: 1.5s;
+    -o-transition-duration: 1.5s;
+    transition-duration: 1.5s;
+    -webkit-transition-delay: 1.25s;
+    -moz-transition-delay: 1.25s;
+    -ms-transition-delay: 1.25s;
+    -o-transition-delay: 1.25s;
+    transition-delay: 1.25s;
+}
+
+#chatbubble3 {
+    position: absolute;
+    display: none;
+    -webkit-transform-origin: center center;
+    -moz-transform-origin: center center;
+    -ms-transform-origin: center center;
+    -o-transform-origin: center center;
+    transform-origin: center center;
+    top: 379px;
+    left: 419px;
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    -ms-transform: scale(0);
+    -o-transform: scale(0);
+    transform: scale(0);
+}
+
+.chatbubble3_animate {
+    position: absolute;
+    -webkit-transform-origin: center center;
+    -moz-transform-origin: center center;
+    -ms-transform-origin: center center;
+    -o-transform-origin: center center;
+    transform-origin: center center;
+    top: 379px;
+    left: 419px;
+    -webkit-transform: scale(0.8) !important;
+    -moz-transform: scale(0.8) !important;
+    -ms-transform: scale(0.8) !important;
+    -o-transform: scale(0.8) !important;
+    transform: scale(0.8) !important;
+    -webkit-transition-property: transform;
+    -moz-transition-property: transform;
+    -ms-transition-property: transform;
+    -o-transition-property: transform;
+    transition-property: transform;
+    -webkit-transition-duration: 1.5s;
+    -moz-transition-duration: 1.5s;
+    -ms-transition-duration: 1.5s;
+    -o-transition-duration: 1.5s;
+    transition-duration: 1.5s;
+    -webkit-transition-delay: 1.5s;
+    -moz-transition-delay: 1.5s;
+    -ms-transition-delay: 1.5s;
+    -o-transition-delay: 1.5s;
+    transition-delay: 1.5s;
+}
+
+#chatbubble4 {
+    position: absolute;
+    display: none;
+    -webkit-transform-origin: center center;
+    -moz-transform-origin: center center;
+    -ms-transform-origin: center center;
+    -o-transform-origin: center center;
+    transform-origin: center center;
+    top: 337px;
+    left: 40px;
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    -ms-transform: scale(0);
+    -o-transform: scale(0);
+    transform: scale(0);
+}
+
+.chatbubble4_animate {
+    position: absolute;
+    -webkit-transform-origin: center center;
+    -moz-transform-origin: center center;
+    -ms-transform-origin: center center;
+    -o-transform-origin: center center;
+    transform-origin: center center;
+    top: 337px;
+    left: 40px;
+    -webkit-transform: scale(0.7) !important;
+    -moz-transform: scale(0.7) !important;
+    -ms-transform: scale(0.7) !important;
+    -o-transform: scale(0.7) !important;
+    transform: scale(0.7) !important;
+    -webkit-transition-property: transform;
+    -moz-transition-property: transform;
+    -ms-transition-property: transform;
+    -o-transition-property: transform;
+    transition-property: transform;
+    -webkit-transition-duration: 1.5s;
+    -moz-transition-duration: 1.5s;
+    -ms-transition-duration: 1.5s;
+    -o-transition-duration: 1.5s;
+    transition-duration: 1.5s;
+    -webkit-transition-delay: 1.75s;
+    -moz-transition-delay: 1.75s;
+    -ms-transition-delay: 1.75s;
+    -o-transition-delay: 1.75s;
+    transition-delay: 1.75s;
+}
+
+#chatbubble5 {
+    position: absolute;
+    display: none;
+    -webkit-transform-origin: center center;
+    -moz-transform-origin: center center;
+    -ms-transform-origin: center center;
+    -o-transform-origin: center center;
+    transform-origin: center center;
+    top: 273px;
+    left: 257px;
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    -ms-transform: scale(0);
+    -o-transform: scale(0);
+    transform: scale(0);
+}
+
+.chatbubble5_animate {
+    position: absolute;
+    -webkit-transform-origin: center center;
+    -moz-transform-origin: center center;
+    -ms-transform-origin: center center;
+    -o-transform-origin: center center;
+    transform-origin: center center;
+    top: 273px;
+    left: 257px;
+    -webkit-transform: scale(0.6) !important;
+    -moz-transform: scale(0.6) !important;
+    -ms-transform: scale(0.6) !important;
+    -o-transform: scale(0.6) !important;
+    transform: scale(0.6) !important;
+    -webkit-transition-property: transform;
+    -moz-transition-property: transform;
+    -ms-transition-property: transform;
+    -o-transition-property: transform;
+    transition-property: transform;
+    -webkit-transition-duration: 1.5s;
+    -moz-transition-duration: 1.5s;
+    -ms-transition-duration: 1.5s;
+    -o-transition-duration: 1.5s;
+    transition-duration: 1.5s;
+    -webkit-transition-delay: 2.0s;
+    -moz-transition-delay: 2.0s;
+    -ms-transition-delay: 2.0s;
+    -o-transition-delay: 2.0s;
+    transition-delay: 2.0s;
+}
+
+#chatbubble6 {
+    position: absolute;
+    display: none;
+    -webkit-transform-origin: center center;
+    -moz-transform-origin: center center;
+    -ms-transform-origin: center center;
+    -o-transform-origin: center center;
+    transform-origin: center center;
+    top: 140px;
+    left: 181px;
+    -webkit-transform: scale(0,0);
+    -moz-transform: scale(0,0);
+    -ms-transform: scale(0,0);
+    -o-transform: scale(0,0);
+    transform: scale(0,0);
+}
+
+.chatbubble6_animate {
+    position: absolute;
+    -webkit-transform-origin: center center;
+    -moz-transform-origin: center center;
+    -ms-transform-origin: center center;
+    -o-transform-origin: center center;
+    transform-origin: center center;
+    top: 140px;
+    left: 181px;
+    -webkit-transform: scale(0.5) !important;
+    -moz-transform: scale(0.5) !important;
+    -ms-transform: scale(0.5) !important;
+    -o-transform: scale(0.5) !important;
+    transform: scale(0.5) !important;
+    -webkit-transition-property: transform;
+    -moz-transition-property: transform;
+    -ms-transition-property: transform;
+    -o-transition-property: transform;
+    transition-property: transform;
+    -webkit-transition-duration: 1.5s;
+    -moz-transition-duration: 1.5s;
+    -ms-transition-duration: 1.5s;
+    -o-transition-duration: 1.5s;
+    transition-duration: 1.5s;
+    -webkit-transition-delay: 2.25s;
+    -moz-transition-delay: 2.25s;
+    -ms-transition-delay: 2.25s;
+    -o-transition-delay: 2.25s;
+    transition-delay: 2.25s;
+}
+
+#topHeader {
+    width: 960px;
+    height: 19px;
+    background-color: black;
+    position: fixed;
+    top: 0;
+    border-bottom: 1px solid gray;
+    z-index: 500;
+}
+
+header div {
+    width: 350px;
+    color: white;
+    vertical-align: middle;
+}
+
+    header div:first-child {
+        text-align: left;
+        text-indent: 1em;
+        float: left;
+        top: 5px;
+        font-family: Fedra Sans Light;
+    }
+
+    header div:nth-child(2) {
+        text-align: right;
+        padding-right: 1em;
+        float: right;
+        top: 5px;
+        font-family: Fedra Sans Light;
+    }
+
+.nav_page4 {
+    position: absolute;
+    left: 316px;
+    top: 38px;
+    font-size: 20px;
+    z-index: 10;
+}
+
+    /*ul {
+    clear: both;
+    text-decoration: none;
+}*/
+
+    .nav_page4 a {
+        text-decoration: none;
+        color: white;
+        font-family: Fedra Sans Light;
+    }
+
+        .nav_page4 a:hover {
+            padding-left: 8px;
+            color: #553E95;
+            cursor: pointer;
+            -moz-transition-property: color,padding-left;
+            -o-transition-property: color,padding-left;
+            -webkit-transition-property: color,padding-left;
+            transition-property: color,padding-left;
+            -moz-transition-duration: .25s,.25s;
+            -o-transition-duration: .25s,.25s;
+            -webkit-transition-duration: .25s,.25s;
+            transition-duration: .25s,.25s;
+        }
+
+/* Form styling */
+
+#contact_form {
+    position: relative;
+    left: 559px;
+    top: -486px;
+    z-index: 50;
+}
+
+    /*td input[name=firstname], td input[name=email], td textarea[name=message] {
+    background-color: #FFFFB6;
+}*/
+
+    #contact_form td {
+        padding: 5px;
+    }
+
+    #contact_form tr > td:first-child {
+        text-align: right;
+        font-family: Fedra Sans Light Italic;
+        color: yellow;
+        font-size: 10pt;
+    }
+
+    #contact_form tr > td:nth-child(2) {
+        width: 250px;
+        max-width: 250px;
+    }
+
+    #contact_form table tr:nth-child(5) > td {
+        vertical-align: top;
+    }
+
+form button {
+    position: relative;
+    left: 105px;
+}
+
+#messagebox {
+    width: 186px;
+    max-width: 186px;
+    max-height: 121px;
+    height: 121px;
+}
+
+.remaining {
+    font-family: Fedra Sans Light Italic;
+    position: absolute;
+    top: 120px;
+    left: 270px;
+    color: white;
+    font-size: 9pt;
+}

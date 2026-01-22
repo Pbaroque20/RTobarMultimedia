@@ -1,0 +1,27 @@
+﻿@font-face {
+    font-family: "Univers 55";
+    src: url("../fonts/Univers.eot") format('embedded-opentype');
+    src: url("../fonts/Univers.eot#?iefix") format('embedded-opentype');
+    src: url("../fonts/Univers.woff") format('woff');
+}
+
+@font-face {
+    font-family: "Univers Oblique";
+    src: url("../fonts/Univers-Oblique.eot") format('embedded-opentype');
+    src: url("../fonts/Univers-Oblique.eot#?iefix") format('embedded-opentype');
+    src: url("../fonts/Univers-Oblique.woff") format('woff');
+}
+
+@font-face {
+    font-family: "Fedra Sans Light";
+    src: url("../fonts/FedraSansStd-Light.eot") format('embedded-opentype');
+    src: url("../fonts/FedraSansStd-Light.eot#?iefix") format('embedded-opentype');
+    src: url("../fonts/FedraSansStd-Light.woff") format('woff');
+}
+
+@font-face {
+    font-family: "Fedra Sans Light Italic";
+    src: url("../fonts/FedraSansStd-LightItalic.eot") format('embedded-opentype');
+    src: url("../fonts/FedraSansStd-LightItalic.eot#?iefix") format('embedded-opentype');
+    src: url("../fonts/FedraSansStd-LightItalic.woff") format('woff');
+}

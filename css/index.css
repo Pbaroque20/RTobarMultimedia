@@ -1,0 +1,77 @@
+﻿@import url("fontloader.css");
+
+/*body {
+    background-color: #F5E10E;
+}*/
+
+.loaderContainer {
+    position: relative;
+    margin: 0 auto;
+    width: 300px;
+    height: 300px;
+    text-align: center;
+    top: 150px;
+    color: black;
+    font-family: "Fedra Sans Light";
+}
+
+#loader {
+    -moz-transform: scale(.5);
+    -ms-transform: scale(.5);
+    -o-transform: scale(.5);
+    -webkit-transform: scale(.5);
+    transform: scale(.5);
+}
+
+#loading {
+    position: relative;
+    top: -25px;
+    left: 5px;
+    color: black;
+    -moz-animation: pulse 0.3s infinite alternate;
+    -o-animation: pulse 0.3s infinite alternate;
+    -webkit-animation: pulse 0.3s infinite alternate;
+    animation: pulse 0.3s infinite alternate;
+}
+
+@-moz-keyframes pulse {
+    from {
+        opacity: 0.25;
+    }
+
+    to {
+        opacity: 1.0;
+    }
+}
+
+@-webkit-keyframes pulse {
+    from {
+        opacity: 0.25;
+    }
+
+    to {
+        opacity: 1.0;
+    }
+}
+
+@keyframes pulse {
+    from {
+        opacity: 0.25;
+    }
+
+    to {
+        opacity: 1.0;
+    }
+}
+
+.wrapper {
+    position: relative;
+    margin: 0 auto;
+    width: 960px;
+    overflow: hidden;
+    height: 1014px;
+}
+
+.multi {
+    font-family: "Fedra Sans Light Italic";
+}
