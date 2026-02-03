@@ -1,4 +1,4 @@
-﻿@import url("fontloader.css");
+@import url("fontloader.css");
 
 /*body {
     background-color: #F5E10E;
@@ -70,6 +70,15 @@
     width: 960px;
     overflow: hidden;
     height: 1014px;
+}
+
+@media (max-width: 959px) {
+    .wrapper {
+        width: 100%;
+        max-width: 960px;
+        min-height: 100vh;
+        height: auto;
+    }
 }
 
 .multi {
