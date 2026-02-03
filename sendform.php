@@ -8,7 +8,7 @@ header("refresh: 5; url=index.html");
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Raphael Tobar - Multimedia Design</title>
+    <title>TobarMediaDesign</title>
     <link href="css/meyer_reset.css" rel="stylesheet" type="text/css" />
     <link href="css/send.css" rel="stylesheet" type="text/css" />
 </head>
