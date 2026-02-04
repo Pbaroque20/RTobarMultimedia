@@ -1,4 +1,4 @@
-﻿@import url("fontloader.css");
+@import url("fontloader.css");
 
 body {
     position: relative;
@@ -295,7 +295,7 @@ ul {
 
     .nav_page2 a:hover {
         padding-left: 8px;
-        color: #F3E60F;
+        color: var(--color-session-nav);
         cursor: pointer;
         -moz-transition-property: color,padding-left;
         -o-transition-property: color,padding-left;
@@ -330,7 +330,7 @@ ul {
     }
 
         #demoreel a:hover {
-            color: #F3E60F;
+            color: var(--color-session-nav);
             cursor: pointer;
             -moz-transition-property: color;
             -o-transition-property: color;
@@ -390,4 +390,92 @@ ul {
     z-index: 51;
     padding: 10px;
     text-align: right;
+}
+
+@media (max-width: 959px) {
+    .wrapper.session-page {
+        overflow-x: auto;
+        overflow-y: visible;
+        min-width: 100%;
+    }
+
+    .wrapper.session-page .imageContainer2 {
+        min-width: 960px;
+    }
+
+    #lightbox {
+        position: fixed !important;
+        left: 50% !important;
+        top: 50% !important;
+        width: 95vw !important;
+        max-width: 95vw;
+        height: auto !important;
+        max-height: 90vh;
+        -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        box-sizing: border-box;
+    }
+
+    #lightbox #changeImg {
+        max-width: 100%;
+        max-height: 75vh;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        display: block;
+    }
+
+    .nav_page2 {
+        left: 50%;
+        top: 28px;
+        -webkit-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+        transform: translateX(-50%);
+        text-align: center;
+    }
+
+    .nav_page2 ul {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: center;
+        gap: 1em;
+        list-style: none;
+        padding-left: 0;
+        margin: 0;
+    }
+
+    .nav_page2 li {
+        margin: 0;
+    }
+
+    .nav_page2 a {
+        display: inline-block;
+        padding: 0.5em 0.75em;
+    }
+
+    .nav_page2 a:hover {
+        padding-left: 0.75em;
+        color: var(--color-session-nav);
+        -webkit-transition: color 0.25s;
+        -moz-transition: color 0.25s;
+        -ms-transition: color 0.25s;
+        -o-transition: color 0.25s;
+        transition: color 0.25s;
+    }
+}
+
+@media (max-width: 499px) {
+    .nav_page2 {
+        font-size: 3.5vw;
+    }
+
+    .nav_page2 ul {
+        gap: 2vw;
+    }
+
+    .nav_page2 a {
+        padding: 1.5vw 2.5vw;
+    }
 }

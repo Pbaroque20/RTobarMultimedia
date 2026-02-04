@@ -1,5 +1,5 @@
-﻿body {
-    background-color: #EA0C94;
+body {
+    background-color: var(--color-connect);
 }
 
 @font-face {
@@ -27,7 +27,7 @@
     font-size:88%;
     position: relative;
     top: 60px;
-    color: yellow;
+    color: var(--color-accent);
     text-align: center;
     font-family: 'Fedra Sans Light';
 }
@@ -42,5 +42,5 @@ a:link {
 }
 
 a:hover {
-    color: yellow;
+    color: var(--color-accent);
 }

@@ -1,4 +1,4 @@
-﻿@import url("fontloader.css");
+@import url("fontloader.css");
 
 body {
     position: relative;
@@ -49,7 +49,7 @@ body {
     display: block;
     width: 230px;
     font-family: "Univers Oblique";
-    color: yellow;
+    color: var(--color-accent);
     top: 150px;
     left: 366px;
     padding: 10px;
@@ -88,7 +88,7 @@ body {
 }
 
     #history .header {
-        color: yellow;
+        color: var(--color-accent);
     }
 
     #history table {
@@ -112,7 +112,7 @@ body {
 }
 
     #skillsedu .header {
-        color: yellow;
+        color: var(--color-accent);
         text-align: left;
     }
 
@@ -129,7 +129,7 @@ body {
 }
 
 .name {
-    color: yellow;
+    color: var(--color-accent);
 }
 
 .spacer {
@@ -399,7 +399,7 @@ ul {
 
     .nav_page3 a:hover {
         padding-left: 8px;
-        color: #F77A05;
+        color: var(--color-narrative-nav);
         cursor: pointer;
         -moz-transition-property: color,padding-left;
         -o-transition-property: color,padding-left;
@@ -410,3 +410,83 @@ ul {
         -webkit-transition-duration: .25s,.25s;
         transition-duration: .25s,.25s;
     }
+
+@media (max-width: 959px) {
+    .instruct,
+    .biography,
+    .skills,
+    .download,
+    .work {
+        display: none !important;
+    }
+
+    #bio {
+        display: block !important;
+        position: absolute;
+        top: 90px;
+        left: 50%;
+        -webkit-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+        transform: translateX(-50%);
+        width: 90%;
+        max-width: 600px;
+        margin: 0;
+        padding: 1em;
+        box-sizing: border-box;
+        text-align: left;
+        line-height: 1.4em;
+    }
+
+    .nav_page3 {
+        left: 50%;
+        top: 28px;
+        -webkit-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+        transform: translateX(-50%);
+        text-align: center;
+    }
+
+    .nav_page3 ul {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: center;
+        gap: 1em;
+        list-style: none;
+        padding-left: 0;
+        margin: 0;
+    }
+
+    .nav_page3 li {
+        margin: 0;
+    }
+
+    .nav_page3 a {
+        display: inline-block;
+        padding: 0.5em 0.75em;
+    }
+
+    .nav_page3 a:hover {
+        padding-left: 0.75em;
+        color: var(--color-narrative-nav);
+        -webkit-transition: color 0.25s;
+        -moz-transition: color 0.25s;
+        -ms-transition: color 0.25s;
+        -o-transition: color 0.25s;
+        transition: color 0.25s;
+    }
+}
+
+@media (max-width: 499px) {
+    .nav_page3 {
+        font-size: 3.5vw;
+    }
+
+    .nav_page3 ul {
+        gap: 2vw;
+    }
+
+    .nav_page3 a {
+        padding: 1.5vw 2.5vw;
+    }
+}

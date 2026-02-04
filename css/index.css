@@ -1,7 +1,18 @@
 @import url("fontloader.css");
 
+:root {
+    --color-genesis: #F5E10E;
+    --color-session: #1D5F89;
+    --color-narrative: #26273D;
+    --color-connect: #EA0C94;
+    --color-accent: yellow;
+    --color-session-nav: #F3E60F;
+    --color-narrative-nav: #F77A05;
+    --color-connect-nav: #553E95;
+}
+
 /*body {
-    background-color: #F5E10E;
+    background-color: var(--color-genesis);
 }*/
 
 .loaderContainer {
@@ -83,4 +94,8 @@
 
 .multi {
     font-family: "Fedra Sans Light Italic";
+}
+
+#topHeader .multi {
+    color: var(--color-accent);
 }

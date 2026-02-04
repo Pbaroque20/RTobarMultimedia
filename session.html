@@ -1,12 +1,12 @@
 <body style="background-color: #1D5F89;">
 
-    <div class="wrapper">
+    <div class="wrapper session-page">
         <div id="overlay"></div>
         <div class="imageContainer2">
             <header>
                 <div id="topHeader">
-                    <div>TobarMediaDesign</div>
-                    <div>©2019</div>
+                    <div>Tobar<span class="multi">MediaDesign</span></div>
+                    <div id="copyright-year">©2026</div>
                 </div>
             </header>
             <main>
@@ -50,7 +50,7 @@
     </div>
     <script>
         $(document).ready(function () {
-
+            $('#copyright-year').text('©' + new Date().getFullYear());
             //Site navigation and animation
 
             $('.genesis').on('click', function (e) {
@@ -105,9 +105,12 @@
             $('#overlay').css('display', 'block');
         });
         $('#close').on('click', function () {
-            $(this).css('display', 'none').removeAttr('src');
+            $(this).css('display', 'none');
             $('#videobox').css('display', 'none').attr('src', '');
             $('#overlay').css('display', 'none');
+            $('#lightbox').css('display', 'none');
+            if (window.innerWidth > 959) $('.wrapper').css('height', '1014px');
+            else $('.wrapper').css('height', '');
         });
 
         $('.workimg').on('click', function () {
@@ -199,7 +202,8 @@
                     $('#changeImg').attr("src", "images/portfolio/space.jpg");
                     $('#inform').text(info.information[12].m);
                     $('#overlay').css('display', 'block');
-                    $('.wrapper').css('height', '1487px');
+                    if (window.innerWidth > 959) $('.wrapper').css('height', '1487px');
+                    else $('.wrapper').css('height', '');
                     break;
                 case "mirror":
                     $('#close').css('display', 'block');
@@ -218,7 +222,8 @@
                     $('#changeImg').attr("src", "images/portfolio/rwwork.jpg");
                     $('#inform').text(info.information[15].rw);
                     $('#overlay').css('display', 'block');
-                    $('.wrapper').css('height', '1185px');
+                    if (window.innerWidth > 959) $('.wrapper').css('height', '1185px');
+                    else $('.wrapper').css('height', '');
                     break;
                 case "skittles":
                     $('#lightbox').css({
@@ -244,7 +249,8 @@
                     $('#changeImg').attr("src", "images/portfolio/vanitystuff.jpg");
                     $('#inform').text(info.information[18].vaniads);
                     $('#overlay').css('display', 'block');
-                    $('.wrapper').css('height', '2674px');
+                    if (window.innerWidth > 959) $('.wrapper').css('height', '2674px');
+                    else $('.wrapper').css('height', '');
                     break;
                 case "logod":
                     $('#lightbox').css({ 'display': 'block', 'width': '820px', 'height': '1099px', 'left': '86px', 'top': '50px' });
@@ -252,14 +258,17 @@
                     $('#changeImg').attr("src", "images/portfolio/logos2.jpg");
                     $('#inform').text(info.information[19].logod);
                     $('#overlay').css('display', 'block');
-                    $('.wrapper').css('height', '1198px');
+                    if (window.innerWidth > 959) $('.wrapper').css('height', '1198px');
+                    else $('.wrapper').css('height', '');
                     break;
             }
             $('#lightbox').on('click', function () {
-                ($(this).css('display', 'none'));
+                $(this).css('display', 'none');
                 $('#overlay').css('display', 'none');
-                $('.wrapper').css('height', '1014px');
-
+                $('#close').css('display', 'none');
+                $('#videobox').css('display', 'none').attr('src', '');
+                if (window.innerWidth > 959) $('.wrapper').css('height', '1014px');
+                else $('.wrapper').css('height', '');
             });
 
         });

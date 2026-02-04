@@ -116,7 +116,7 @@ body {
 }
 
 #news {
-    color: yellow;
+    color: var(--color-accent);
 }
 
 .hover {
@@ -259,6 +259,12 @@ ul {
         -ms-transform: translateX(-50%);
         transform: translateX(-50%);
         text-align: center;
+        background-color: rgba(255, 255, 255, 0.6);
+        padding: 0.6em 1em;
+        -webkit-border-radius: 8px;
+        -ms-border-radius: 8px;
+        border-radius: 8px;
+        box-sizing: border-box;
     }
 
     .nav_page1 ul {
@@ -288,7 +294,7 @@ ul {
 
     #visit a {
         display: inline-block;
-        margin: 0 0.25em;
+        margin: 0.75em 0.25em 0 0.25em;
     }
 
     #visit img {
@@ -316,5 +322,15 @@ ul {
     #topHeader > div:nth-child(2) {
         flex: 0 0 auto;
         white-space: nowrap;
+    }
+
+    .nav_page1 a:hover {
+        margin-right: 0;
+        color: magenta;
+        -webkit-transition: color 0.25s;
+        -moz-transition: color 0.25s;
+        -ms-transition: color 0.25s;
+        -o-transition: color 0.25s;
+        transition: color 0.25s;
     }
 }

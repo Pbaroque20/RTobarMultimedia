@@ -1,4 +1,4 @@
-﻿@import url("fontloader.css");
+@import url("fontloader.css");
 
 body {
     position: relative;
@@ -436,7 +436,7 @@ header div {
 
         .nav_page4 a:hover {
             padding-left: 8px;
-            color: #553E95;
+            color: white;
             cursor: pointer;
             -moz-transition-property: color,padding-left;
             -o-transition-property: color,padding-left;
@@ -449,6 +449,12 @@ header div {
         }
 
 /* Form styling */
+
+/*
+ * Email validation (used by connect form):
+ * Regex: ^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$
+ * Used in: connect.html (input#email pattern + JS), validation.php (preg_match).
+ */
 
 #contact_form {
     position: relative;
@@ -468,7 +474,7 @@ header div {
     #contact_form tr > td:first-child {
         text-align: right;
         font-family: Fedra Sans Light Italic;
-        color: yellow;
+        color: var(--color-accent);
         font-size: 10pt;
     }
 
@@ -479,6 +485,22 @@ header div {
 
     #contact_form table tr:nth-child(5) > td {
         vertical-align: top;
+    }
+
+    #contact_form input#email:valid:not(:placeholder-shown) {
+        border-color: rgba(255,255,255,0.4);
+    }
+
+    #contact_form input#email:invalid:not(:placeholder-shown) {
+        border-color: rgba(255,100,100,0.8);
+    }
+
+    .email-error {
+        display: block;
+        font-family: Fedra Sans Light Italic;
+        font-size: 9pt;
+        color: rgba(255,200,200,0.95);
+        margin-top: 2px;
     }
 
 form button {
@@ -500,4 +522,151 @@ form button {
     left: 270px;
     color: white;
     font-size: 9pt;
+}
+
+@media (max-width: 959px) {
+    .imageContainer4 {
+        width: 100%;
+        min-height: 100vh;
+        height: auto;
+        position: relative;
+        background-image: none;
+        z-index: 0;
+    }
+
+    .imageContainer4::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url("../images/page4.jpg");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        opacity: 0.25;
+        -ms-opacity: 0.25;
+        z-index: -1;
+        pointer-events: none;
+    }
+
+    .imageContainer4 header,
+    .imageContainer4 main {
+        position: relative;
+        z-index: 1;
+    }
+
+    .nav_page4 {
+        left: 50%;
+        top: 28px;
+        -webkit-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+        transform: translateX(-50%);
+        text-align: center;
+    }
+
+    .nav_page4 ul {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: center;
+        gap: 1em;
+        list-style: none;
+        padding-left: 0;
+        margin: 0;
+    }
+
+    .nav_page4 li {
+        margin: 0;
+    }
+
+    .nav_page4 a {
+        color: white;
+        display: inline-block;
+        padding: 0.5em 0.75em;
+    }
+
+    .nav_page4 ul li:nth-child(4) a {
+        color: yellow !important;
+    }
+
+    .nav_page4 a:hover {
+        padding-left: 0.75em;
+        color: var(--color-connect-nav);
+        -webkit-transition: color 0.25s;
+        -moz-transition: color 0.25s;
+        -ms-transition: color 0.25s;
+        -o-transition: color 0.25s;
+        transition: color 0.25s;
+    }
+
+    [id^="chatbubble"] {
+        display: none !important;
+    }
+
+    .formplatform {
+        display: none !important;
+    }
+
+    #contact_form {
+        left: 50%;
+        top: 80px;
+        -webkit-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+        transform: translateX(-50%);
+        text-align: center;
+        width: 100%;
+        max-width: 320px;
+        box-sizing: border-box;
+        position: relative;
+        z-index: 2;
+    }
+
+    #contact_form table {
+        margin: 0 auto;
+    }
+
+    #contact_form tr > td:first-child {
+        color: var(--color-accent);
+    }
+
+    #contact_form table tr:nth-child(2) > td:first-child,
+    #contact_form table tr:nth-child(3) > td:first-child {
+        color: white;
+    }
+
+    #contact_form input,
+    #contact_form textarea {
+        background-color: white;
+        color: #333;
+    }
+
+    form button {
+        left: auto;
+        display: inline-block;
+        margin: 0.5em 0.25em 0;
+    }
+
+    .remaining {
+        left: 50%;
+        -webkit-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+        transform: translateX(-50%);
+        margin-left: 60px;
+    }
+}
+
+@media (max-width: 499px) {
+    .nav_page4 {
+        font-size: 3.5vw;
+    }
+
+    .nav_page4 ul {
+        gap: 2vw;
+    }
+
+    .nav_page4 a {
+        padding: 1.5vw 2.5vw;
+    }
 }

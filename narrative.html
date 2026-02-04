@@ -1,10 +1,10 @@
 <body style="background-color: #26273D;">
-    <div class="wrapper">
+    <div class="wrapper narrative-page">
         <div class="imageContainer3">
             <header>
                 <div id="topHeader">
-                    <div>TobarMediaDesign</div>
-                    <div>©2019</div>
+                    <div>Tobar<span class="multi">MediaDesign</span></div>
+                    <div id="copyright-year">©2026</div>
                 </div>
             </header>
             <main>
@@ -16,18 +16,12 @@
                     <div class="work" style="cursor:default;">Work History</div>
                 </section>
                 <div id="bio" style="display: none;">
-                    <span class="name">Raphael Francisco Tobar Jr.</span> was born on June 3, 1985. A digital artist
-                    native to Miami, Florida, he has made significant travelling and lived
-                    in other cities to educate himself on the history of art, but also the
-                    aesthetic spirit in contemporary society.<br /><br />At a young age, Tobar became familiar
-                    with software used for creating digital art through his father's sign business. By the time he graduated from
-                    high school in 2005, he had an opportunity to live in Paris, France for seven months. While in Paris, he spent most of his time observing
-                    important cultural documents and artifacts in art and scientific history at
-                    the museums, while developing critical thinking skills by a reading of
-                    philosophical texts. <br /><br />Returning to Miami the following year in May, he began to practice
-                    the animal figure with birds. By 2008, he eventually moved to Los Angeles to develop his artistic sensibilities, and for three years became acquainted with the newest digital techniques in the
-                    entertainment industry. He returned to Miami in 2011 applying a new artistic
-                    direction, and studied graphic design at Miami Int'l University of Art & Design.
+                    <span class="name">Raphael Tobar</span> is a 3D &amp; graphics artist experienced in realtime WebGL content, AR ready assets, and advertising. Skilled in<br /><br />
+                    • Photo-manipulation<br />
+                    • Vector graphics<br />
+                    • 3D modeling/texturing, and<br />
+                    • Broad understanding of animation practices<br /><br />
+                    Expertise in CAD-to-Quad retopology and performant glTF/GLB pipelines for browser content. <br /><br />Delivered interactive work for adidas and Giphy; served as Lead 3D Artist on the Webby nominated "2020: The Ride" game.
                 </div>
                 <div id="history" style="display: none;">
                     <table>
@@ -206,6 +200,7 @@
             </main>
             <script>
                 $(document).ready(function () {
+                    $('#copyright-year').text('©' + new Date().getFullYear());
                     //Site navigation and animation
                     $('.nav_page1').css({ 'left': '-180px', 'opacity': '1' });
                     $('.imageContainer1').css('opacity', '1');

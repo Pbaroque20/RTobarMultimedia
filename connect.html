@@ -3,8 +3,8 @@
         <div class="imageContainer4">
             <header>
                 <div id="topHeader">
-                    <div>TobarMediaDesign</div>
-                    <div>©2019</div>
+                    <div>Tobar<span class="multi">MediaDesign</span></div>
+                    <div id="copyright-year">©2026</div>
                 </div>
             </header>
             <main>
@@ -49,7 +49,9 @@
                                 <sup>*</sup><label for="email">E-Mail</label>
                             </td>
                             <td>
-                                <input type="text" id="email" required placeholder="required" name="email" />
+                                <input type="email" id="email" required placeholder="required" name="email"
+                                       pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" />
+                                    <span id="email-error" class="email-error"></span>
                             </td>
                         </tr>
                         <tr>
@@ -67,6 +69,22 @@
             </main>
             <script>
                 $(document).ready(function () {
+                    $('#copyright-year').text('©' + new Date().getFullYear());
+
+                    // Dynamic scroll stop: do not scroll past the form buttons (Send/Reset)
+                    (function () {
+                        var $stop = $('#contact_form');
+                        if (!$stop.length) return;
+                        function getMaxScrollY() {
+                            var rect = $stop[0].getBoundingClientRect();
+                            return rect.bottom + window.scrollY - window.innerHeight;
+                        }
+                        function clampScroll() {
+                            var maxY = getMaxScrollY();
+                            if (maxY > 0 && window.scrollY > maxY) window.scrollTo(0, maxY);
+                        }
+                        $(window).on('scroll', clampScroll).on('resize', clampScroll);
+                    })();
 
                     $('#chatbubble').css('display', 'block').addClass('chatbubble_animate');
                     $('#chatbubble2').css('display', 'block').addClass('chatbubble2_animate');
@@ -111,6 +129,38 @@
                     //remaining counter hides when reset is activated
                     $('button:reset').on('click', function () {
                         $('.remaining').hide();
+                        $('#email-error').text('');
+                    });
+
+                    // Email validation (same regex as in connect.css comment and HTML pattern)
+                    var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                    var $emailInput = $('#email');
+                    var $emailError = $('#email-error');
+
+                    function validateEmail() {
+                        var val = $emailInput.val().trim();
+                        if (val.length === 0) {
+                            $emailError.text('');
+                            return true;
+                        }
+                        if (!emailRegex.test(val)) {
+                            $emailError.text('Please enter a valid e-mail address.');
+                            return false;
+                        }
+                        $emailError.text('');
+                        return true;
+                    }
+
+                    $emailInput.on('blur', validateEmail);
+                    $emailInput.on('input', function () {
+                        if ($emailError.text()) validateEmail();
+                    });
+
+                    $('#contact_form').on('submit', function (e) {
+                        if (!validateEmail()) {
+                            e.preventDefault();
+                            return false;
+                        }
                     });
 
                     //eval
