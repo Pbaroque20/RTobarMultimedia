@@ -13,8 +13,10 @@
                 <section>
                     <div class="portfolioblocks"></div>
                     <div id="lightbox"><div id="closelightbox">PRESS WINDOW TO CLOSE</div><img id="changeImg" /><div id="inform"></div></div>
-                    <div id="close">CLOSE WINDOW</div>
-                    <iframe id="videobox" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                    <div id="videoLightboxWrap">
+                        <div id="close">CLOSE WINDOW</div>
+                        <iframe id="videobox" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                    </div>
                     <div class="birth"><img style="cursor:pointer;" class="workimg" id="birth" src="images/birth.png" /></div>
                     <div class="ances"><img style="cursor:pointer;" class="workimg" id="ances" src="images/ances.png" /></div>
                     <div class="jelly"><img style="cursor:pointer;" class="workimg" id="jelly" src="images/jelly.png" /></div>
@@ -100,11 +102,13 @@
         };
 
         $('#demoreel').on('click', function () {
+            $('#videoLightboxWrap').css('display', window.innerWidth > 959 ? 'block' : 'flex');
             $('#close').css('display', 'block');
             $('#videobox').css('display', 'block').attr({ 'src': '//player.vimeo.com/video/88704801?title=0&amp;byline=0&amp;portrait=0', 'width': '500', 'height': 281, 'frameborder': 0 });
             $('#overlay').css('display', 'block');
         });
         $('#close').on('click', function () {
+            $('#videoLightboxWrap').css('display', 'none');
             $(this).css('display', 'none');
             $('#videobox').css('display', 'none').attr('src', '');
             $('#overlay').css('display', 'none');
@@ -137,6 +141,7 @@
                     $('#overlay').css('display', 'block');
                     break;
                 case "min":
+                    $('#videoLightboxWrap').css('display', window.innerWidth > 959 ? 'block' : 'flex');
                     $('#close').css('display', 'block');
                     $('#changeImg').attr("src", "");
                     $('#videobox').css('display', 'block').attr({ 'src': '//player.vimeo.com/video/52028294?title=0&amp;byline=0&amp;portrait=0', 'width': '500', 'height': 281, 'frameborder': 0 });
@@ -192,6 +197,7 @@
                     $('#overlay').css('display', 'block');
                     break;
                 case "gelfenstein":
+                    $('#videoLightboxWrap').css('display', window.innerWidth > 959 ? 'block' : 'flex');
                     $('#close').css('display', 'block');
                     $('#videobox').css('display', 'block').attr({ 'src': '//player.vimeo.com/video/88657994?title=0&amp;byline=0&amp;portrait=0', 'width': '500', 'height': 281, 'frameborder': 0 });
                     $('#overlay').css('display', 'block');
@@ -206,11 +212,13 @@
                     else $('.wrapper').css('height', '');
                     break;
                 case "mirror":
+                    $('#videoLightboxWrap').css('display', window.innerWidth > 959 ? 'block' : 'flex');
                     $('#close').css('display', 'block');
                     $('#videobox').css('display', 'block').attr({ 'src': '//player.vimeo.com/video/56375759?title=0&amp;byline=0&amp;portrait=0', 'width': '500', 'height': 281, 'frameborder': 0 });
                     $('#overlay').css('display', 'block');
                     break;
                 case "onelev":
+                    $('#videoLightboxWrap').css('display', window.innerWidth > 959 ? 'block' : 'flex');
                     $('#close').css('display', 'block');
                     $('#changeImg').attr("src", "");
                     $('#videobox').css('display', 'block').attr({ 'src': '//player.vimeo.com/video/78442277?title=0&amp;byline=0&amp;portrait=0', 'width': '500', 'height': 281, 'frameborder': 0 });
@@ -239,6 +247,7 @@
                     $('#overlay').css('display', 'block');
                     break;
                 case "surgeons":
+                    $('#videoLightboxWrap').css('display', window.innerWidth > 959 ? 'block' : 'flex');
                     $('#close').css('display', 'block');
                     $('#videobox').css('display', 'block').attr({ 'src': '//player.vimeo.com/video/48152700?title=0&amp;byline=0&amp;portrait=0', 'width': '500', 'height': 281, 'frameborder': 0 });
                     $('#overlay').css('display', 'block');
@@ -265,6 +274,7 @@
             $('#lightbox').on('click', function () {
                 $(this).css('display', 'none');
                 $('#overlay').css('display', 'none');
+                $('#videoLightboxWrap').css('display', 'none');
                 $('#close').css('display', 'none');
                 $('#videobox').css('display', 'none').attr('src', '');
                 if (window.innerWidth > 959) $('.wrapper').css('height', '1014px');
