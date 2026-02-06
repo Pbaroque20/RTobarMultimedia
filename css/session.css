@@ -291,6 +291,14 @@ ul {
     text-decoration: none;
     color: white;
     font-family: Fedra Sans Light;
+    -moz-transition-property: color, padding-left;
+    -o-transition-property: color, padding-left;
+    -webkit-transition-property: color, padding-left;
+    transition-property: color, padding-left;
+    -moz-transition-duration: .25s, .25s;
+    -o-transition-duration: .25s, .25s;
+    -webkit-transition-duration: .25s, .25s;
+    transition-duration: .25s, .25s;
 }
 
     .nav_page2 a:hover {
@@ -305,6 +313,10 @@ ul {
         -o-transition-duration: .25s,.25s;
         -webkit-transition-duration: .25s,.25s;
         transition-duration: .25s,.25s;
+    }
+
+    .nav_page2 ul li:nth-child(2) a:hover {
+        padding-left: 0;
     }
 
 #videobox {
@@ -393,6 +405,10 @@ ul {
 }
 
 @media (max-width: 959px) {
+    html, body {
+        overflow-y: hidden;
+    }
+
     .wrapper.session-page {
         overflow-x: auto;
         overflow-y: visible;
@@ -453,10 +469,19 @@ ul {
     .nav_page2 a {
         display: inline-block;
         padding: 0.5em 0.75em;
+        -webkit-transition: color 0.25s;
+        -moz-transition: color 0.25s;
+        -ms-transition: color 0.25s;
+        -o-transition: color 0.25s;
+        transition: color 0.25s;
+    }
+
+    .nav_page2 ul li:nth-child(2) a {
+        pointer-events: none;
     }
 
     .nav_page2 a:hover {
-        padding-left: 0.75em;
+        padding-left: 0.75em !important;
         color: var(--color-session-nav);
         -webkit-transition: color 0.25s;
         -moz-transition: color 0.25s;
@@ -464,6 +489,15 @@ ul {
         -o-transition: color 0.25s;
         transition: color 0.25s;
     }
+}
+
+@keyframes session-nav-pulse {
+    0%, 100% { color: #F3E60F; }
+    50% { color: white; }
+}
+
+.nav_page2 ul li:nth-child(2) a {
+    animation: session-nav-pulse 1s ease-in-out infinite;
 }
 
 @media (max-width: 499px) {

@@ -395,6 +395,14 @@ ul {
 .nav_page3 a {
     color: white;
     font-family: Fedra Sans Light;
+    -moz-transition-property: color, padding-left;
+    -o-transition-property: color, padding-left;
+    -webkit-transition-property: color, padding-left;
+    transition-property: color, padding-left;
+    -moz-transition-duration: .25s, .25s;
+    -o-transition-duration: .25s, .25s;
+    -webkit-transition-duration: .25s, .25s;
+    transition-duration: .25s, .25s;
 }
 
     .nav_page3 a:hover {
@@ -409,6 +417,10 @@ ul {
         -o-transition-duration: .25s,.25s;
         -webkit-transition-duration: .25s,.25s;
         transition-duration: .25s,.25s;
+    }
+
+    .nav_page3 ul li:nth-child(3) a:hover {
+        padding-left: 0;
     }
 
 @media (max-width: 959px) {
@@ -464,10 +476,19 @@ ul {
     .nav_page3 a {
         display: inline-block;
         padding: 0.5em 0.75em;
+        -webkit-transition: color 0.25s;
+        -moz-transition: color 0.25s;
+        -ms-transition: color 0.25s;
+        -o-transition: color 0.25s;
+        transition: color 0.25s;
+    }
+
+    .nav_page3 ul li:nth-child(3) a {
+        pointer-events: none;
     }
 
     .nav_page3 a:hover {
-        padding-left: 0.75em;
+        padding-left: 0.75em !important;
         color: var(--color-narrative-nav);
         -webkit-transition: color 0.25s;
         -moz-transition: color 0.25s;
@@ -475,6 +496,15 @@ ul {
         -o-transition: color 0.25s;
         transition: color 0.25s;
     }
+}
+
+@keyframes narrative-nav-pulse {
+    0%, 100% { color: #F77A05; }
+    50% { color: white; }
+}
+
+.nav_page3 ul li:nth-child(3) a {
+    animation: narrative-nav-pulse 1s ease-in-out infinite;
 }
 
 @media (max-width: 499px) {

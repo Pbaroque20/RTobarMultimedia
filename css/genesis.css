@@ -199,13 +199,21 @@ ul {
     text-decoration: none;
     color: black;
     font-family: Fedra Sans Light;
+    -moz-transition-property: color, margin-right;
+    -o-transition-property: color, margin-right;
+    -webkit-transition-property: color, margin-right;
+    transition-property: color, margin-right;
+    -moz-transition-duration: .25s, .25s;
+    -o-transition-duration: .25s, .25s;
+    -webkit-transition-duration: .25s, .25s;
+    transition-duration: .25s, .25s;
 }
 
     .nav_page1 a:hover {
         color: magenta;
         cursor: pointer;
         margin-right: 8px;
-        -moz-transition-property: color,margin-right;
+        -moz-transition-property: color, margin-right;
         -o-transition-property: color,margin-right;
         -webkit-transition-property: color,margin-right;
         transition-property: color,margin-right;
@@ -213,6 +221,10 @@ ul {
         -o-transition-duration: .25s,.25s;
         -webkit-transition-duration: .25s,.25s;
         transition-duration: .25s,.25s;
+    }
+
+    .nav_page1 ul li:first-child a:hover {
+        margin-right: 0;
     }
 
 /* Responsive: non-desktop – centered nav, centered visit block, faded background */
@@ -282,6 +294,15 @@ ul {
         min-height: 44px;
         line-height: 44px;
         box-sizing: border-box;
+        -webkit-transition: color 0.25s;
+        -moz-transition: color 0.25s;
+        -ms-transition: color 0.25s;
+        -o-transition: color 0.25s;
+        transition: color 0.25s;
+    }
+
+    .nav_page1 ul li:first-child a {
+        pointer-events: none;
     }
 
     #visit {
@@ -325,7 +346,7 @@ ul {
     }
 
     .nav_page1 a:hover {
-        margin-right: 0;
+        margin-right: 0 !important;
         color: magenta;
         -webkit-transition: color 0.25s;
         -moz-transition: color 0.25s;
@@ -333,4 +354,13 @@ ul {
         -o-transition: color 0.25s;
         transition: color 0.25s;
     }
+}
+
+@keyframes genesis-nav-pulse {
+    0%, 100% { color: magenta; }
+    50% { color: black; }
+}
+
+.nav_page1 ul li:first-child a {
+    animation: genesis-nav-pulse 1s ease-in-out infinite;
 }
