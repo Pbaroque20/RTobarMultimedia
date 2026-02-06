@@ -1,5 +1,36 @@
 @import url("fontloader.css");
 
+/* Portrait-only on non-desktop: block landscape orientation */
+#portraitOnlyOverlay {
+    display: none;
+}
+
+@media (max-width: 959px) and (orientation: landscape) {
+    #portraitOnlyOverlay {
+        display: flex !important;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 99999;
+        background: #1a1a1a;
+        color: #fff;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 2rem;
+        box-sizing: border-box;
+        font-family: "Fedra Sans Light", sans-serif;
+    }
+
+    #portraitOnlyOverlay p {
+        margin: 0;
+        font-size: 1.25rem;
+        max-width: 20em;
+    }
+}
+
 body {
     position: relative;
 }
