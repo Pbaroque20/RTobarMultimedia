@@ -104,8 +104,9 @@
                 var isSession = url.indexOf('session.html') !== -1;
                 var isGenesis = url.indexOf('genesis.html') !== -1;
                 var isConnect = url.indexOf('connect.html') !== -1;
-                var loaderSrc = (isNarrative || isSession) ? 'loader/white_loader.gif' : 'loader/black_loader.gif';
-                var loaderColor = (isNarrative || isSession) ? 'white' : 'black';
+                var isGenoma = url.indexOf('genoma.html') !== -1;
+                var loaderSrc = (isNarrative || isSession || isGenoma) ? 'loader/white_loader.gif' : 'loader/black_loader.gif';
+                var loaderColor = (isNarrative || isSession || isGenoma) ? 'white' : 'black';
                 
                 // Timer to show loader after 1 second if loading is still in progress
                 loaderTimeout = setTimeout(function() {
@@ -128,6 +129,8 @@
                         backgroundImage = 'images/page4.jpg';
                     } else if (isSession) {
                         backgroundImage = 'images/page2.jpg';
+                    } else if (isGenoma) {
+                        backgroundImage = 'expansion/images/expansion_wires.png';
                     }
                     
                     if (!backgroundImage) {
