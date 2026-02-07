@@ -569,6 +569,9 @@ ul {
 
     .nav_page2 ul li:nth-child(2) a {
         pointer-events: none;
+        padding-left: 0.75em;
+        padding-right: 0.75em;
+        text-align: center;
     }
 
     .nav_page2 a:hover {

@@ -505,6 +505,9 @@ ul {
 
     .nav_page3 ul li:nth-child(3) a {
         pointer-events: none;
+        padding-left: 0.75em;
+        padding-right: 0.75em;
+        text-align: center;
     }
 
     .nav_page3 a:hover {
