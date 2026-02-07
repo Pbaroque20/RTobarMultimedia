@@ -30,12 +30,67 @@
     <div id="page-content">
         <div class="loaderContainer">
             <img id="loader" src="loader/black_loader.gif" /><br />
-            <span id="loading">loading...</span>
+            <span id="loading">loading 0%</span>
         </div>
     </div>
     <script>
+        // Pre-load loader animation gifs immediately on page load
+        (function() {
+            var blackLoader = new Image();
+            blackLoader.src = 'loader/black_loader.gif';
+            var whiteLoader = new Image();
+            whiteLoader.src = 'loader/white_loader.gif';
+        })();
+        
+        // Pre-load Univers fonts immediately on page load
+        (function() {
+            // Preload Univers 55 (woff format for modern browsers)
+            var univers55Link = document.createElement('link');
+            univers55Link.rel = 'preload';
+            univers55Link.as = 'font';
+            univers55Link.type = 'font/woff';
+            univers55Link.crossOrigin = 'anonymous';
+            univers55Link.href = 'fonts/Univers.woff';
+            document.head.appendChild(univers55Link);
+            
+            // Preload Univers Oblique (woff format for modern browsers)
+            var universObliqueLink = document.createElement('link');
+            universObliqueLink.rel = 'preload';
+            universObliqueLink.as = 'font';
+            universObliqueLink.type = 'font/woff';
+            universObliqueLink.crossOrigin = 'anonymous';
+            universObliqueLink.href = 'fonts/Univers-Oblique.woff';
+            document.head.appendChild(universObliqueLink);
+        })();
+
         $(document).ready(function () {
             $('#copyright-year').text('©' + new Date().getFullYear());
+
+            // Track the highest percentage reached to prevent going backwards
+            var maxLoadingPercent = 0;
+
+            // Function to update loading percentage (only increases, never decreases)
+            function updateLoadingPercentage(percent) {
+                var roundedPercent = Math.round(percent);
+                // Only update if the new percentage is higher than the current maximum
+                if (roundedPercent > maxLoadingPercent) {
+                    maxLoadingPercent = roundedPercent;
+                    var $loading = $('#loading');
+                    if ($loading.length) {
+                        $loading.text('loading ' + maxLoadingPercent + '%');
+                    }
+                }
+            }
+            
+            // Function to reset loading percentage to 0
+            function resetLoadingPercentage() {
+                maxLoadingPercent = 0;
+                // Force update to 0%
+                var $loading = $('#loading');
+                if ($loading.length) {
+                    $loading.text('loading 0%');
+                }
+            }
 
             window.navigateTo = function (url, bg) {
                 $('body').css('backgroundColor', bg);
@@ -46,16 +101,161 @@
                 
                 // Determine loader type based on URL
                 var isNarrative = url.indexOf('narrative.html') !== -1;
-                var loaderSrc = isNarrative ? 'loader/white_loader.gif' : 'loader/black_loader.gif';
-                var loaderColor = isNarrative ? 'white' : 'black';
+                var isSession = url.indexOf('session.html') !== -1;
+                var isGenesis = url.indexOf('genesis.html') !== -1;
+                var isConnect = url.indexOf('connect.html') !== -1;
+                var loaderSrc = (isNarrative || isSession) ? 'loader/white_loader.gif' : 'loader/black_loader.gif';
+                var loaderColor = (isNarrative || isSession) ? 'white' : 'black';
                 
-                // Timer to show loader if transition takes too long (500ms)
+                // Timer to show loader after 1 second if loading is still in progress
                 loaderTimeout = setTimeout(function() {
                     showLoader = true;
                     if (!$pc.find('.loaderContainer').length) {
-                        $pc.prepend('<div class="loaderContainer"><img id="loader" src="' + loaderSrc + '" /><br /><span id="loading" style="color:' + loaderColor + ';">loading...</span></div>');
+                        resetLoadingPercentage();
+                        $pc.prepend('<div class="loaderContainer"><img id="loader" src="' + loaderSrc + '" /><br /><span id="loading" style="color:' + loaderColor + ';">loading 0%</span></div>');
                     }
-                }, 500);
+                }, 1000);
+                
+                // Function to pre-load page background images
+                function preloadPageBackground(targetPercent, callback) {
+                    var backgroundImage = null;
+                    
+                    if (isGenesis) {
+                        backgroundImage = 'images/page1.jpg';
+                    } else if (isNarrative) {
+                        backgroundImage = 'images/page3.jpg';
+                    } else if (isConnect) {
+                        backgroundImage = 'images/page4.jpg';
+                    } else if (isSession) {
+                        backgroundImage = 'images/page2.jpg';
+                    }
+                    
+                    if (!backgroundImage) {
+                        if (callback) callback();
+                        return;
+                    }
+                    
+                    var img = new Image();
+                    img.onload = function() {
+                        updateLoadingPercentage(targetPercent);
+                        if (callback) callback();
+                    };
+                    img.onerror = function() {
+                        updateLoadingPercentage(targetPercent);
+                        if (callback) callback(); // Count errors as loaded to not block forever
+                    };
+                    img.src = backgroundImage;
+                }
+                
+                // Function to pre-load session workimg images and background
+                function preloadSessionImages(callback) {
+                    if (!isSession) {
+                        callback();
+                        return;
+                    }
+                    
+                    // Include all workimg images (background already loaded via preloadPageBackground)
+                    var imageSources = [
+                        'images/birth.png',
+                        'images/ances.png',
+                        'images/jelly.png',
+                        'images/30min.png',
+                        'images/axis.png',
+                        'images/beaver.png',
+                        'images/essence.png',
+                        'images/experi.png',
+                        'images/fish.png',
+                        'images/ford.png',
+                        'images/lifeisjazz.png',
+                        'images/M.png',
+                        'images/mirror.png',
+                        'images/onelev.png',
+                        'images/rw.png',
+                        'images/skittles.png',
+                        'images/surgeons.png',
+                        'images/vaniads.png',
+                        'images/logodesigns.png',
+                        'images/gelfenstein.png'
+                    ];
+                    
+                    var imagesToLoad = imageSources.length;
+                    var imagesLoaded = 0;
+                    var startPercent = 60; // Start after background (50% HTML + 10% background = 60%)
+                    var percentPerImage = (100 - startPercent) / imagesToLoad; // Remaining 40% divided by number of images
+                    
+                    if (imagesToLoad === 0) {
+                        if (callback) callback();
+                        return;
+                    }
+                    
+                    // Update percentage as images load (jumps based on completion)
+                    imageSources.forEach(function(src) {
+                        var img = new Image();
+                        img.onload = function() {
+                            imageLoaded();
+                        };
+                        img.onerror = function() {
+                            imageLoaded(); // Count errors as loaded to not block forever
+                        };
+                        img.src = src;
+                    });
+                    
+                    function imageLoaded() {
+                        imagesLoaded++;
+                        // Jump to percentage based on how many images are loaded
+                        var targetPercent = startPercent + (imagesLoaded / imagesToLoad) * (100 - startPercent);
+                        updateLoadingPercentage(Math.min(targetPercent, 100));
+                        
+                        if (imagesLoaded >= imagesToLoad) {
+                            // All images loaded, ensure we show 100%
+                            updateLoadingPercentage(100);
+                            if (callback) callback();
+                        }
+                    }
+                }
+                
+                // Function to complete page load and transition
+                function completePageLoad() {
+                    // Clear the 1-second loader timeout since we're done loading
+                    clearTimeout(loaderTimeout);
+                    // Remove loader if it appeared
+                    $pc.find('.loaderContainer').remove();
+                    $pc.find('header').first().remove();
+                    
+                    // Ensure we're at 100% before removing loader
+                    updateLoadingPercentage(100);
+                    
+                    // Remove loader
+                    $pc.find('.loaderContainer').remove();
+                    
+                    // Remove any existing fade-in-wrap to prevent double wrapping
+                    var $existingFadeIn = $('#fade-in-wrap');
+                    if ($existingFadeIn.length) {
+                        $existingFadeIn.children().unwrap();
+                    }
+                    
+                    // Get content (should be direct children of $pc now, excluding loader)
+                    var $new = $pc.children().not('.loaderContainer');
+                    if ($new.length === 0) return; // No content to fade in
+                    
+                    // Make content visible (it was hidden with visibility:hidden)
+                    $new.css('visibility', 'visible');
+                    
+                    // Wrap content
+                    $new.wrapAll('<div id="fade-in-wrap"></div>');
+                    var $in = $('#fade-in-wrap');
+                    
+                    // Set initial opacity to 0 and transition on wrapper
+                    $in.css({ 'opacity': '0', 'transition': 'opacity 0.35s ease' });
+                    
+                    // Force reflow to ensure initial opacity: 0 is applied
+                    $in[0].offsetHeight;
+                    
+                    // Fade in
+                    requestAnimationFrame(function () {
+                        $in.css('opacity', '1');
+                    });
+                }
                 
                 if ($content.length && !$content.is('#fade-out-wrap'))
                     $content.wrapAll('<div id="fade-out-wrap"></div>');
@@ -66,30 +266,142 @@
                     $wrap.css('opacity', '0');
                     $wrap.one('transitionend', function () {
                         $pc.empty();
-                        if (showLoader) {
-                            $pc.html('<div class="loaderContainer"><img id="loader" src="' + loaderSrc + '" /><br /><span id="loading" style="color:' + loaderColor + ';">loading...</span></div>');
-                        }
+                        // Reset loading percentage to 0
+                        resetLoadingPercentage();
+                        // Don't show loader immediately - wait 1 second
+                        
+                        // Load HTML immediately
                         $pc.load(url, function () {
-                            clearTimeout(loaderTimeout);
-                            $pc.find('header').first().remove();
-                            var $new = $pc.children();
-                            $new.wrapAll('<div id="fade-in-wrap"></div>');
-                            var $in = $('#fade-in-wrap');
-                            $in.css({ 'opacity': '0', 'transition': 'opacity 0.35s ease' });
-                            $in[0].offsetHeight;
-                            requestAnimationFrame(function () {
-                                $in.css('opacity', '1');
+                            // Hide content immediately when loaded (before loader is removed)
+                            var $loadedContent = $pc.children().not('.loaderContainer');
+                            $loadedContent.css('visibility', 'hidden');
+                            
+                            // HTML loaded, jump to 50%
+                            updateLoadingPercentage(50);
+                            
+                            // Pre-load page background image first (for genesis, narrative, connect, session)
+                            preloadPageBackground(60, function() {
+                                // Background loaded (now at 60%), now handle page-specific images
+                                if (isSession) {
+                                    // Pre-load session workimg images
+                                    preloadSessionImages(function() {
+                                        // Ensure we're at 100% - preloadSessionImages already sets it
+                                        updateLoadingPercentage(100);
+                                        // Small delay to ensure 100% is visible, then complete
+                                        setTimeout(function() {
+                                            completePageLoad();
+                                        }, 100);
+                                    });
+                                } else {
+                                    // No additional images to load, jump directly to 100%
+                                    updateLoadingPercentage(100);
+                                    // Small delay to ensure 100% is visible, then complete
+                                    setTimeout(function() {
+                                        completePageLoad();
+                                    }, 100);
+                                }
                             });
                         });
                     });
                 } else {
                     $pc.empty();
-                    if (showLoader) {
-                        $pc.html('<div class="loaderContainer"><img id="loader" src="' + loaderSrc + '" /><br /><span id="loading" style="color:' + loaderColor + ';">loading...</span></div>');
-                    }
+                    // Reset loading percentage to 0
+                    resetLoadingPercentage();
+                    // Don't show loader immediately - wait 1 second
+                    
+                    // Load HTML immediately
                     $pc.load(url, function () {
-                        clearTimeout(loaderTimeout);
-                        $pc.find('header').first().remove();
+                        // Hide content immediately when loaded
+                        var $loadedContent = $pc.children().not('.loaderContainer');
+                        $loadedContent.css('visibility', 'hidden');
+                        
+                        // HTML loaded, jump to 50%
+                        updateLoadingPercentage(50);
+                        
+                        // Pre-load page background image first (for genesis, narrative, connect, session)
+                        preloadPageBackground(60, function() {
+                            // Background loaded (now at 60%), now handle page-specific images
+                            if (isSession) {
+                                // Pre-load session workimg images
+                                preloadSessionImages(function() {
+                                    // Ensure we're at 100% - preloadSessionImages already sets it
+                                    updateLoadingPercentage(100);
+                                    // Clear the 1-second loader timeout since we're done loading
+                                    clearTimeout(loaderTimeout);
+                                    // Small delay to ensure 100% is visible, then remove loader and fade in content
+                                    setTimeout(function() {
+                                        // Remove loader if it appeared
+                                        $pc.find('.loaderContainer').remove();
+                                        $pc.find('header').first().remove();
+                                            
+                                            // Get content
+                                            var $new = $pc.children();
+                                            if ($new.length > 0) {
+                                                // Make content visible
+                                                $new.css('visibility', 'visible');
+                                                
+                                                // Remove any existing fade-in-wrap
+                                                var $existingFadeIn = $('#fade-in-wrap');
+                                                if ($existingFadeIn.length) {
+                                                    $existingFadeIn.children().unwrap();
+                                                    $new = $pc.children();
+                                                }
+                                                
+                                                // Wrap and set initial opacity
+                                                $new.wrapAll('<div id="fade-in-wrap"></div>');
+                                                var $in = $('#fade-in-wrap');
+                                                $in.css({ 'opacity': '0', 'transition': 'opacity 0.35s ease' });
+                                                
+                                                // Force reflow
+                                                $in[0].offsetHeight;
+                                                
+                                                // Fade in
+                                                requestAnimationFrame(function () {
+                                                    $in.css('opacity', '1');
+                                                });
+                                            }
+                                        }, 100);
+                                    });
+                            } else {
+                                // No additional images to load, jump directly to 100%
+                                updateLoadingPercentage(100);
+                                // Clear the 1-second loader timeout since we're done loading
+                                clearTimeout(loaderTimeout);
+                                // Small delay to ensure 100% is visible, then remove loader and fade in content
+                                setTimeout(function() {
+                                    // Remove loader if it appeared
+                                    $pc.find('.loaderContainer').remove();
+                                    $pc.find('header').first().remove();
+                                    
+                                    // Get content
+                                    var $new = $pc.children();
+                                    if ($new.length > 0) {
+                                        // Make content visible
+                                        $new.css('visibility', 'visible');
+                                        
+                                        // Remove any existing fade-in-wrap
+                                        var $existingFadeIn = $('#fade-in-wrap');
+                                        if ($existingFadeIn.length) {
+                                            $existingFadeIn.children().unwrap();
+                                            $new = $pc.children();
+                                        }
+                                        
+                                        // Wrap and set initial opacity
+                                        $new.wrapAll('<div id="fade-in-wrap"></div>');
+                                        var $in = $('#fade-in-wrap');
+                                        $in.css({ 'opacity': '0', 'transition': 'opacity 0.35s ease' });
+                                        
+                                        // Force reflow
+                                        $in[0].offsetHeight;
+                                        
+                                        // Fade in
+                                        requestAnimationFrame(function () {
+                                            $in.css('opacity', '1');
+                                        });
+                                    }
+                                }, 100);
+                            }
+                        });
                     });
                 }
             };
@@ -99,66 +411,157 @@
             var loaderTimeout;
             var contentLoaded = false;
             
-            // Timer to ensure loader stays visible if loading takes too long (500ms)
+            // Timer to show loader after 1 second if initial load is still in progress
             loaderTimeout = setTimeout(function() {
                 var $pc = $('#page-content');
                 if (!$pc.find('.loaderContainer').length && !contentLoaded) {
-                    $pc.html('<div class="loaderContainer"><img id="loader" src="loader/black_loader.gif" /><br /><span id="loading">loading...</span></div>');
+                    resetLoadingPercentage();
+                    $pc.html('<div class="loaderContainer"><img id="loader" src="loader/black_loader.gif" /><br /><span id="loading">loading 0%</span></div>');
                 }
-            }, 500);
+            }, 1000);
             
+            // Reset loading percentage to 0 for initial load
+            resetLoadingPercentage();
+            
+            // Load HTML immediately
             $preloadContainer.load('genesis.html', function () {
                 var $preloadedContent = $preloadContainer.children();
+                // Hide preloaded content initially
+                $preloadedContent.css('visibility', 'hidden');
                 
-                // Wait for all images to load
-                var $images = $preloadedContent.find('img');
-                var imagesToLoad = $images.length;
-                var imagesLoaded = 0;
+                // HTML loaded, jump to 50%
+                updateLoadingPercentage(50);
                 
-                if (imagesToLoad === 0) {
-                    // No images, display immediately
-                    displayContent();
-                } else {
-                    // Wait for all images to load
-                    $images.each(function () {
-                        var $img = $(this);
-                        if (this.complete) {
-                            imageLoaded();
-                        } else {
-                            $img.on('load error', imageLoaded);
-                        }
-                    });
-                }
-                
-                function imageLoaded() {
-                    imagesLoaded++;
-                    if (imagesLoaded >= imagesToLoad) {
+                // Pre-load genesis background image first
+                var bgImg = new Image();
+                bgImg.onload = function() {
+                    // Background loaded, jump to 60%
+                    updateLoadingPercentage(60);
+                    
+                    // Now check for other images
+                    var $images = $preloadedContent.find('img');
+                    var imagesToLoad = $images.length;
+                    var imagesLoaded = 0;
+                    
+                    if (imagesToLoad === 0) {
+                        // No images, jump directly to 100%
+                        updateLoadingPercentage(100);
                         displayContent();
+                    } else {
+                        // Wait for all images to load and jump percentage
+                        var startPercent = 60;
+                        var percentPerImage = (100 - startPercent) / imagesToLoad;
+                        
+                        $images.each(function () {
+                            var $img = $(this);
+                            if (this.complete) {
+                                imageLoaded();
+                            } else {
+                                $img.on('load error', imageLoaded);
+                            }
+                        });
+                        
+                        function imageLoaded() {
+                            imagesLoaded++;
+                            // Jump to percentage based on how many images are loaded
+                            var targetPercent = startPercent + (imagesLoaded / imagesToLoad) * (100 - startPercent);
+                            updateLoadingPercentage(Math.min(targetPercent, 100));
+                            
+                            if (imagesLoaded >= imagesToLoad) {
+                                // All images loaded, ensure we show 100%
+                                updateLoadingPercentage(100);
+                                displayContent();
+                            }
+                        }
                     }
-                }
+                };
+                bgImg.onerror = function() {
+                    // If background fails, continue anyway at 50%
+                    var $images = $preloadedContent.find('img');
+                    var imagesToLoad = $images.length;
+                    var imagesLoaded = 0;
+                    
+                    if (imagesToLoad === 0) {
+                        updateLoadingPercentage(100);
+                        displayContent();
+                    } else {
+                        var startPercent = 50;
+                        var percentPerImage = (100 - startPercent) / imagesToLoad;
+                        
+                        $images.each(function () {
+                            var $img = $(this);
+                            if (this.complete) {
+                                imageLoaded();
+                            } else {
+                                $img.on('load error', imageLoaded);
+                            }
+                        });
+                        
+                        function imageLoaded() {
+                            imagesLoaded++;
+                            var targetPercent = startPercent + (imagesLoaded / imagesToLoad) * (100 - startPercent);
+                            updateLoadingPercentage(Math.min(targetPercent, 100));
+                            
+                            if (imagesLoaded >= imagesToLoad) {
+                                updateLoadingPercentage(100);
+                                displayContent();
+                            }
+                        }
+                    }
+                };
+                bgImg.src = 'images/page1.jpg'; // Genesis background image
                 
                 function displayContent() {
                     contentLoaded = true;
+                    // Clear the 1-second loader timeout since we're done loading
                     clearTimeout(loaderTimeout);
                     
-                    // Ensure loader is visible before replacing content
+                    // Ensure we're at 100% before removing loader
+                    updateLoadingPercentage(100);
+                    
                     var $pc = $('#page-content');
-                    if (!$pc.find('.loaderContainer').length) {
-                        $pc.html('<div class="loaderContainer"><img id="loader" src="loader/black_loader.gif" /><br /><span id="loading">loading...</span></div>');
-                        // Small delay to ensure loader is visible
-                        setTimeout(function() {
-                            $pc.empty();
-                            $preloadedContent.find('#topHeader').remove();
-                            $pc.append($preloadedContent);
-                            $preloadContainer.remove();
-                        }, 100);
-                    } else {
-                        // Remove the loader and display pre-loaded content
+                    // Small delay to ensure 100% is visible, then remove loader and display content
+                    setTimeout(function() {
+                        // Remove loader if it appeared
+                        $pc.find('.loaderContainer').remove();
+                        
+                        // Remove any existing fade-in-wrap
+                        var $existingFadeIn = $('#fade-in-wrap');
+                        if ($existingFadeIn.length) {
+                            $existingFadeIn.children().unwrap();
+                        }
+                        
+                        // Clear page content
                         $pc.empty();
+                        
+                        // Remove header from preloaded content
                         $preloadedContent.find('#topHeader').remove();
+                        
+                        // Make content visible (it was hidden)
+                        $preloadedContent.css('visibility', 'visible');
+                        
+                        // Append content
                         $pc.append($preloadedContent);
+                        
+                        // Get the content we just appended
+                        var $new = $pc.children();
+                        if ($new.length > 0) {
+                            // Wrap and set initial opacity
+                            $new.wrapAll('<div id="fade-in-wrap"></div>');
+                            var $in = $('#fade-in-wrap');
+                            $in.css({ 'opacity': '0', 'transition': 'opacity 0.35s ease' });
+                            
+                            // Force reflow to ensure initial state is applied
+                            $in[0].offsetHeight;
+                            
+                            // Fade in
+                            requestAnimationFrame(function () {
+                                $in.css('opacity', '1');
+                            });
+                        }
+                        
                         $preloadContainer.remove();
-                    }
+                    }, 100);
                 }
             });
         });

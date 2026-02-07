@@ -5,14 +5,18 @@ body {
 }
 
 .loaderContainer {
-    position: relative;
-    margin: 0 auto;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-left: -150px;
+    margin-top: -150px;
     width: 300px;
     height: 300px;
     text-align: center;
-    top: 150px;
     color: white;
     font-family: "Fedra Sans Light";
+    z-index: 1000;
+    pointer-events: none;
 }
 
 #loader {
