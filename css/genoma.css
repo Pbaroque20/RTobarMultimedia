@@ -68,7 +68,11 @@
 }
 
 #genoma-back a.genoma-back-link:hover {
-    text-decoration: underline;
+    text-decoration: none;
+}
+
+#genoma-back a.genoma-back-link::selection {
+    text-decoration: none;
 }
 
 /* Responsive: non-desktop */

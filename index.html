@@ -257,6 +257,32 @@
                     // Fade in
                     requestAnimationFrame(function () {
                         $in.css('opacity', '1');
+                        
+                        // For connect page, trigger chat bubble animations after fade-in completes
+                        var isConnectPage = url.indexOf('connect.html') !== -1;
+                        if (isConnectPage) {
+                            // Remove any animation classes that might have been added prematurely
+                            $new.find('#chatbubble, #chatbubble2, #chatbubble3, #chatbubble4, #chatbubble5, #chatbubble6')
+                                .removeClass('chatbubble_animate chatbubble2_animate chatbubble3_animate chatbubble4_animate chatbubble5_animate chatbubble6_animate');
+                            
+                            // Wait for fade-in transition to complete (350ms) plus small buffer
+                            setTimeout(function() {
+                                // Trigger chat bubble animations after fade-in completes
+                                var $chatbubbles = $new.find('#chatbubble, #chatbubble2, #chatbubble3, #chatbubble4, #chatbubble5, #chatbubble6');
+                                if ($chatbubbles.length > 0) {
+                                    $chatbubbles.css('display', 'block');
+                                    // Small delay to ensure elements are visible
+                                    setTimeout(function() {
+                                        $new.find('#chatbubble').addClass('chatbubble_animate');
+                                        $new.find('#chatbubble2').addClass('chatbubble2_animate');
+                                        $new.find('#chatbubble3').addClass('chatbubble3_animate');
+                                        $new.find('#chatbubble4').addClass('chatbubble4_animate');
+                                        $new.find('#chatbubble5').addClass('chatbubble5_animate');
+                                        $new.find('#chatbubble6').addClass('chatbubble6_animate');
+                                    }, 50);
+                                }
+                            }, 400); // Wait for fade-in transition (350ms) + small buffer
+                        }
                     });
                 }
                 
@@ -281,6 +307,17 @@
                             
                             // HTML loaded, jump to 50%
                             updateLoadingPercentage(50);
+                            
+                            // For connect page, prevent premature chat bubble animations
+                            var isConnectPage = url.indexOf('connect.html') !== -1;
+                            if (isConnectPage) {
+                                // Remove animation classes that might have been added by connect.html's script
+                                setTimeout(function() {
+                                    $loadedContent.find('#chatbubble, #chatbubble2, #chatbubble3, #chatbubble4, #chatbubble5, #chatbubble6')
+                                        .removeClass('chatbubble_animate chatbubble2_animate chatbubble3_animate chatbubble4_animate chatbubble5_animate chatbubble6_animate')
+                                        .css('display', 'none');
+                                }, 10);
+                            }
                             
                             // Pre-load page background image first (for genesis, narrative, connect, session)
                             preloadPageBackground(60, function() {
@@ -320,6 +357,17 @@
                         
                         // HTML loaded, jump to 50%
                         updateLoadingPercentage(50);
+                        
+                        // For connect page, prevent premature chat bubble animations
+                        var isConnectPageElse = url.indexOf('connect.html') !== -1;
+                        if (isConnectPageElse) {
+                            // Remove animation classes that might have been added by connect.html's script
+                            setTimeout(function() {
+                                $loadedContent.find('#chatbubble, #chatbubble2, #chatbubble3, #chatbubble4, #chatbubble5, #chatbubble6')
+                                    .removeClass('chatbubble_animate chatbubble2_animate chatbubble3_animate chatbubble4_animate chatbubble5_animate chatbubble6_animate')
+                                    .css('display', 'none');
+                            }, 10);
+                        }
                         
                         // Pre-load page background image first (for genesis, narrative, connect, session)
                         preloadPageBackground(60, function() {
@@ -361,6 +409,32 @@
                                                 // Fade in
                                                 requestAnimationFrame(function () {
                                                     $in.css('opacity', '1');
+                                                    
+                                                    // For connect page, trigger chat bubble animations after fade-in completes
+                                                    var isConnectPage = url.indexOf('connect.html') !== -1;
+                                                    if (isConnectPage) {
+                                                        // Remove any animation classes that might have been added prematurely
+                                                        $new.find('#chatbubble, #chatbubble2, #chatbubble3, #chatbubble4, #chatbubble5, #chatbubble6')
+                                                            .removeClass('chatbubble_animate chatbubble2_animate chatbubble3_animate chatbubble4_animate chatbubble5_animate chatbubble6_animate');
+                                                        
+                                                        // Wait for fade-in transition to complete (350ms) plus small buffer
+                                                        setTimeout(function() {
+                                                            // Trigger chat bubble animations after fade-in completes
+                                                            var $chatbubbles = $new.find('#chatbubble, #chatbubble2, #chatbubble3, #chatbubble4, #chatbubble5, #chatbubble6');
+                                                            if ($chatbubbles.length > 0) {
+                                                                $chatbubbles.css('display', 'block');
+                                                                // Small delay to ensure elements are visible
+                                                                setTimeout(function() {
+                                                                    $new.find('#chatbubble').addClass('chatbubble_animate');
+                                                                    $new.find('#chatbubble2').addClass('chatbubble2_animate');
+                                                                    $new.find('#chatbubble3').addClass('chatbubble3_animate');
+                                                                    $new.find('#chatbubble4').addClass('chatbubble4_animate');
+                                                                    $new.find('#chatbubble5').addClass('chatbubble5_animate');
+                                                                    $new.find('#chatbubble6').addClass('chatbubble6_animate');
+                                                                }, 50);
+                                                            }
+                                                        }, 400); // Wait for fade-in transition (350ms) + small buffer
+                                                    }
                                                 });
                                             }
                                         }, 100);
@@ -400,6 +474,32 @@
                                         // Fade in
                                         requestAnimationFrame(function () {
                                             $in.css('opacity', '1');
+                                            
+                                            // For connect page, trigger chat bubble animations after fade-in completes
+                                            var isConnectPage = url.indexOf('connect.html') !== -1;
+                                            if (isConnectPage) {
+                                                // Remove any animation classes that might have been added prematurely
+                                                $new.find('#chatbubble, #chatbubble2, #chatbubble3, #chatbubble4, #chatbubble5, #chatbubble6')
+                                                    .removeClass('chatbubble_animate chatbubble2_animate chatbubble3_animate chatbubble4_animate chatbubble5_animate chatbubble6_animate');
+                                                
+                                                // Wait for fade-in transition to complete (350ms) plus small buffer
+                                                setTimeout(function() {
+                                                    // Trigger chat bubble animations after fade-in completes
+                                                    var $chatbubbles = $new.find('#chatbubble, #chatbubble2, #chatbubble3, #chatbubble4, #chatbubble5, #chatbubble6');
+                                                    if ($chatbubbles.length > 0) {
+                                                        $chatbubbles.css('display', 'block');
+                                                        // Small delay to ensure elements are visible
+                                                        setTimeout(function() {
+                                                            $new.find('#chatbubble').addClass('chatbubble_animate');
+                                                            $new.find('#chatbubble2').addClass('chatbubble2_animate');
+                                                            $new.find('#chatbubble3').addClass('chatbubble3_animate');
+                                                            $new.find('#chatbubble4').addClass('chatbubble4_animate');
+                                                            $new.find('#chatbubble5').addClass('chatbubble5_animate');
+                                                            $new.find('#chatbubble6').addClass('chatbubble6_animate');
+                                                        }, 50);
+                                                    }
+                                                }, 400); // Wait for fade-in transition (350ms) + small buffer
+                                            }
                                         });
                                     }
                                 }, 100);
