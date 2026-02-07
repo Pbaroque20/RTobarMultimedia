@@ -41,6 +41,22 @@
                 $('body').css('backgroundColor', bg);
                 var $pc = $('#page-content');
                 var $content = $pc.children();
+                var loaderTimeout;
+                var showLoader = false;
+                
+                // Determine loader type based on URL
+                var isNarrative = url.indexOf('narrative.html') !== -1;
+                var loaderSrc = isNarrative ? 'loader/white_loader.gif' : 'loader/black_loader.gif';
+                var loaderColor = isNarrative ? 'white' : 'black';
+                
+                // Timer to show loader if transition takes too long (500ms)
+                loaderTimeout = setTimeout(function() {
+                    showLoader = true;
+                    if (!$pc.find('.loaderContainer').length) {
+                        $pc.prepend('<div class="loaderContainer"><img id="loader" src="' + loaderSrc + '" /><br /><span id="loading" style="color:' + loaderColor + ';">loading...</span></div>');
+                    }
+                }, 500);
+                
                 if ($content.length && !$content.is('#fade-out-wrap'))
                     $content.wrapAll('<div id="fade-out-wrap"></div>');
                 var $wrap = $('#page-content #fade-out-wrap');
@@ -50,7 +66,11 @@
                     $wrap.css('opacity', '0');
                     $wrap.one('transitionend', function () {
                         $pc.empty();
+                        if (showLoader) {
+                            $pc.html('<div class="loaderContainer"><img id="loader" src="' + loaderSrc + '" /><br /><span id="loading" style="color:' + loaderColor + ';">loading...</span></div>');
+                        }
                         $pc.load(url, function () {
+                            clearTimeout(loaderTimeout);
                             $pc.find('header').first().remove();
                             var $new = $pc.children();
                             $new.wrapAll('<div id="fade-in-wrap"></div>');
@@ -64,14 +84,82 @@
                     });
                 } else {
                     $pc.empty();
+                    if (showLoader) {
+                        $pc.html('<div class="loaderContainer"><img id="loader" src="' + loaderSrc + '" /><br /><span id="loading" style="color:' + loaderColor + ';">loading...</span></div>');
+                    }
                     $pc.load(url, function () {
+                        clearTimeout(loaderTimeout);
                         $pc.find('header').first().remove();
                     });
                 }
             };
 
-            $('#page-content').load('genesis.html', function () {
-                $('#page-content').find('#topHeader').remove();
+            // Pre-load genesis.html content before displaying
+            var $preloadContainer = $('<div style="display:none;"></div>').appendTo('body');
+            var loaderTimeout;
+            var contentLoaded = false;
+            
+            // Timer to ensure loader stays visible if loading takes too long (500ms)
+            loaderTimeout = setTimeout(function() {
+                var $pc = $('#page-content');
+                if (!$pc.find('.loaderContainer').length && !contentLoaded) {
+                    $pc.html('<div class="loaderContainer"><img id="loader" src="loader/black_loader.gif" /><br /><span id="loading">loading...</span></div>');
+                }
+            }, 500);
+            
+            $preloadContainer.load('genesis.html', function () {
+                var $preloadedContent = $preloadContainer.children();
+                
+                // Wait for all images to load
+                var $images = $preloadedContent.find('img');
+                var imagesToLoad = $images.length;
+                var imagesLoaded = 0;
+                
+                if (imagesToLoad === 0) {
+                    // No images, display immediately
+                    displayContent();
+                } else {
+                    // Wait for all images to load
+                    $images.each(function () {
+                        var $img = $(this);
+                        if (this.complete) {
+                            imageLoaded();
+                        } else {
+                            $img.on('load error', imageLoaded);
+                        }
+                    });
+                }
+                
+                function imageLoaded() {
+                    imagesLoaded++;
+                    if (imagesLoaded >= imagesToLoad) {
+                        displayContent();
+                    }
+                }
+                
+                function displayContent() {
+                    contentLoaded = true;
+                    clearTimeout(loaderTimeout);
+                    
+                    // Ensure loader is visible before replacing content
+                    var $pc = $('#page-content');
+                    if (!$pc.find('.loaderContainer').length) {
+                        $pc.html('<div class="loaderContainer"><img id="loader" src="loader/black_loader.gif" /><br /><span id="loading">loading...</span></div>');
+                        // Small delay to ensure loader is visible
+                        setTimeout(function() {
+                            $pc.empty();
+                            $preloadedContent.find('#topHeader').remove();
+                            $pc.append($preloadedContent);
+                            $preloadContainer.remove();
+                        }, 100);
+                    } else {
+                        // Remove the loader and display pre-loaded content
+                        $pc.empty();
+                        $preloadedContent.find('#topHeader').remove();
+                        $pc.append($preloadedContent);
+                        $preloadContainer.remove();
+                    }
+                }
             });
         });
     </script>
