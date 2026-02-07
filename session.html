@@ -16,12 +16,16 @@
                     <div id="videoLightboxWrap">
                         <div id="close">CLOSE WINDOW</div>
                         <iframe id="videobox" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                        <video id="localVideo" controls preload="auto">
+                            <source id="localVideoSource" src="" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
                     </div>
                     <div class="birth"><img style="cursor:pointer;" class="workimg" id="birth" src="images/birth.png" /></div>
                     <div class="ances"><img style="cursor:pointer;" class="workimg" id="ances" src="images/ances.png" /></div>
-                    <div class="jelly"><img style="cursor:pointer;" class="workimg" id="jelly" src="images/jelly.png" /></div>
+                    <div class="contactus2"><img style="cursor:pointer;" class="workimg" id="contactus2" src="images/contactus2.png" /></div>
                     <div class="min"><img style="cursor:pointer;" class="workimg" id="min" src="images/30min.png" /></div>
-                    <div class="axis"><img style="cursor:pointer;" class="workimg" id="axis" src="images/axis.png" /></div>
+                    <div class="contactus2gameplay"><img style="cursor:pointer;" class="workimg" id="contactus2gameplay" src="images/contactus2gameplay.png" /></div>
                     <div class="beaver"><img style="cursor:pointer;" class="workimg" id="beaver" src="images/beaver.png" /></div>
                     <div class="essence"><img style="cursor:pointer;" class="workimg" id="essence" src="images/essence.png" /></div>
                     <div class="experi"><img style="cursor:pointer;" class="workimg" id="experi" src="images/experi.png" /></div>
@@ -32,7 +36,7 @@
                     <div class="mirror"><img style="cursor:pointer;" class="workimg" id="mirror" src="images/mirror.png" /></div>
                     <div class="work2020"><img style="cursor:pointer;" class="workimg" id="2020" src="images/2020.png" /></div>
                     <div class="rw"><img style="cursor:pointer;" class="workimg" id="rw" src="images/rw.png" /></div>
-                    <div class="skittles"><img style="cursor:pointer;" class="workimg" id="skittles" src="images/skittles.png" /></div>
+                    <div class="eledonkey2020"><img style="cursor:pointer;" class="workimg" id="eledonkey2020" src="images/2020eledonkey.png" /></div>
                     <div class="surgeons"><img style="cursor:pointer;" class="workimg" id="surgeons" src="images/surgeons.png" /></div>
                     <div class="vaniads"><img style="cursor:pointer;" class="workimg" id="vaniads" src="images/vaniads.png" /></div>
                     <div class="logod"><img style="cursor:pointer;" class="workimg" id="logod" src="images/logodesigns.png" /></div>
@@ -126,9 +130,9 @@
             "information": [
                 { "birth": "Birth of the Universe, 2011" },
                 { "ances": "Ancestor, 2014" },
-                { "jelly": "Jellyfish (Technical Study), 2013" },
+                { "contactus2": "Contact Us 2 Trailer" },
                 { "min": "30 Minute Interview with Dr. Hasan on WSVN7 (Highlights Reel), 2012" },
-                { "axis": "Axis Labs Logo Development and Branding (Study), 2013" },
+                { "contactus2gameplay": "Contact Us 2: Gameplay Screenshots, 2022 (Collaborative Project)" },
                 { "beaver": "Beaver Walking Across Water, 2011" },
                 { "essence": "The Essence of Morals, 2013" },
                 { "experi": "Typographical Posters, 2002-03" },
@@ -140,7 +144,7 @@
                 { "mirror": "Vanity Cosmetic Surgery - 30 Second Spot on NBC6 and ABC10, 2012" },
                 { "2020": "2020: The Ride, 2021" },
                 { "rw": "Realty Estate Flyers for Realty World REC, 2013" },
-                { "skittles": "Skittles Re-Branding (Study), 2013" },
+                { "eledonkey2020": "2020: The Ride, 2020 (Collaborative Project)" },
                 { "surgeons": "Surgeon's Cosmetic Med & Spa, 2012" },
                 { "vaniads": "Vanity Cosmetic Surgery Designs, 2012" },
                 { "logod": "Logo Designs, 2015" }
@@ -157,6 +161,13 @@
             $('#videoLightboxWrap').css('display', 'none');
             $(this).css('display', 'none');
             $('#videobox').css('display', 'none').attr('src', '');
+            var localVideoEl = $('#localVideo').get(0);
+            if (localVideoEl) {
+                localVideoEl.pause();
+                localVideoEl.currentTime = 0;
+            }
+            $('#localVideo').css('display', 'none');
+            $('#localVideoSource').attr('src', '');
             $('#overlay').css('display', 'none');
             $('#lightbox').css('display', 'none');
             if (window.innerWidth > 959) $('.wrapper').css('height', '1014px');
@@ -179,11 +190,22 @@
                     $('#inform').text(info.information[1].ances);
                     $('#overlay').css('display', 'block');
                     break;
-                case "jelly":
-                    $('#lightbox').css({ 'display': 'block', 'width': '701px', 'height': '463px', 'left': '133px', 'top': '90px' });
-                    $('#changeImg').attr("src", "");
-                    $('#changeImg').attr("src", "images/portfolio/jellyfish2013.png");
-                    $('#inform').text(info.information[2].jelly);
+                case "contactus2":
+                    $('#videoLightboxWrap').css('display', window.innerWidth > 959 ? 'block' : 'flex');
+                    $('#close').css('display', 'block');
+                    $('#videobox').css('display', 'none');
+                    var videoPath = 'videos/contactUs2_trailer.mp4';
+                    var videoElement = $('#localVideo').get(0);
+                    $('#localVideoSource').attr('src', videoPath);
+                    videoElement.load();
+                    $('#localVideo').css('display', 'block');
+                    // Try to play the video
+                    var playPromise = videoElement.play();
+                    if (playPromise !== undefined) {
+                        playPromise.catch(function(error) {
+                            console.log('Video play failed:', error);
+                        });
+                    }
                     $('#overlay').css('display', 'block');
                     break;
                 case "min":
@@ -193,11 +215,24 @@
                     $('#videobox').css('display', 'block').attr({ 'src': '//player.vimeo.com/video/52028294?title=0&amp;byline=0&amp;portrait=0', 'width': '500', 'height': 281, 'frameborder': 0 });
                     $('#overlay').css('display', 'block');
                     break;
-                case "axis":
-                    $('#lightbox').css({ 'display': 'block', 'width': '669px', 'height': '813px', 'left': '147px', 'top': '50px' });
+                case "contactus2gameplay":
+                    $('#lightbox').css({
+                        'display': 'block',
+                        'width': '669px',
+                        'height': 'auto',
+                        'left': '147px',
+                        'top': '50px'
+                    });
                     $('#changeImg').attr("src", "");
-                    $('#changeImg').attr("src", "images/portfolio/axislabs_branding.jpg");
-                    $('#inform').text(info.information[4].axis);
+                    $('#changeImg').css({ 'max-width': '100%', 'max-height': 'none', 'width': 'auto', 'height': 'auto', 'object-fit': 'contain' });
+                    $('#changeImg').attr("src", "images/portfolio/work/contactusScreens.jpg");
+                    $('#changeImg').on('load', function() {
+                        var imgHeight = $(this).height();
+                        var informHeight = $('#inform').outerHeight(true);
+                        var closelightboxHeight = $('#closelightbox').outerHeight(true);
+                        $('#lightbox').css('height', (imgHeight + informHeight + closelightboxHeight + 20) + 'px');
+                    });
+                    $('#inform').text(info.information[4].contactus2gameplay);
                     $('#overlay').css('display', 'block');
                     break;
                 case "beaver":
@@ -279,17 +314,24 @@
                     if (window.innerWidth > 959) $('.wrapper').css('height', '1185px');
                     else $('.wrapper').css('height', '');
                     break;
-                case "skittles":
+                case "eledonkey2020":
                     $('#lightbox').css({
                         'display': 'block',
                         'width': '767px',
-                        'height': '887px',
+                        'height': 'auto',
                         'left': '105px',
                         'top': '50px'
                     });
                     $('#changeImg').attr("src", "");
-                    $('#changeImg').attr("src", "images/portfolio/skittelsad.jpg");
-                    $('#inform').text(info.information[16].skittles);
+                    $('#changeImg').css({ 'max-width': '100%', 'max-height': 'none', 'width': 'auto', 'height': 'auto', 'object-fit': 'contain' });
+                    $('#changeImg').attr("src", "images/portfolio/work/2020posters.jpg");
+                    $('#changeImg').on('load', function() {
+                        var imgHeight = $(this).height();
+                        var informHeight = $('#inform').outerHeight(true);
+                        var closelightboxHeight = $('#closelightbox').outerHeight(true);
+                        $('#lightbox').css('height', (imgHeight + informHeight + closelightboxHeight + 20) + 'px');
+                    });
+                    $('#inform').text(info.information[16].eledonkey2020);
                     $('#overlay').css('display', 'block');
                     break;
                 case "surgeons":

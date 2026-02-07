@@ -102,7 +102,7 @@ body {
     left: 659px;
 }
 
-.jelly {
+.contactus2 {
     position: absolute;
     top: 148px;
     left: 249px;
@@ -114,7 +114,7 @@ body {
     left: 221px;
 }
 
-.axis {
+.contactus2gameplay {
     position: absolute;
     top: 151px;
     left: 370px;
@@ -186,7 +186,7 @@ body {
     left: 664px;
 }
 
-.skittles {
+.eledonkey2020 {
     position: absolute;
     top: 252px;
     left: 495px;
@@ -368,6 +368,16 @@ ul {
     z-index: 51;
 }
 
+#localVideo {
+    position: absolute;
+    display: none;
+    left: 225px;
+    top: 150px;
+    width: 500px;
+    height: 281px;
+    z-index: 51;
+}
+
 #demoreel {
     position: absolute;
     top: 605px;
@@ -526,6 +536,20 @@ ul {
     }
 
     #videoLightboxWrap #videobox {
+        position: relative !important;
+        left: auto !important;
+        top: auto !important;
+        width: 95vw !important;
+        max-width: 95vw;
+        height: 53.39vw !important; /* 281/500 aspect ratio */
+        max-height: 90vh !important;
+        -webkit-transform: none;
+        -ms-transform: none;
+        transform: none;
+        box-sizing: border-box;
+    }
+
+    #videoLightboxWrap #localVideo {
         position: relative !important;
         left: auto !important;
         top: auto !important;
