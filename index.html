@@ -16,18 +16,63 @@
     <link href="css/session.css" rel="stylesheet" type="text/css" />
     <link href="css/narrative.css" rel="stylesheet" type="text/css" />
     <link href="css/connect.css" rel="stylesheet" type="text/css" />
+    <link href="css/genoma.css" rel="stylesheet" type="text/css" />
     <script src="js/jquery-2.1.1.min.js"></script>
     <script src="js/ajaxLoader.js"></script>
 </head>
 <body style="background-color:#F5E10E;">
-    <div class="loaderContainer">
-        <img id="loader" src="loader/black_loader.gif" /><br />
-        <span id="loading">loading...</span>
+    <header>
+        <div id="topHeader">
+            <div>Tobar<span class="multi">MediaDesign</span></div>
+            <div id="copyright-year">©2026</div>
+        </div>
+    </header>
+    <div id="page-content">
+        <div class="loaderContainer">
+            <img id="loader" src="loader/black_loader.gif" /><br />
+            <span id="loading">loading...</span>
+        </div>
     </div>
     <script>
         $(document).ready(function () {
-            $('body').load('genesis.html');
+            $('#copyright-year').text('©' + new Date().getFullYear());
 
+            window.navigateTo = function (url, bg) {
+                $('body').css('backgroundColor', bg);
+                var $pc = $('#page-content');
+                var $content = $pc.children();
+                if ($content.length && !$content.is('#fade-out-wrap'))
+                    $content.wrapAll('<div id="fade-out-wrap"></div>');
+                var $wrap = $('#page-content #fade-out-wrap');
+                if ($wrap.length) {
+                    $wrap.css('transition', 'opacity 0.3s ease');
+                    $wrap[0].offsetHeight;
+                    $wrap.css('opacity', '0');
+                    $wrap.one('transitionend', function () {
+                        $pc.empty();
+                        $pc.load(url, function () {
+                            $pc.find('header').first().remove();
+                            var $new = $pc.children();
+                            $new.wrapAll('<div id="fade-in-wrap"></div>');
+                            var $in = $('#fade-in-wrap');
+                            $in.css({ 'opacity': '0', 'transition': 'opacity 0.35s ease' });
+                            $in[0].offsetHeight;
+                            requestAnimationFrame(function () {
+                                $in.css('opacity', '1');
+                            });
+                        });
+                    });
+                } else {
+                    $pc.empty();
+                    $pc.load(url, function () {
+                        $pc.find('header').first().remove();
+                    });
+                }
+            };
+
+            $('#page-content').load('genesis.html', function () {
+                $('#page-content').find('#topHeader').remove();
+            });
         });
     </script>
 </body>

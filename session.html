@@ -56,21 +56,15 @@
             //Site navigation and animation
 
             $('.genesis').on('click', function (e) {
-                $('body').css('backgroundColor', '#F5E10E');
-                ajaxLoader_b();
-                $('body').load('genesis.html');
+                navigateTo('genesis.html', '#F5E10E');
             });
 
             $('.narrative').on('click', function (e) {
-                $('body').css('backgroundColor', '#26273D');
-                ajaxLoader();
-                $('body').load('narrative.html');
+                navigateTo('narrative.html', '#26273D');
             });
 
             $('.connect').on('click', function (e) {
-                $('body').css('backgroundColor', '#EA0C94');
-                ajaxLoader();
-                $('body').load('connect.html');
+                navigateTo('connect.html', '#EA0C94');
             });
         });
         // portfolio windows and ajax

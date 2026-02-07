@@ -106,11 +106,11 @@ body {
 #chatbubble {
     position: absolute;
     display: none;
-    -webkit-transform-origin: center center;
-    -moz-transform-origin: center center;
-    -ms-transform-origin: center center;
-    -o-transform-origin: center center;
-    transform-origin: center center;
+    -webkit-transform-origin: bottom left;
+    -moz-transform-origin: bottom left;
+    -ms-transform-origin: bottom left;
+    -o-transform-origin: bottom left;
+    transform-origin: bottom left;
     top: 714px;
     left: 294px;
     -webkit-transform: scale(0);
@@ -121,6 +121,11 @@ body {
 }
 
 .chatbubble_animate {
+    -webkit-transform-origin: bottom left;
+    -moz-transform-origin: bottom left;
+    -ms-transform-origin: bottom left;
+    -o-transform-origin: bottom left;
+    transform-origin: bottom left;
     -webkit-transform: scale(1, 1) !important;
     -moz-transform: scale(1, 1) !important;
     -ms-transform: scale(1, 1) !important;
@@ -162,11 +167,11 @@ body {
 
 .chatbubble2_animate {
     position: absolute;
-    -webkit-transform-origin: center center;
-    -moz-transform-origin: center center;
-    -ms-transform-origin: center center;
-    -o-transform-origin: center center;
-    transform-origin: center center;
+    -webkit-transform-origin: bottom left;
+    -moz-transform-origin: bottom left;
+    -ms-transform-origin: bottom left;
+    -o-transform-origin: bottom left;
+    transform-origin: bottom left;
     top: 489px;
     left: 117px;
     -webkit-transform: scale(0.9) !important;
@@ -210,11 +215,11 @@ body {
 
 .chatbubble3_animate {
     position: absolute;
-    -webkit-transform-origin: center center;
-    -moz-transform-origin: center center;
-    -ms-transform-origin: center center;
-    -o-transform-origin: center center;
-    transform-origin: center center;
+    -webkit-transform-origin: bottom left;
+    -moz-transform-origin: bottom left;
+    -ms-transform-origin: bottom left;
+    -o-transform-origin: bottom left;
+    transform-origin: bottom left;
     top: 379px;
     left: 419px;
     -webkit-transform: scale(0.8) !important;
@@ -258,11 +263,11 @@ body {
 
 .chatbubble4_animate {
     position: absolute;
-    -webkit-transform-origin: center center;
-    -moz-transform-origin: center center;
-    -ms-transform-origin: center center;
-    -o-transform-origin: center center;
-    transform-origin: center center;
+    -webkit-transform-origin: bottom left;
+    -moz-transform-origin: bottom left;
+    -ms-transform-origin: bottom left;
+    -o-transform-origin: bottom left;
+    transform-origin: bottom left;
     top: 337px;
     left: 40px;
     -webkit-transform: scale(0.7) !important;
@@ -306,11 +311,11 @@ body {
 
 .chatbubble5_animate {
     position: absolute;
-    -webkit-transform-origin: center center;
-    -moz-transform-origin: center center;
-    -ms-transform-origin: center center;
-    -o-transform-origin: center center;
-    transform-origin: center center;
+    -webkit-transform-origin: bottom left;
+    -moz-transform-origin: bottom left;
+    -ms-transform-origin: bottom left;
+    -o-transform-origin: bottom left;
+    transform-origin: bottom left;
     top: 273px;
     left: 257px;
     -webkit-transform: scale(0.6) !important;
@@ -354,11 +359,11 @@ body {
 
 .chatbubble6_animate {
     position: absolute;
-    -webkit-transform-origin: center center;
-    -moz-transform-origin: center center;
-    -ms-transform-origin: center center;
-    -o-transform-origin: center center;
-    transform-origin: center center;
+    -webkit-transform-origin: bottom left;
+    -moz-transform-origin: bottom left;
+    -ms-transform-origin: bottom left;
+    -o-transform-origin: bottom left;
+    transform-origin: bottom left;
     top: 140px;
     left: 181px;
     -webkit-transform: scale(0.5) !important;
@@ -649,10 +654,17 @@ form button {
         box-sizing: border-box;
         position: relative;
         z-index: 2;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        align-items: flex-end;
     }
 
     #contact_form table {
         margin: 0 auto;
+        width: 100%;
+        flex: 0 0 100%;
     }
 
     #contact_form tr > td:first-child {
@@ -673,7 +685,7 @@ form button {
     form button {
         left: auto;
         display: inline-block;
-        margin: 0.5em 0.25em 0;
+        margin: 0.5em 0 0 0.25em;
     }
 
     .remaining {

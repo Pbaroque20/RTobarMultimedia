@@ -5,15 +5,24 @@
     --color-session: #1D5F89;
     --color-narrative: #26273D;
     --color-connect: #EA0C94;
+    --color-genoma: #3B002B;
     --color-accent: yellow;
     --color-session-nav: #F3E60F;
     --color-narrative-nav: #F77A05;
     --color-connect-nav: #553E95;
 }
 
-/*body {
-    background-color: var(--color-genesis);
-}*/
+html {
+    overflow-y: scroll;
+}
+
+body {
+    -webkit-transition: background-color 0.5s ease;
+    -moz-transition: background-color 0.5s ease;
+    -ms-transition: background-color 0.5s ease;
+    -o-transition: background-color 0.5s ease;
+    transition: background-color 0.5s ease;
+}
 
 .loaderContainer {
     position: relative;
@@ -72,6 +81,20 @@
 
     to {
         opacity: 1.0;
+    }
+}
+
+/* Desktop: align persistent header with top of centered 960px content; isolate so it doesn't jump during transitions */
+@media (min-width: 960px) {
+    body > header #topHeader {
+        left: 50%;
+        margin-left: 0;
+        -webkit-transform: translateX(-50%) translateZ(0);
+        -ms-transform: translateX(-50%) translateZ(0);
+        transform: translateX(-50%) translateZ(0);
+    }
+    #page-content {
+        padding-top: 19px;
     }
 }
 

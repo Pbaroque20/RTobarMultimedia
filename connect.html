@@ -87,33 +87,30 @@
                         $(window).on('scroll', clampScroll).on('resize', clampScroll);
                     })();
 
-                    $('#chatbubble').css('display', 'block').addClass('chatbubble_animate');
-                    $('#chatbubble2').css('display', 'block').addClass('chatbubble2_animate');
-                    $('#chatbubble3').css('display', 'block').addClass('chatbubble3_animate');
-                    $('#chatbubble4').css('display', 'block').addClass('chatbubble4_animate');
-                    $('#chatbubble5').css('display', 'block').addClass('chatbubble5_animate');
-                    $('#chatbubble6').css('display', 'block').addClass('chatbubble6_animate');
+                    $('#chatbubble, #chatbubble2, #chatbubble3, #chatbubble4, #chatbubble5, #chatbubble6').css('display', 'block');
+                    requestAnimationFrame(function () {
+                        $('#chatbubble').addClass('chatbubble_animate');
+                        $('#chatbubble2').addClass('chatbubble2_animate');
+                        $('#chatbubble3').addClass('chatbubble3_animate');
+                        $('#chatbubble4').addClass('chatbubble4_animate');
+                        $('#chatbubble5').addClass('chatbubble5_animate');
+                        $('#chatbubble6').addClass('chatbubble6_animate');
+                    });
 
                     //Site navigation and animation
                     $('.nav_page1').css({ 'left': '-180px', 'opacity': '1' });
                     $('.imageContainer1').css('opacity', '1');
 
                     $('.genesis').on('click', function (e) {
-                        $('body').css('backgroundColor', '#F5E10E');
-                        ajaxLoader_b();
-                        $('body').load('genesis.html');
+                        navigateTo('genesis.html', '#F5E10E');
                     });
 
                     $('.session').on('click', function (e) {
-                        $('body').css('backgroundColor', '#1D5F89');
-                        ajaxLoader();
-                        $('body').load('session.html');
+                        navigateTo('session.html', '#1D5F89');
                     });
 
                     $('.narrative').on('click', function (e) {
-                        $('body').css('backgroundColor', '#26273D');
-                        ajaxLoader();
-                        $('body').load('narrative.html');
+                        navigateTo('narrative.html', '#26273D');
                     });
 
                     //remaining letters in message

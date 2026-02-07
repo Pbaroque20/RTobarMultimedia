@@ -207,21 +207,15 @@
                     $('.imageContainer1').css('opacity', '1');
 
                     $('.genesis').on('click', function (e) {
-                        $('body').css('backgroundColor', '#F5E10E');
-                        ajaxLoader_b();
-                        $('body').load('genesis.html');
+                        navigateTo('genesis.html', '#F5E10E');
                     });
 
                     $('.session').on('click', function (e) {
-                        $('body').css('backgroundColor', '#1D5F89');
-                        ajaxLoader();
-                        $('body').load('session.html');
+                        navigateTo('session.html', '#1D5F89');
                     });
 
                     $('.connect').on('click', function (e) {
-                        $('body').css('backgroundColor', '#EA0C94');
-                        ajaxLoader();
-                        $('body').load('connect.html');
+                        navigateTo('connect.html', '#EA0C94');
                     });
 
                     $('#broken1').on('mouseover mouseout', function (e) {

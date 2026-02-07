@@ -35,6 +35,10 @@ body {
     position: relative;
 }
 
+.wrapper {
+    position: relative;
+}
+
 .loaderContainer {
     position: relative;
     margin: 0 auto;
@@ -258,8 +262,49 @@ ul {
         margin-right: 0;
     }
 
+/* Desktop: genoma logo near "Also visit me here" */
+@media (min-width: 960px) {
+    #genoma_black {
+        position: absolute;
+        top: 558px;
+        left: 647px;
+        font-family: "Fedra Sans Light";
+        font-size: 9pt;
+        cursor: pointer;
+    }
+
+    #genoma_black img {
+        width: 225px;
+        height: auto;
+    }
+}
+
 /* Responsive: non-desktop – centered nav, centered visit block, faded background */
 @media (max-width: 959px) {
+    #genoma_black {
+        display: block;
+        position: absolute;
+        cursor: pointer;
+        left: 50%;
+        -webkit-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+        transform: translateX(-50%);
+        text-align: center;
+        top: 354px;
+        font-family: "Fedra Sans Light";
+        font-size: 9pt;
+        padding: 0.6em 1em;
+        box-sizing: border-box;
+    }
+
+    #genoma_black img {
+        width: 225px;
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: 0.5em auto 0;
+    }
+
     #categories {
         display: none;
     }

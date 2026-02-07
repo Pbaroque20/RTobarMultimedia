@@ -1,0 +1,26 @@
+<div id="portraitOnlyOverlay" aria-hidden="true"><p>Please rotate your device to portrait mode to view this website.</p></div>
+<div class="wrapper genoma-page">
+    <div class="imageContainerGenoma">
+        <header>
+            <div id="topHeader">
+                <div>Tobar<span class="multi">MediaDesign</span></div>
+                <div id="copyright-year">©2026</div>
+            </div>
+        </header>
+        <main>
+            <section>
+                <p id="genoma-back"><a href="#" class="genoma-back-link">Back to Genesis</a></p>
+            </section>
+        </main>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('#copyright-year').text('©' + new Date().getFullYear());
+
+            $('.genoma-back-link').on('click', function (e) {
+                e.preventDefault();
+                navigateTo('genesis.html', '#F5E10E');
+            });
+        });
+    </script>
+</div>

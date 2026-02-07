@@ -26,7 +26,8 @@
                 <li><a class="connect">connect</a></li>
             </ul>
         </nav>
-        <div id="visit">Also visit me here at:<br /><a href="https://www.behance.net/raphaeltobar"><img src="images/behancelogo.png" /></a>  <a href="https://www.linkedin.com/pub/raphael-tobar/62/1b2/993/"><img src="images/linkedinlogo.png" /></a>  <a href="https://twitter.com/rftobar"><img src="images/Twitter_logo_blue.png" /></a></div>
+        <div id="genoma_black">Under construction<br /><img src="expansion/images/genoma_logo_black.png" alt="Genoma" /></div>
+        <div id="visit">Also visit me here at<br /><a href="https://www.behance.net/raphaeltobar"><img src="images/behancelogo.png" /></a>  <a href="https://www.linkedin.com/pub/raphael-tobar/62/1b2/993/"><img src="images/linkedinlogo.png" /></a>  <a href="https://twitter.com/rftobar"><img src="images/Twitter_logo_blue.png" /></a></div>
         <script>
             $(document).ready(function () {
                 $('#copyright-year').text('©' + new Date().getFullYear());
@@ -50,21 +51,19 @@
                 //    $('.nav_page1').css({ 'left': '-180px', 'opacity': '1' });
 
                 $('.session').on('click', function (e) {
-                    $('body').css('backgroundColor', '#1D5F89');
-                    ajaxLoader();
-                    $('body').load('session.html');
+                    navigateTo('session.html', '#1D5F89');
                 });
 
                 $('.narrative').on('click', function (e) {
-                    $('body').css('backgroundColor', '#26273D');
-                    ajaxLoader();
-                    $('body').load('narrative.html');
+                    navigateTo('narrative.html', '#26273D');
                 });
 
                 $('.connect').on('click', function (e) {
-                    $('body').css('backgroundColor', '#EA0C94');
-                    ajaxLoader();
-                    $('body').load('connect.html');
+                    navigateTo('connect.html', '#EA0C94');
+                });
+
+                $('#genoma_black').on('click', function (e) {
+                    navigateTo('genoma.html', '#3B002B');
                 });
             });
         </script>
