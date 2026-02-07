@@ -247,19 +247,32 @@ ul {
     .nav_page1 a:hover {
         color: magenta;
         cursor: pointer;
+        -moz-transition-property: color, margin-right;
+        -o-transition-property: color, margin-right;
+        -webkit-transition-property: color, margin-right;
+        transition-property: color, margin-right;
+        -moz-transition-duration: .25s, .25s;
+        -o-transition-duration: .25s, .25s;
+        -webkit-transition-duration: .25s, .25s;
+        transition-duration: .25s, .25s;
+    }
+
+    .nav_page1 a.nav-desktop-hover {
+        color: magenta;
         margin-right: 8px;
         -moz-transition-property: color, margin-right;
-        -o-transition-property: color,margin-right;
-        -webkit-transition-property: color,margin-right;
-        transition-property: color,margin-right;
-        -moz-transition-duration: .25s,.25s;
-        -o-transition-duration: .25s,.25s;
-        -webkit-transition-duration: .25s,.25s;
-        transition-duration: .25s,.25s;
+        -o-transition-property: color, margin-right;
+        -webkit-transition-property: color, margin-right;
+        transition-property: color, margin-right;
+        -moz-transition-duration: .25s, .25s;
+        -o-transition-duration: .25s, .25s;
+        -webkit-transition-duration: .25s, .25s;
+        transition-duration: .25s, .25s;
     }
 
     .nav_page1 ul li:first-child a:hover {
         margin-right: 0;
+        margin-left: 0;
     }
 
 /* Desktop: genoma logo near "Also visit me here" */
@@ -438,5 +451,11 @@ ul {
 }
 
 .nav_page1 ul li:first-child a {
+    margin-right: 0;
+    margin-left: 0;
+    -moz-transition: none;
+    -o-transition: none;
+    -webkit-transition: none;
+    transition: none;
     animation: genesis-nav-pulse 1s ease-in-out infinite;
 }

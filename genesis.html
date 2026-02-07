@@ -65,6 +65,10 @@
                 $('#genoma_black').on('click', function (e) {
                     navigateTo('genoma.html', '#3B002B');
                 });
+
+                if (window.innerWidth >= 960) {
+                    $('.nav_page1 ul li').not(':first-child').find('a').on('mouseenter', function () { $(this).addClass('nav-desktop-hover'); }).on('mouseleave', function () { $(this).removeClass('nav-desktop-hover'); });
+                }
             });
         </script>
     </div>

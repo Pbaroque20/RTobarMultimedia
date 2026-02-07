@@ -302,7 +302,6 @@ ul {
 }
 
     .nav_page2 a:hover {
-        padding-left: 8px;
         color: var(--color-session-nav);
         cursor: pointer;
         -moz-transition-property: color,padding-left;
@@ -313,6 +312,27 @@ ul {
         -o-transition-duration: .25s,.25s;
         -webkit-transition-duration: .25s,.25s;
         transition-duration: .25s,.25s;
+    }
+
+    .nav_page2 a.nav-desktop-hover {
+        color: var(--color-session-nav);
+        padding-left: 8px;
+        -moz-transition-property: color, padding-left;
+        -o-transition-property: color, padding-left;
+        -webkit-transition-property: color, padding-left;
+        transition-property: color, padding-left;
+        -moz-transition-duration: .25s, .25s;
+        -o-transition-duration: .25s, .25s;
+        -webkit-transition-duration: .25s, .25s;
+        transition-duration: .25s, .25s;
+    }
+
+    .nav_page2 ul li:nth-child(2) a {
+        padding-left: 0;
+        -moz-transition: none;
+        -o-transition: none;
+        -webkit-transition: none;
+        transition: none;
     }
 
     .nav_page2 ul li:nth-child(2) a:hover {
@@ -409,7 +429,39 @@ ul {
     text-align: right;
 }
 
+#sessionPanHint {
+    display: none !important;
+}
+
 @media (max-width: 959px) {
+    #sessionPanHint {
+        display: none !important;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        z-index: 100;
+        padding: 0.6em 1em;
+        background-color: rgba(0, 0, 0, 0.75);
+        color: #fff;
+        font-family: "Fedra Sans Light", sans-serif;
+        font-size: 14px;
+        -webkit-border-radius: 8px;
+        -ms-border-radius: 8px;
+        border-radius: 8px;
+        pointer-events: none;
+        visibility: hidden;
+        opacity: 0;
+    }
+
+    #sessionPanHint.session-pan-hint-visible {
+        display: block !important;
+        visibility: visible;
+        opacity: 1;
+    }
+
     html, body {
         overflow-y: hidden;
     }

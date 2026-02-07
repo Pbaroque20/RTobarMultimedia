@@ -171,9 +171,15 @@
 console.log(msg);
                             }
                         })
-                    })
+                    });
 
-
+                    if (window.innerWidth >= 960) {
+                        $('.nav_page4 ul li').not(':nth-child(4)').find('a').on('mouseenter', function () {
+                            $(this).addClass('nav-desktop-hover');
+                        }).on('mouseleave', function () {
+                            $(this).removeClass('nav-desktop-hover');
+                        });
+                    }
                 });
             </script>
         </div>

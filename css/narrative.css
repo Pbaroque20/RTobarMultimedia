@@ -406,7 +406,6 @@ ul {
 }
 
     .nav_page3 a:hover {
-        padding-left: 8px;
         color: var(--color-narrative-nav);
         cursor: pointer;
         -moz-transition-property: color,padding-left;
@@ -417,6 +416,27 @@ ul {
         -o-transition-duration: .25s,.25s;
         -webkit-transition-duration: .25s,.25s;
         transition-duration: .25s,.25s;
+    }
+
+    .nav_page3 a.nav-desktop-hover {
+        color: var(--color-narrative-nav);
+        padding-left: 8px;
+        -moz-transition-property: color, padding-left;
+        -o-transition-property: color, padding-left;
+        -webkit-transition-property: color, padding-left;
+        transition-property: color, padding-left;
+        -moz-transition-duration: .25s, .25s;
+        -o-transition-duration: .25s, .25s;
+        -webkit-transition-duration: .25s, .25s;
+        transition-duration: .25s, .25s;
+    }
+
+    .nav_page3 ul li:nth-child(3) a {
+        padding-left: 0;
+        -moz-transition: none;
+        -o-transition: none;
+        -webkit-transition: none;
+        transition: none;
     }
 
     .nav_page3 ul li:nth-child(3) a:hover {

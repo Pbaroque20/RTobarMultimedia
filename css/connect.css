@@ -457,8 +457,7 @@ header div {
 }
 
     .nav_page4 a:hover {
-            padding-left: 8px;
-            color: white;
+            color: var(--color-connect-nav);
             cursor: pointer;
             -moz-transition-property: color, padding-left;
             -o-transition-property: color, padding-left;
@@ -469,6 +468,27 @@ header div {
             -webkit-transition-duration: .25s, .25s;
             transition-duration: .25s, .25s;
         }
+
+    .nav_page4 a.nav-desktop-hover {
+        color: yellow;
+        padding-left: 8px;
+        -moz-transition-property: color, padding-left;
+        -o-transition-property: color, padding-left;
+        -webkit-transition-property: color, padding-left;
+        transition-property: color, padding-left;
+        -moz-transition-duration: .25s, .25s;
+        -o-transition-duration: .25s, .25s;
+        -webkit-transition-duration: .25s, .25s;
+        transition-duration: .25s, .25s;
+    }
+
+    .nav_page4 ul li:nth-child(4) a {
+        padding-left: 0;
+        -moz-transition: none;
+        -o-transition: none;
+        -webkit-transition: none;
+        transition: none;
+    }
 
     .nav_page4 ul li:nth-child(4) a:hover {
         padding-left: 0;

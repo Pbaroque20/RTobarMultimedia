@@ -235,6 +235,14 @@
                         $('#history').toggle();
                         $('.instruct').css('display', 'none');
                     });
+
+                    if (window.innerWidth >= 960) {
+                        $('.nav_page3 ul li').not(':nth-child(3)').find('a').on('mouseenter', function () {
+                            $(this).addClass('nav-desktop-hover');
+                        }).on('mouseleave', function () {
+                            $(this).removeClass('nav-desktop-hover');
+                        });
+                    }
                 })
             </script>
         </div>
