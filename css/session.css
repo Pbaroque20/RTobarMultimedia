@@ -242,6 +242,16 @@ body {
     display: none;
 }
 
+#lightbox #changeImg {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+}
+
 #topHeader {
     width: 960px;
     height: 19px;
@@ -582,6 +592,10 @@ ul {
         -ms-transition: color 0.25s;
         -o-transition: color 0.25s;
         transition: color 0.25s;
+    }
+
+    #inform {
+        font-size: 10pt;
     }
 }
 

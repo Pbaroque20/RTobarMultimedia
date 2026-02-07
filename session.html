@@ -75,7 +75,7 @@
             });
 
             $('.narrative').on('click', function (e) {
-                navigateTo('narrative.html', '#26273D');
+                navigateTo('narrative.html', '#0E1037');
             });
 
             $('.connect').on('click', function (e) {
@@ -88,6 +88,35 @@
                 }).on('mouseleave', function () {
                     $(this).removeClass('nav-desktop-hover');
                 });
+
+                // Dynamic scroll stop: do not scroll past the "2013 Motion Graphics Demo Reel" block
+                // Increased clamping to prevent lightboxes from overlapping the demo reel
+                (function () {
+                    var $stop = $('#demoreel');
+                    if (!$stop.length) return;
+                    var originalMaxScrollY = null;
+                    function getMaxScrollY() {
+                        var rect = $stop[0].getBoundingClientRect();
+                        // Add extra padding (200px) to account for lightbox heights and prevent overlap
+                        var extraPadding = 200;
+                        var calculatedMax = rect.top + window.scrollY - window.innerHeight + extraPadding;
+                        // Store the original max scroll value before any lightbox opens
+                        if (originalMaxScrollY === null) {
+                            originalMaxScrollY = calculatedMax;
+                        }
+                        // Always use the original max scroll, don't allow it to increase
+                        return originalMaxScrollY;
+                    }
+                    function clampScroll() {
+                        // Don't clamp if lightbox is open - prevent scrolling entirely instead
+                        if ($('#lightbox').is(':visible') || $('#videoLightboxWrap').is(':visible')) {
+                            return;
+                        }
+                        var maxY = getMaxScrollY();
+                        if (maxY > 0 && window.scrollY > maxY) window.scrollTo(0, maxY);
+                    }
+                    $(window).on('scroll', clampScroll).on('resize', clampScroll);
+                })();
             }
         });
         // portfolio windows and ajax
@@ -270,13 +299,18 @@
                     $('#overlay').css('display', 'block');
                     break;
                 case "vaniads":
-                    $('#lightbox').css({ 'display': 'block', 'width': '620px', 'height': '2586px', 'left': '174px', 'top': '50px' });
+                    $('#lightbox').css({ 'display': 'block', 'width': '744px', 'height': 'auto', 'left': '115px', 'top': '50px' });
                     $('#changeImg').attr("src", "");
-                    $('#changeImg').attr("src", "images/portfolio/vanitystuff.jpg");
+                    $('#changeImg').css({ 'max-width': '100%', 'max-height': 'none', 'width': 'auto', 'height': 'auto', 'object-fit': 'contain' });
+                    $('#changeImg').attr("src", "images/portfolio/vanitystuff2.jpg?v=2");
+                    $('#changeImg').on('load', function() {
+                        var imgHeight = $(this).height();
+                        var informHeight = $('#inform').outerHeight(true);
+                        var closelightboxHeight = $('#closelightbox').outerHeight(true);
+                        $('#lightbox').css('height', (imgHeight + informHeight + closelightboxHeight + 20) + 'px');
+                    });
                     $('#inform').text(info.information[18].vaniads);
                     $('#overlay').css('display', 'block');
-                    if (window.innerWidth > 959) $('.wrapper').css('height', '2674px');
-                    else $('.wrapper').css('height', '');
                     break;
                 case "logod":
                     $('#lightbox').css({ 'display': 'block', 'width': '820px', 'height': '1099px', 'left': '86px', 'top': '50px' });
