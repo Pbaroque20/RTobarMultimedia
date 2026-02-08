@@ -210,6 +210,30 @@ body {
     left: 14px;
 }
 
+/* Desktop only: brightness hover effect for workimg */
+@media (min-width: 960px) {
+    .workimg {
+        -webkit-filter: brightness(1);
+        -moz-filter: brightness(1);
+        -ms-filter: brightness(1);
+        -o-filter: brightness(1);
+        filter: brightness(1);
+        -webkit-transition: filter 0.3s ease;
+        -moz-transition: filter 0.3s ease;
+        -ms-transition: filter 0.3s ease;
+        -o-transition: filter 0.3s ease;
+        transition: filter 0.3s ease;
+    }
+
+    .workimg:hover {
+        -webkit-filter: brightness(1.4);
+        -moz-filter: brightness(1.4);
+        -ms-filter: brightness(1.4);
+        -o-filter: brightness(1.4);
+        filter: brightness(1.4);
+    }
+}
+
 .hover {
     position: relative;
     font-family: Fedra Sans Light Italic;
