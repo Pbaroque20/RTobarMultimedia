@@ -1,0 +1,527 @@
+/*
+ * Responsive overrides for ajaxLoader-powered site.
+ * Loaded last so these rules override page-specific CSS.
+ * Breakpoints: 960px (design width), 768px (tablet), 480px (phone).
+ */
+
+/* -------------------------------------------------------------------------
+   Smaller than desktop (959px): faded genesis background, centered visit under nav
+   ------------------------------------------------------------------------- */
+@media (max-width: 959px) {
+    .imageContainer1::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.35);
+        z-index: -1;
+        pointer-events: none;
+    }
+
+    /* Genesis: center "Also visit me here at:" under stacked nav on small screens */
+    #visit {
+        left: 50%;
+        transform: translateX(-50%);
+        top: 430px;
+        text-align: center;
+        width: auto;
+        max-width: 320px;
+    }
+}
+
+/* -------------------------------------------------------------------------
+   Base: viewports up to 960px (fluid within design width)
+   ------------------------------------------------------------------------- */
+@media (max-width: 960px) {
+    .wrapper {
+        max-width: 100%;
+        width: 100%;
+        height: auto;
+        min-height: 100vh;
+        box-sizing: border-box;
+    }
+
+    #topHeader {
+        width: 100%;
+        max-width: 960px;
+        box-sizing: border-box;
+    }
+
+    header div {
+        max-width: 50%;
+        box-sizing: border-box;
+    }
+
+    /* Loader: flexible centering */
+    .loaderContainer {
+        width: 200px;
+        height: 200px;
+        top: 15vh;
+        max-width: 90vw;
+    }
+
+    #loader {
+        max-width: 100%;
+    }
+
+    /* Session: scale portfolio thumbnails with viewport */
+    .imageContainer2 .workimg {
+        max-width: 15vw;
+        height: auto;
+    }
+
+    .imageContainer2 .birth,
+    .imageContainer2 .ances,
+    .imageContainer2 .jelly,
+    .imageContainer2 .min,
+    .imageContainer2 .axis,
+    .imageContainer2 .beaver,
+    .imageContainer2 .essence,
+    .imageContainer2 .experi,
+    .imageContainer2 .fish,
+    .imageContainer2 .ford,
+    .imageContainer2 .lifeisjazz,
+    .imageContainer2 .gelfenstein,
+    .imageContainer2 .m,
+    .imageContainer2 .mirror,
+    .imageContainer2 .onelev,
+    .imageContainer2 .rw,
+    .imageContainer2 .skittles,
+    .imageContainer2 .surgeons,
+    .imageContainer2 .vaniads,
+    .imageContainer2 .logod {
+        max-width: 15vw;
+    }
+
+    /* Session: lightbox image scales to viewport */
+    #lightbox #changeImg {
+        max-width: 100%;
+        height: auto;
+    }
+}
+
+/* -------------------------------------------------------------------------
+   Tablet: max-width 768px
+   ------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+    .wrapper {
+        min-height: auto;
+    }
+
+    #topHeader {
+        font-size: 12px;
+        padding: 4px 0;
+    }
+
+    header div {
+        width: auto;
+        max-width: 45%;
+        font-size: 0.9em;
+    }
+
+    /* Genesis */
+    .imageContainer1 {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        min-height: 80vh;
+        background-size: contain;
+        background-position: top center;
+        position: relative;
+    }
+
+    #categories {
+        font-size: 18px;
+        padding: 0 10px;
+        box-sizing: border-box;
+    }
+
+    .nav_page1 {
+        left: 50%;
+        transform: translateX(-50%);
+        right: auto;
+        top: 220px;
+        text-align: center;
+    }
+
+    .nav_page1 ul {
+        margin: 0 auto;
+    }
+
+    #visit {
+        left: 50%;
+        transform: translateX(-50%);
+        top: 420px;
+        text-align: center;
+        font-size: 8pt;
+    }
+
+    #visit img {
+        max-width: 24px;
+        height: auto;
+    }
+
+    /* Session: portfolio grid and lightbox/video */
+    .imageContainer2 {
+        width: 100%;
+        min-height: 120vh;
+        background-size: contain;
+        background-position: top center;
+        position: relative;
+    }
+
+    .imageContainer2 .portfolioblocks {
+        display: none;
+    }
+
+    .imageContainer2 section {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 12px;
+        padding: 100px 16px 40px;
+        box-sizing: border-box;
+        position: relative;
+    }
+
+    .imageContainer2 section #lightbox {
+        grid-column: 1 / -1;
+    }
+
+    .imageContainer2 .birth,
+    .imageContainer2 .ances,
+    .imageContainer2 .jelly,
+    .imageContainer2 .min,
+    .imageContainer2 .axis,
+    .imageContainer2 .beaver,
+    .imageContainer2 .essence,
+    .imageContainer2 .experi,
+    .imageContainer2 .fish,
+    .imageContainer2 .ford,
+    .imageContainer2 .lifeisjazz,
+    .imageContainer2 .gelfenstein,
+    .imageContainer2 .m,
+    .imageContainer2 .mirror,
+    .imageContainer2 .onelev,
+    .imageContainer2 .rw,
+    .imageContainer2 .skittles,
+    .imageContainer2 .surgeons,
+    .imageContainer2 .vaniads,
+    .imageContainer2 .logod {
+        position: relative;
+        top: auto;
+        left: auto;
+    }
+
+    .imageContainer2 .workimg {
+        max-width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    #lightbox {
+        position: fixed !important;
+        max-width: 95vw;
+        width: 95vw !important;
+        height: auto !important;
+        left: 50% !important;
+        top: 50% !important;
+        transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+    }
+
+    #lightbox #changeImg {
+        max-width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    #videobox {
+        position: fixed !important;
+        max-width: 95vw;
+        width: 95vw !important;
+        height: auto !important;
+        left: 50% !important;
+        top: 50% !important;
+        transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+    }
+
+    #close {
+        position: fixed !important;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 52;
+    }
+
+    .nav_page2 {
+        top: 60px;
+    }
+
+    #demoreel {
+        left: 50%;
+        transform: translateX(-50%);
+        top: auto;
+        bottom: 20px;
+    }
+
+    /* Narrative */
+    .imageContainer3 {
+        width: 100%;
+        min-height: 100vh;
+        background-size: contain;
+        background-position: top center;
+        background-repeat: no-repeat;
+    }
+
+    .instruct {
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
+        max-width: 280px;
+        font-size: 9pt;
+    }
+
+    #bio,
+    #history,
+    #skillsedu {
+        width: 90%;
+        max-width: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        box-sizing: border-box;
+    }
+
+    #bio {
+        top: 80px;
+    }
+
+    #history {
+        top: 50px;
+    }
+
+    #skillsedu {
+        top: 80px;
+    }
+
+    #skillsedu table {
+        border-spacing: 1em;
+    }
+
+    #broken1 > img,
+    #broken2 > img,
+    #broken3 > img,
+    #broken4 > img {
+        max-width: 80%;
+        height: auto;
+    }
+
+    #broken1 > img {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+
+    .biography,
+    .skills,
+    .download,
+    .work {
+        font-size: 0.9em;
+    }
+
+    /* Connect */
+    .imageContainer4 {
+        width: 100%;
+        min-height: 100vh;
+        background-size: contain;
+        background-position: top center;
+        background-repeat: no-repeat;
+    }
+
+    .formplatform {
+        max-width: 90%;
+        background-size: contain;
+    }
+
+    #contact_form {
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+        max-width: 400px;
+        padding: 0 16px;
+        top: 100px;
+        box-sizing: border-box;
+    }
+
+    #contact_form tr > td:nth-child(2) {
+        max-width: 100%;
+    }
+
+    #messagebox {
+        max-width: 100%;
+    }
+
+    .remaining {
+        left: auto;
+        right: 16px;
+    }
+
+    #chatbubble,
+    #chatbubble2,
+    #chatbubble3,
+    #chatbubble4,
+    #chatbubble5,
+    #chatbubble6 {
+        max-width: 60px;
+        height: auto;
+    }
+}
+
+/* -------------------------------------------------------------------------
+   Phone: max-width 480px
+   ------------------------------------------------------------------------- */
+@media (max-width: 480px) {
+    .loaderContainer {
+        width: 160px;
+        height: 160px;
+        top: 25vh;
+    }
+
+    #topHeader {
+        height: auto;
+        min-height: 36px;
+        font-size: 11px;
+    }
+
+    header div {
+        font-size: 0.85em;
+    }
+
+    /* Genesis */
+    #categories {
+        font-size: 14px;
+        line-height: 1.4;
+    }
+
+    .nav_page1 {
+        font-size: 16px;
+        top: 180px;
+    }
+
+    .nav_page1 ul {
+        width: auto;
+    }
+
+    #visit {
+        font-size: 7pt;
+        top: 360px;
+    }
+
+    /* Session */
+    .imageContainer2 section {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        gap: 8px;
+        padding-top: 80px;
+    }
+
+    #lightbox {
+        width: 100% !important;
+        max-width: 100%;
+        top: 50% !important;
+    }
+
+    #videobox {
+        width: 100% !important;
+        max-width: 100%;
+    }
+
+    #close {
+        font-size: 7pt;
+        padding: 6px;
+    }
+
+    .nav_page2 {
+        font-size: 16px;
+        top: 48px;
+    }
+
+    #demoreel {
+        font-size: 12px;
+    }
+
+    /* Narrative */
+    .instruct {
+        font-size: 8pt;
+        width: 95%;
+    }
+
+    #bio,
+    #history,
+    #skillsedu {
+        width: 95%;
+        font-size: 8pt;
+        padding: 10px;
+    }
+
+    #skillsedu table {
+        border-spacing: 0.5em;
+    }
+
+    #skillsedu td {
+        display: block;
+        width: 100%;
+    }
+
+    #skillsedu tr {
+        display: block;
+    }
+
+    .nav_page3 {
+        font-size: 16px;
+        top: 48px;
+    }
+
+    /* Connect */
+    #contact_form {
+        max-width: 100%;
+        top: 80px;
+    }
+
+    #contact_form tr > td:first-child,
+    #contact_form tr > td:nth-child(2) {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        text-align: left;
+    }
+
+    #contact_form tr > td:first-child {
+        padding-bottom: 2px;
+    }
+
+    #contact_form tr > td:nth-child(2) {
+        padding-bottom: 10px;
+    }
+
+    form button {
+        left: 0;
+        margin: 4px;
+    }
+
+    .nav_page4 {
+        font-size: 16px;
+        top: 32px;
+    }
+
+    #chatbubble,
+    #chatbubble2,
+    #chatbubble3,
+    #chatbubble4,
+    #chatbubble5,
+    #chatbubble6 {
+        max-width: 40px;
+    }
+}
