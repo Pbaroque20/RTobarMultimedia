@@ -16,8 +16,7 @@
                     <div id="videoLightboxWrap">
                         <div id="close">CLOSE WINDOW</div>
                         <iframe id="videobox" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-                        <video id="localVideo" controls preload="auto">
-                            <source id="localVideoSource" src="" type="video/mp4">
+                        <video id="localVideo" controls preload="none">
                             Your browser does not support the video tag.
                         </video>
                     </div>
@@ -59,7 +58,118 @@
         $(document).ready(function () {
             $('#copyright-year').text('©' + new Date().getFullYear());
 
-            if (window.innerWidth <= 959 && !sessionStorage.getItem('sessionPanHintSeen')) {
+            // Click-drag panning for desktop when window is resized below 960px
+            var hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+            // Desktop = has mouse capability (not mobile/tablet)
+            // Mobile/tablet typically have small screens and touch as primary input
+            // Desktop can have touch but also has mouse
+            var isMobileDevice = hasTouch && window.innerWidth <= 768 && /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            var isDesktop = !isMobileDevice;
+            var isDragging = false;
+            var startX = 0;
+            var scrollLeft = 0;
+            var $wrapper = null;
+            
+            function setupDragPanning() {
+                $wrapper = $('.wrapper.session-page');
+                var windowWidth = window.innerWidth;
+                
+                // Debug: check if wrapper exists and is scrollable
+                if ($wrapper.length) {
+                    console.log('Wrapper found, scrollWidth:', $wrapper[0].scrollWidth, 'clientWidth:', $wrapper[0].clientWidth);
+                    console.log('Window width:', windowWidth, 'isDesktop:', isDesktop, 'hasTouch:', hasTouch);
+                } else {
+                    console.log('Wrapper not found!');
+                    return;
+                }
+                
+                // Remove any existing handlers first
+                $wrapper.off('mousedown.pan');
+                $(document).off('mousemove.pan mouseup.pan');
+                
+                // Only enable for desktop when window is small
+                if (windowWidth <= 959 && isDesktop && $wrapper.length) {
+                    console.log('Setting up drag panning for desktop');
+                    
+                    // Make sure wrapper is scrollable
+                    var wrapperEl = $wrapper[0];
+                    if (wrapperEl.scrollWidth <= wrapperEl.clientWidth) {
+                        console.log('Wrapper is not scrollable - content fits in viewport');
+                        return;
+                    }
+                    
+                    $wrapper.on('mousedown.pan', function(e) {
+                        // Don't drag if clicking on interactive elements
+                        var $target = $(e.target);
+                        var tagName = e.target.tagName.toLowerCase();
+                        
+                        // Allow drag on section, main, div (but not workimg containers)
+                        if (tagName === 'img' || tagName === 'a' || tagName === 'button' ||
+                            $target.closest('.workimg, #lightbox, #videoLightboxWrap, #overlay, nav, #close, #closelightbox, #demoreel').length) {
+                            return true;
+                        }
+                        
+                        console.log('Drag started');
+                        isDragging = true;
+                        startX = e.pageX;
+                        scrollLeft = wrapperEl.scrollLeft;
+                        $wrapper.css({
+                            'cursor': 'grabbing',
+                            'user-select': 'none'
+                        });
+                        e.preventDefault();
+                        e.stopPropagation();
+                        return false;
+                    });
+                    
+                    $(document).on('mousemove.pan', function(e) {
+                        if (!isDragging) return;
+                        e.preventDefault();
+                        e.stopPropagation();
+                        var deltaX = e.pageX - startX;
+                        wrapperEl.scrollLeft = scrollLeft - (deltaX * 2);
+                        return false;
+                    });
+                    
+                    $(document).on('mouseup.pan', function(e) {
+                        if (isDragging) {
+                            console.log('Drag ended');
+                            isDragging = false;
+                            $wrapper.css({
+                                'cursor': 'grab',
+                                'user-select': ''
+                            });
+                        }
+                    });
+                    
+                    // Show grab cursor on hover - apply to wrapper and its children
+                    $wrapper.css('cursor', 'grab');
+                    $wrapper.find('section, main').css('cursor', 'grab');
+                } else {
+                    // Disable drag
+                    if ($wrapper.length) {
+                        $wrapper.css({
+                            'cursor': '',
+                            'user-select': ''
+                        });
+                        $wrapper.find('section, main').css('cursor', '');
+                    }
+                    isDragging = false;
+                }
+            }
+            
+            // Initialize after a small delay to ensure DOM is ready
+            setTimeout(function() {
+                setupDragPanning();
+            }, 100);
+            
+            // Update on resize
+            $(window).on('resize', function() {
+                setTimeout(setupDragPanning, 50);
+            });
+            
+            // Show hint for touch devices only when window is small
+            if (window.innerWidth <= 959 && hasTouch && !sessionStorage.getItem('sessionPanHintSeen')) {
                 $('#sessionPanHint').addClass('session-pan-hint-visible');
                 var panHintTimeout;
                 function hidePanHint() {
@@ -184,7 +294,14 @@
                 'left': '',
                 'top': ''
             });
-            $('#localVideoSource').attr('src', '');
+            // Remove any existing source elements
+            $('#localVideo source').remove();
+            // Clear video src
+            var localVideoEl = $('#localVideo').get(0);
+            if (localVideoEl) {
+                localVideoEl.src = '';
+                localVideoEl.removeAttribute('src');
+            }
             $('#overlay').css('display', 'none');
             $('#lightbox').css('display', 'none');
             if (window.innerWidth > 959) $('.wrapper').css('height', '1014px');
@@ -212,7 +329,13 @@
                     $('#videobox').css('display', 'none');
                     var videoPath = 'videos/contactUs2_trailer.mp4';
                     var videoElement = $('#localVideo').get(0);
-                    $('#localVideoSource').attr('src', videoPath);
+                    // Remove any existing source elements
+                    $('#localVideo source').remove();
+                    // Create and append new source element
+                    var sourceElement = document.createElement('source');
+                    sourceElement.src = videoPath;
+                    sourceElement.type = 'video/mp4';
+                    videoElement.appendChild(sourceElement);
                     videoElement.load();
                     // Increase video size for contactus2 (750px x 422px, maintaining 16:9 aspect ratio)
                     var videoLeft = 105; // Adjusted to center: (960 - 750) / 2 = 105px
@@ -348,7 +471,13 @@
                     $('#videobox').css('display', 'none');
                     var videoPath = 'videos/2020_trailer.mp4';
                     var videoElement = $('#localVideo').get(0);
-                    $('#localVideoSource').attr('src', videoPath);
+                    // Remove any existing source elements
+                    $('#localVideo source').remove();
+                    // Create and append new source element
+                    var sourceElement = document.createElement('source');
+                    sourceElement.src = videoPath;
+                    sourceElement.type = 'video/mp4';
+                    videoElement.appendChild(sourceElement);
                     videoElement.load();
                     // Use default video size for 2020 (500px x 281px)
                     var videoLeft = 225;

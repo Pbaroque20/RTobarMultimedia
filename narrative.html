@@ -227,22 +227,130 @@ and deploy glTF and AR furniture content.
                         navigateTo('connect.html', '#EA0C94');
                     });
 
-                    $('#broken1').on('mouseover mouseout', function (e) {
-                        e.stopPropagation();
-                        $('#skillsedu').toggle();
-                        $('.instruct').css('display', 'none');
+                    // Detect touch capability
+                    var hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+                    var isDesktopTouch = window.innerWidth >= 960 && hasTouch;
+                    var touchUsed = false;
+                    
+                    // Track if touch was used recently to prevent mouse events from firing
+                    $(document).on('touchstart', function() {
+                        touchUsed = true;
+                        setTimeout(function() {
+                            touchUsed = false;
+                        }, 300);
                     });
-
-                    $('#broken2').on('mouseover mouseout', function (e) {
-                        e.stopPropagation();
-                        $('#bio').toggle();
+                    
+                    // Function to toggle popup (shared by both mouse and touch)
+                    // Closes other popups before opening the requested one
+                    function togglePopup(popupId) {
+                        // List of all popup IDs
+                        var allPopups = ['skillsedu', 'bio', 'history'];
+                        
+                        // Close all other popups first
+                        allPopups.forEach(function(id) {
+                            if (id !== popupId && $('#' + id).is(':visible')) {
+                                $('#' + id).hide();
+                            }
+                        });
+                        
+                        // Toggle the requested popup
+                        $('#' + popupId).toggle();
                         $('.instruct').css('display', 'none');
-                    });
+                    }
+                    
+                    // Mouse handlers (only if not desktop touchscreen, or if mouse is being used)
+                    if (!isDesktopTouch) {
+                        $('#broken1').on('mouseover mouseout', function (e) {
+                            e.stopPropagation();
+                            togglePopup('skillsedu');
+                        });
 
-                    $('#broken3').on('mouseover mouseout', function (e) {
-                        e.stopPropagation();
-                        $('#history').toggle();
-                        $('.instruct').css('display', 'none');
+                        $('#broken2').on('mouseover mouseout', function (e) {
+                            e.stopPropagation();
+                            togglePopup('bio');
+                        });
+
+                        $('#broken3').on('mouseover mouseout', function (e) {
+                            e.stopPropagation();
+                            togglePopup('history');
+                        });
+                    } else {
+                        // Desktop touchscreen: use mouseover/mouseout but prevent if touch was just used
+                        $('#broken1').on('mouseover mouseout', function (e) {
+                            if (touchUsed) {
+                                e.stopPropagation();
+                                return;
+                            }
+                            e.stopPropagation();
+                            togglePopup('skillsedu');
+                        });
+
+                        $('#broken2').on('mouseover mouseout', function (e) {
+                            if (touchUsed) {
+                                e.stopPropagation();
+                                return;
+                            }
+                            e.stopPropagation();
+                            togglePopup('bio');
+                        });
+
+                        $('#broken3').on('mouseover mouseout', function (e) {
+                            if (touchUsed) {
+                                e.stopPropagation();
+                                return;
+                            }
+                            e.stopPropagation();
+                            togglePopup('history');
+                        });
+                    }
+                    
+                    // Touch/click handlers for desktop touchscreens
+                    function setupTouchHandlers() {
+                        // Remove existing touch handlers
+                        $('#broken1, #broken2, #broken3').off('click.touch touchstart.touch');
+                        
+                        // Only enable for desktop screens (>= 960px) with touch capability
+                        if (window.innerWidth >= 960 && hasTouch) {
+                            // Desktop screen with touch capability - add click/touch handlers
+                            $('#broken1').on('click.touch touchstart.touch', function (e) {
+                                e.stopPropagation();
+                                e.preventDefault();
+                                touchUsed = true;
+                                setTimeout(function() {
+                                    touchUsed = false;
+                                }, 300);
+                                togglePopup('skillsedu');
+                            });
+                            
+                            $('#broken2').on('click.touch touchstart.touch', function (e) {
+                                e.stopPropagation();
+                                e.preventDefault();
+                                touchUsed = true;
+                                setTimeout(function() {
+                                    touchUsed = false;
+                                }, 300);
+                                togglePopup('bio');
+                            });
+                            
+                            $('#broken3').on('click.touch touchstart.touch', function (e) {
+                                e.stopPropagation();
+                                e.preventDefault();
+                                touchUsed = true;
+                                setTimeout(function() {
+                                    touchUsed = false;
+                                }, 300);
+                                togglePopup('history');
+                            });
+                        }
+                    }
+                    
+                    // Initialize touch handlers
+                    setupTouchHandlers();
+                    
+                    // Update on window resize
+                    $(window).on('resize', function() {
+                        isDesktopTouch = window.innerWidth >= 960 && hasTouch;
+                        setupTouchHandlers();
                     });
 
                     if (window.innerWidth >= 960) {

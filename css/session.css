@@ -518,6 +518,15 @@ ul {
         overflow-x: auto;
         overflow-y: visible;
         min-width: 100%;
+        -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    }
+    
+    /* Ensure wrapper is scrollable on desktop when resized */
+    @media (max-width: 959px) {
+        .wrapper.session-page {
+            overflow-x: auto !important;
+            overflow-y: visible !important;
+        }
     }
 
     .wrapper.session-page .imageContainer2 {
