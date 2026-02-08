@@ -210,18 +210,17 @@ body {
     left: 14px;
 }
 
-/* Desktop only: brightness hover effect for workimg and disable vertical scroll */
+/* Prevent image dragging on workimgs */
+.workimg img {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
+}
+
+/* Desktop only: brightness hover effect for workimg */
 @media (min-width: 960px) {
-    html, body {
-        overflow-y: hidden !important;
-        height: 100%;
-    }
-    
-    .wrapper.session-page {
-        overflow-y: hidden !important;
-        height: 100vh;
-    }
-    
     .workimg {
         -webkit-filter: brightness(1);
         -moz-filter: brightness(1);
@@ -233,30 +232,6 @@ body {
         -ms-transition: filter 0.3s ease;
         -o-transition: filter 0.3s ease;
         transition: filter 0.3s ease;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        -webkit-user-drag: none;
-        -khtml-user-drag: none;
-        -moz-user-drag: none;
-        -ms-user-drag: none;
-        user-drag: none;
-        pointer-events: auto;
-    }
-    
-    .workimg img {
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        -webkit-user-drag: none;
-        -khtml-user-drag: none;
-        -moz-user-drag: none;
-        -ms-user-drag: none;
-        user-drag: none;
-        pointer-events: none;
-        -webkit-touch-callout: none;
     }
 
     .workimg:hover {
@@ -562,7 +537,6 @@ ul {
             overflow-y: visible !important;
         }
     }
-}
 
     .wrapper.session-page .imageContainer2 {
         min-width: 960px;

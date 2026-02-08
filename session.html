@@ -57,36 +57,29 @@
     <script>
         $(document).ready(function () {
             $('#copyright-year').text('©' + new Date().getFullYear());
+            
+            // Disable image dragging on workimgs globally
+            $('.workimg img').attr('draggable', 'false').on('dragstart', function(e) {
+                e.preventDefault();
+                return false;
+            });
 
             // Click-drag panning for desktop when window is resized below 960px
             var hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
             // Desktop = has mouse capability (not mobile/tablet)
-            // Mobile/tablet typically have small screens and touch as primary input
-            // Desktop can have touch but also has mouse
             var isMobileDevice = hasTouch && window.innerWidth <= 768 && /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
             var isDesktop = !isMobileDevice;
             var isDragging = false;
+            var hasDragged = false; // Track if user actually dragged (moved mouse) - accessible globally
             var startX = 0;
             var scrollLeft = 0;
+            var dragThreshold = 5; // Pixels to move before considering it a drag
             var $wrapper = null;
-            
-            // Track workimg drag state (accessible to click handler)
-            var workimgDragData = {
-                moved: false
-            };
+            var panStartTarget = null; // Track what element was clicked for pan start
             
             function setupDragPanning() {
                 $wrapper = $('.wrapper.session-page');
                 var windowWidth = window.innerWidth;
-                
-                // Debug: check if wrapper exists and is scrollable
-                if ($wrapper.length) {
-                    console.log('Wrapper found, scrollWidth:', $wrapper[0].scrollWidth, 'clientWidth:', $wrapper[0].clientWidth);
-                    console.log('Window width:', windowWidth, 'isDesktop:', isDesktop, 'hasTouch:', hasTouch);
-                } else {
-                    console.log('Wrapper not found!');
-                    return;
-                }
                 
                 // Remove any existing handlers first
                 $wrapper.off('mousedown.pan');
@@ -94,133 +87,125 @@
                 
                 // Only enable for desktop when window is small
                 if (windowWidth <= 959 && isDesktop && $wrapper.length) {
-                    console.log('Setting up drag panning for desktop');
-                    
                     // Make sure wrapper is scrollable
                     var wrapperEl = $wrapper[0];
                     if (wrapperEl.scrollWidth <= wrapperEl.clientWidth) {
-                        console.log('Wrapper is not scrollable - content fits in viewport');
                         return;
                     }
-                    
-                    // Prevent default image dragging globally for workimgs
-                    $wrapper.find('.workimg img').on('dragstart', function(e) {
-                        e.preventDefault();
-                        return false;
-                    });
                     
                     $wrapper.on('mousedown.pan', function(e) {
                         var $target = $(e.target);
                         var tagName = e.target.tagName.toLowerCase();
                         
-                        // Check if clicking on workimg or its container
-                        var isWorkimg = $target.closest('.workimg').length > 0 || 
-                                       $target.hasClass('workimg') || 
-                                       $target.parent().hasClass('workimg') ||
-                                       tagName === 'img';
-                        
-                        // Don't start drag on other interactive elements
+                        // Don't start pan if clicking on interactive elements (except workimg - handled separately)
                         if (tagName === 'a' || tagName === 'button' ||
                             $target.closest('#lightbox, #videoLightboxWrap, #overlay, nav, #close, #closelightbox, #demoreel').length) {
-                            return true; // Allow default behavior
+                            return true;
                         }
                         
-                        // For workimgs: prevent image drag but allow click
-                        if (isWorkimg) {
-                            var initialX = e.pageX;
-                            var initialY = e.pageY;
-                            workimgDragData.moved = false;
-                            
-                            // Prevent default image dragging
-                            e.preventDefault();
-                            e.stopPropagation();
-                            
-                            // Track mouse movement to detect drag
-                            $(document).on('mousemove.pancheck', function(moveE) {
-                                var deltaX = Math.abs(moveE.pageX - initialX);
-                                var deltaY = Math.abs(moveE.pageY - initialY);
-                                // If moved more than 5px, it's a drag (pan)
-                                if (deltaX > 5 || deltaY > 5) {
-                                    workimgDragData.moved = true;
-                                    // Start panning
-                                    isDragging = true;
-                                    startX = initialX;
-                                    scrollLeft = wrapperEl.scrollLeft;
-                                    $wrapper.css({
-                                        'cursor': 'grabbing',
-                                        'user-select': 'none'
-                                    });
-                                    $(document).off('mousemove.pancheck');
-                                }
-                            });
-                            
-                            // On mouseup: if no drag, trigger click manually
-                            $(document).one('mouseup.pancheck', function(upE) {
-                                $(document).off('mousemove.pancheck');
-                                // Check if drag occurred
-                                if (!workimgDragData.moved && !isDragging) {
-                                    // It was a click (no drag), trigger click event
-                                    var $workimg = $target.closest('.workimg');
-                                    if ($workimg.length) {
-                                        // Create a synthetic click event that won't be blocked
-                                        var clickEvent = $.Event('click', {
-                                            originalEvent: { isTrusted: false },
-                                            bubbles: true,
-                                            cancelable: true
-                                        });
-                                        $workimg.trigger(clickEvent);
-                                    }
-                                }
-                                // Reset drag state
-                                workimgDragData.moved = false;
-                            });
-                            
-                            return false;
-                        }
-                        
-                        // For non-workimg areas: start panning immediately
-                        e.preventDefault();
-                        e.stopPropagation();
-                        isDragging = true;
+                        // Store the target for later check
+                        panStartTarget = e.target;
+                        isDragging = false;
+                        hasDragged = false;
                         startX = e.pageX;
                         scrollLeft = wrapperEl.scrollLeft;
+                        
+                        // If clicking on workimg, prevent image drag but allow click if no movement
+                        if ($target.closest('.workimg').length) {
+                            // Prevent image dragging - stop default drag behavior
+                            e.preventDefault();
+                            e.stopPropagation();
+                            // Disable drag on images immediately
+                            $('.workimg img').attr('draggable', 'false');
+                            $('.workimg img').off('dragstart.pan').on('dragstart.pan', function(e) {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                return false;
+                            });
+                            return false; // Prevent default to stop image drag
+                        }
+                        
+                        // For other areas, prepare for drag
                         $wrapper.css({
                             'cursor': 'grabbing',
                             'user-select': 'none'
                         });
+                        e.preventDefault();
+                        e.stopPropagation();
                         return false;
                     });
                     
                     $(document).on('mousemove.pan', function(e) {
-                        if (!isDragging) return;
+                        if (panStartTarget === null) return;
                         
-                        // If dragging started from workimg, prevent click from firing
-                        if (workimgDragData.moved) {
+                        var deltaX = Math.abs(e.pageX - startX);
+                        
+                        // If moved more than threshold, it's a drag
+                        if (deltaX > dragThreshold) {
+                            hasDragged = true;
+                            isDragging = true;
+                            
+                            var $target = $(panStartTarget);
+                            var scrollDelta = e.pageX - startX;
+                            
+                            // Disable selection on workimgs when dragging
+                            if ($target.closest('.workimg').length) {
+                                $('.workimg').css({
+                                    'user-select': 'none',
+                                    '-webkit-user-select': 'none',
+                                    '-moz-user-select': 'none',
+                                    '-ms-user-select': 'none',
+                                    'pointer-events': 'none' // Prevent image drag
+                                });
+                            }
+                            
+                            // Perform pan (works for both workimg and other areas)
+                            wrapperEl.scrollLeft = scrollLeft - (scrollDelta * 2);
+                            $wrapper.css({
+                                'cursor': 'grabbing',
+                                'user-select': 'none'
+                            });
                             e.preventDefault();
                             e.stopPropagation();
+                            return false;
                         }
-                        
-                        var deltaX = e.pageX - startX;
-                        wrapperEl.scrollLeft = scrollLeft - (deltaX * 2);
-                        return false;
                     });
                     
                     $(document).on('mouseup.pan', function(e) {
-                        if (isDragging) {
-                            console.log('Drag ended');
-                            isDragging = false;
+                        if (panStartTarget !== null) {
+                            // Re-enable selection on workimgs
+                            $('.workimg').css({
+                                'user-select': '',
+                                '-webkit-user-select': '',
+                                '-moz-user-select': '',
+                                '-ms-user-select': '',
+                                'pointer-events': ''
+                            });
+                            
+                            // Reset cursor immediately
                             $wrapper.css({
                                 'cursor': 'grab',
                                 'user-select': ''
                             });
+                            
+                            // Reset states after a small delay to allow click event to check hasDragged
+                            setTimeout(function() {
+                                isDragging = false;
+                                hasDragged = false;
+                                panStartTarget = null;
+                            }, 50);
                         }
                     });
                     
-                    // Show grab cursor on hover - but not on workimgs
+                    // Disable image dragging on workimgs
+                    $('.workimg img').attr('draggable', 'false').on('dragstart', function(e) {
+                        e.preventDefault();
+                        return false;
+                    });
+                    
+                    // Show grab cursor on hover - but not on workimg
                     $wrapper.css('cursor', 'grab');
                     $wrapper.find('section, main').css('cursor', 'grab');
-                    // Ensure workimgs keep their pointer cursor
-                    $wrapper.find('.workimg').css('cursor', 'pointer');
                 } else {
                     // Disable drag
                     if ($wrapper.length) {
@@ -231,6 +216,8 @@
                         $wrapper.find('section, main').css('cursor', '');
                     }
                     isDragging = false;
+                    hasDragged = false;
+                    panStartTarget = null;
                 }
             }
             
@@ -279,12 +266,34 @@
                     $(this).removeClass('nav-desktop-hover');
                 });
 
-                // Prevent vertical scrolling on desktop
-                $(window).on('scroll', function() {
-                    if (window.scrollY !== 0) {
-                        window.scrollTo(0, 0);
+                // Dynamic scroll stop: do not scroll past the "2013 Motion Graphics Demo Reel" block
+                // Increased clamping to prevent lightboxes from overlapping the demo reel
+                (function () {
+                    var $stop = $('#demoreel');
+                    if (!$stop.length) return;
+                    var originalMaxScrollY = null;
+                    function getMaxScrollY() {
+                        var rect = $stop[0].getBoundingClientRect();
+                        // Add extra padding (200px) to account for lightbox heights and prevent overlap
+                        var extraPadding = 200;
+                        var calculatedMax = rect.top + window.scrollY - window.innerHeight + extraPadding;
+                        // Store the original max scroll value before any lightbox opens
+                        if (originalMaxScrollY === null) {
+                            originalMaxScrollY = calculatedMax;
+                        }
+                        // Always use the original max scroll, don't allow it to increase
+                        return originalMaxScrollY;
                     }
-                });
+                    function clampScroll() {
+                        // Don't clamp if lightbox is open - prevent scrolling entirely instead
+                        if ($('#lightbox').is(':visible') || $('#videoLightboxWrap').is(':visible')) {
+                            return;
+                        }
+                        var maxY = getMaxScrollY();
+                        if (maxY > 0 && window.scrollY > maxY) window.scrollTo(0, maxY);
+                    }
+                    $(window).on('scroll', clampScroll).on('resize', clampScroll);
+                })();
             }
         });
         // portfolio windows and ajax
@@ -363,11 +372,9 @@
         });
 
         $('.workimg').on('click', function (e) {
-            // Prevent click if we were dragging (but allow manually triggered clicks)
-            // Check if this is a manually triggered event or a real user click
-            var isManualTrigger = e.originalEvent === undefined || e.originalEvent.isTrusted === false;
-            
-            if (!isManualTrigger && (workimgDragData.moved || isDragging)) {
+            // Prevent click if user was dragging (for desktop resized below 960px)
+            // Check if we're in drag mode and user actually dragged
+            if (window.innerWidth <= 959 && typeof hasDragged !== 'undefined' && hasDragged) {
                 e.preventDefault();
                 e.stopPropagation();
                 return false;
