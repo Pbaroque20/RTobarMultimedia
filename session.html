@@ -16,8 +16,7 @@
                     <div id="videoLightboxWrap">
                         <div id="close">CLOSE WINDOW</div>
                         <iframe id="videobox" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-                        <video id="localVideo" controls preload="auto">
-                            <source id="localVideoSource" src="" type="video/mp4">
+                        <video id="localVideo" controls preload="none" style="display: none;">
                             Your browser does not support the video tag.
                         </video>
                     </div>
@@ -184,7 +183,18 @@
                 'left': '',
                 'top': ''
             });
-            $('#localVideoSource').attr('src', '');
+            // Clear video source properly to avoid load errors
+            var localVideoEl = $('#localVideo').get(0);
+            if (localVideoEl) {
+                localVideoEl.pause();
+                localVideoEl.currentTime = 0;
+                // Remove all source elements
+                $('#localVideo source').remove();
+                // Clear src attribute
+                localVideoEl.removeAttribute('src');
+                localVideoEl.src = '';
+                // Don't call load() with empty src - it causes errors
+            }
             $('#overlay').css('display', 'none');
             $('#lightbox').css('display', 'none');
             if (window.innerWidth > 959) $('.wrapper').css('height', '1014px');
@@ -212,30 +222,41 @@
                     $('#videobox').css('display', 'none');
                     var videoPath = 'videos/contactUs2_trailer.mp4';
                     var videoElement = $('#localVideo').get(0);
-                    $('#localVideoSource').attr('src', videoPath);
-                    videoElement.load();
-                    // Increase video size for contactus2 (750px x 422px, maintaining 16:9 aspect ratio)
-                    var videoLeft = 105; // Adjusted to center: (960 - 750) / 2 = 105px
-                    var videoTop = 100;  // Adjusted top position
-                    $('#localVideo').css({
-                        'display': 'block',
-                        'width': '750px',
-                        'height': '422px',
-                        'left': videoLeft + 'px',
-                        'top': videoTop + 'px'
-                    });
-                    // Position close button above the video
-                    $('#close').css({
-                        'display': 'block',
-                        'left': videoLeft + 'px',
-                        'top': (videoTop - 30) + 'px' // 30px above the video
-                    });
-                    // Try to play the video
-                    var playPromise = videoElement.play();
-                    if (playPromise !== undefined) {
-                        playPromise.catch(function(error) {
-                            console.log('Video play failed:', error);
+                    if (videoElement) {
+                        // Remove any existing source elements
+                        $('#localVideo source').remove();
+                        // Clear any existing src
+                        videoElement.src = '';
+                        videoElement.removeAttribute('src');
+                        // Create and add new source element
+                        var sourceElement = document.createElement('source');
+                        sourceElement.src = videoPath;
+                        sourceElement.type = 'video/mp4';
+                        videoElement.appendChild(sourceElement);
+                        // Increase video size for contactus2 (750px x 422px, maintaining 16:9 aspect ratio)
+                        var videoLeft = 105; // Adjusted to center: (960 - 750) / 2 = 105px
+                        var videoTop = 100;  // Adjusted top position
+                        $('#localVideo').css({
+                            'display': 'block',
+                            'width': '750px',
+                            'height': '422px',
+                            'left': videoLeft + 'px',
+                            'top': videoTop + 'px'
                         });
+                        // Position close button above the video
+                        $('#close').css({
+                            'display': 'block',
+                            'left': videoLeft + 'px',
+                            'top': (videoTop - 30) + 'px' // 30px above the video
+                        });
+                        // Load and try to play the video
+                        videoElement.load();
+                        var playPromise = videoElement.play();
+                        if (playPromise !== undefined) {
+                            playPromise.catch(function(error) {
+                                console.log('Video play failed:', error);
+                            });
+                        }
                     }
                     $('#overlay').css('display', 'block');
                     break;
@@ -348,30 +369,41 @@
                     $('#videobox').css('display', 'none');
                     var videoPath = 'videos/2020_trailer.mp4';
                     var videoElement = $('#localVideo').get(0);
-                    $('#localVideoSource').attr('src', videoPath);
-                    videoElement.load();
-                    // Use default video size for 2020 (500px x 281px)
-                    var videoLeft = 225;
-                    var videoTop = 150;
-                    $('#localVideo').css({
-                        'display': 'block',
-                        'width': '500px',
-                        'height': '281px',
-                        'left': videoLeft + 'px',
-                        'top': videoTop + 'px'
-                    });
-                    // Position close button above the video
-                    $('#close').css({
-                        'display': 'block',
-                        'left': videoLeft + 'px',
-                        'top': (videoTop - 30) + 'px' // 30px above the video
-                    });
-                    // Try to play the video
-                    var playPromise = videoElement.play();
-                    if (playPromise !== undefined) {
-                        playPromise.catch(function(error) {
-                            console.log('Video play failed:', error);
+                    if (videoElement) {
+                        // Remove any existing source elements
+                        $('#localVideo source').remove();
+                        // Clear any existing src
+                        videoElement.src = '';
+                        videoElement.removeAttribute('src');
+                        // Create and add new source element
+                        var sourceElement = document.createElement('source');
+                        sourceElement.src = videoPath;
+                        sourceElement.type = 'video/mp4';
+                        videoElement.appendChild(sourceElement);
+                        // Use default video size for 2020 (500px x 281px)
+                        var videoLeft = 225;
+                        var videoTop = 150;
+                        $('#localVideo').css({
+                            'display': 'block',
+                            'width': '500px',
+                            'height': '281px',
+                            'left': videoLeft + 'px',
+                            'top': videoTop + 'px'
                         });
+                        // Position close button above the video
+                        $('#close').css({
+                            'display': 'block',
+                            'left': videoLeft + 'px',
+                            'top': (videoTop - 30) + 'px' // 30px above the video
+                        });
+                        // Load and try to play the video
+                        videoElement.load();
+                        var playPromise = videoElement.play();
+                        if (playPromise !== undefined) {
+                            playPromise.catch(function(error) {
+                                console.log('Video play failed:', error);
+                            });
+                        }
                     }
                     $('#overlay').css('display', 'block');
                     break;
