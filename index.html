@@ -12,11 +12,7 @@
     <link href="css/meyer_reset.css" rel="stylesheet" type="text/css" />
     <link href="css/index.css" rel="stylesheet" type="text/css" />
     <link href="css/fontloader.css" rel="stylesheet" type="text/css" />
-    <link href="css/genesis.css" rel="stylesheet" type="text/css" />
-    <link href="css/session.css" rel="stylesheet" type="text/css" />
-    <link href="css/narrative.css" rel="stylesheet" type="text/css" />
-    <link href="css/connect.css" rel="stylesheet" type="text/css" />
-    <link href="css/genoma.css" rel="stylesheet" type="text/css" />
+    <!-- Page-specific CSS will be loaded lazily when needed -->
     <script src="js/jquery-2.1.1.min.js"></script>
     <script src="js/ajaxLoader.js"></script>
 </head>
@@ -63,6 +59,84 @@
             document.head.appendChild(universObliqueLink);
         })();
 
+        // Lazy CSS loading system
+        var loadedCSS = {
+            genesis: false,
+            session: false,
+            narrative: false,
+            connect: false,
+            genoma: false
+        };
+        
+        function loadPageCSS(pageName, callback) {
+            if (!pageName) {
+                if (callback) callback();
+                return;
+            }
+            
+            if (loadedCSS[pageName]) {
+                // Already loaded
+                if (callback) callback();
+                return;
+            }
+            
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = 'css/' + pageName + '.css';
+            
+            // For older browsers that don't support onload on link elements
+            var checkLoaded = setInterval(function() {
+                if (link.sheet || link.styleSheet) {
+                    clearInterval(checkLoaded);
+                    loadedCSS[pageName] = true;
+                    if (callback) callback();
+                }
+            }, 10);
+            
+            // Modern browsers
+            link.onload = function() {
+                clearInterval(checkLoaded);
+                loadedCSS[pageName] = true;
+                if (callback) callback();
+            };
+            
+            link.onerror = function() {
+                clearInterval(checkLoaded);
+                console.warn('Failed to load CSS for ' + pageName);
+                loadedCSS[pageName] = true; // Mark as attempted to prevent retries
+                if (callback) callback(); // Continue anyway
+            };
+            
+            // Timeout after 5 seconds
+            setTimeout(function() {
+                if (!loadedCSS[pageName]) {
+                    clearInterval(checkLoaded);
+                    loadedCSS[pageName] = true;
+                    console.warn('CSS load timeout for ' + pageName);
+                    if (callback) callback(); // Continue anyway
+                }
+            }, 5000);
+            
+            document.head.appendChild(link);
+        }
+        
+        // Promise wrapper for compatibility
+        function loadPageCSSPromise(pageName) {
+            if (typeof Promise !== 'undefined' && Promise.resolve) {
+                return new Promise(function(resolve) {
+                    loadPageCSS(pageName, resolve);
+                });
+            } else {
+                // Fallback: use jQuery Deferred
+                var dfd = $.Deferred();
+                loadPageCSS(pageName, function() {
+                    dfd.resolve();
+                });
+                return dfd.promise();
+            }
+        }
+        
         $(document).ready(function () {
             $('#copyright-year').text('©' + new Date().getFullYear());
 
@@ -91,6 +165,107 @@
                     $loading.text('loading 0%');
                 }
             }
+            
+            // Helper function to trigger page-specific animations (refactored to reduce nesting)
+            function triggerPageAnimations($new, $in, url) {
+                var isConnectPage = url.indexOf('connect.html') !== -1;
+                var isSessionPage = url.indexOf('session.html') !== -1;
+                
+                if (isConnectPage) {
+                    triggerConnectAnimations($new);
+                }
+                
+                if (isSessionPage && !sessionStorage.getItem('sessionScramblingShown')) {
+                    $in.on('transitionend', function(e) {
+                        if (e.originalEvent.propertyName === 'opacity') {
+                            $in.off('transitionend');
+                            triggerSessionScrambling($new);
+                        }
+                    });
+                }
+            }
+            
+            // Helper function for connect page chat bubble animations
+            function triggerConnectAnimations($new) {
+                $new.find('#chatbubble, #chatbubble2, #chatbubble3, #chatbubble4, #chatbubble5, #chatbubble6')
+                    .removeClass('chatbubble_animate chatbubble2_animate chatbubble3_animate chatbubble4_animate chatbubble5_animate chatbubble6_animate');
+                
+                setTimeout(function() {
+                    var $chatbubbles = $new.find('#chatbubble, #chatbubble2, #chatbubble3, #chatbubble4, #chatbubble5, #chatbubble6');
+                    if ($chatbubbles.length > 0) {
+                        $chatbubbles.css('display', 'block');
+                        setTimeout(function() {
+                            $new.find('#chatbubble').addClass('chatbubble_animate');
+                            $new.find('#chatbubble2').addClass('chatbubble2_animate');
+                            $new.find('#chatbubble3').addClass('chatbubble3_animate');
+                            $new.find('#chatbubble4').addClass('chatbubble4_animate');
+                            $new.find('#chatbubble5').addClass('chatbubble5_animate');
+                            $new.find('#chatbubble6').addClass('chatbubble6_animate');
+                        }, 50);
+                    }
+                }, 50);
+            }
+            
+            // Helper function for session page scrambling animation
+            function triggerSessionScrambling($new) {
+                var $workimgs = $new.find('.workimg');
+                if ($workimgs.length === 0) return;
+                
+                $workimgs.css({
+                    '-webkit-transition': 'filter 0.15s ease',
+                    '-moz-transition': 'filter 0.15s ease',
+                    '-ms-transition': 'filter 0.15s ease',
+                    '-o-transition': 'filter 0.15s ease',
+                    'transition': 'filter 0.15s ease'
+                });
+                
+                var blinkInterval = setInterval(function() {
+                    $workimgs.each(function() {
+                        var randomBrightness = 0.3 + Math.random() * 1.5;
+                        $(this).css({
+                            '-webkit-filter': 'brightness(' + randomBrightness + ')',
+                            '-moz-filter': 'brightness(' + randomBrightness + ')',
+                            '-ms-filter': 'brightness(' + randomBrightness + ')',
+                            '-o-filter': 'brightness(' + randomBrightness + ')',
+                            'filter': 'brightness(' + randomBrightness + ')'
+                        });
+                    });
+                }, 150);
+                
+                setTimeout(function() {
+                    clearInterval(blinkInterval);
+                    $workimgs.css({
+                        '-webkit-transition': 'filter 0.8s ease',
+                        '-moz-transition': 'filter 0.8s ease',
+                        '-ms-transition': 'filter 0.8s ease',
+                        '-o-transition': 'filter 0.8s ease',
+                        'transition': 'filter 0.8s ease'
+                    });
+                    $workimgs.css({
+                        '-webkit-filter': 'brightness(1)',
+                        '-moz-filter': 'brightness(1)',
+                        '-ms-filter': 'brightness(1)',
+                        '-o-filter': 'brightness(1)',
+                        'filter': 'brightness(1)'
+                    });
+                    
+                    setTimeout(function() {
+                        $workimgs.css({
+                            '-webkit-filter': '',
+                            '-moz-filter': '',
+                            '-ms-filter': '',
+                            '-o-filter': '',
+                            'filter': '',
+                            '-webkit-transition': '',
+                            '-moz-transition': '',
+                            '-ms-transition': '',
+                            '-o-transition': '',
+                            'transition': ''
+                        });
+                        sessionStorage.setItem('sessionScramblingShown', '1');
+                    }, 800);
+                }, 1000);
+            }
 
             window.navigateTo = function (url, bg) {
                 $('body').css('backgroundColor', bg);
@@ -107,6 +282,14 @@
                 var isGenoma = url.indexOf('genoma.html') !== -1;
                 var loaderSrc = (isNarrative || isSession || isGenoma) ? 'loader/white_loader.gif' : 'loader/black_loader.gif';
                 var loaderColor = (isNarrative || isSession || isGenoma) ? 'white' : 'black';
+                
+                // Determine which CSS to load
+                var pageCSS = null;
+                if (isGenesis) pageCSS = 'genesis';
+                else if (isSession) pageCSS = 'session';
+                else if (isNarrative) pageCSS = 'narrative';
+                else if (isConnect) pageCSS = 'connect';
+                else if (isGenoma) pageCSS = 'genoma';
                 
                 // Timer to show loader after 1 second if loading is still in progress
                 loaderTimeout = setTimeout(function() {
@@ -257,175 +440,44 @@
                     // Fade in
                     requestAnimationFrame(function () {
                         $in.css('opacity', '1');
-                        
-                        // For connect page, trigger chat bubble animations after fade-in completes
-                        var isConnectPage = url.indexOf('connect.html') !== -1;
-                        if (isConnectPage) {
-                            // Remove any animation classes that might have been added prematurely
-                            $new.find('#chatbubble, #chatbubble2, #chatbubble3, #chatbubble4, #chatbubble5, #chatbubble6')
-                                .removeClass('chatbubble_animate chatbubble2_animate chatbubble3_animate chatbubble4_animate chatbubble5_animate chatbubble6_animate');
-                            
-                            // Wait for fade-in transition to complete (350ms) plus small buffer
-                            setTimeout(function() {
-                                // Trigger chat bubble animations after fade-in completes
-                                var $chatbubbles = $new.find('#chatbubble, #chatbubble2, #chatbubble3, #chatbubble4, #chatbubble5, #chatbubble6');
-                                if ($chatbubbles.length > 0) {
-                                    $chatbubbles.css('display', 'block');
-                                    // Small delay to ensure elements are visible
-                                    setTimeout(function() {
-                                        $new.find('#chatbubble').addClass('chatbubble_animate');
-                                        $new.find('#chatbubble2').addClass('chatbubble2_animate');
-                                        $new.find('#chatbubble3').addClass('chatbubble3_animate');
-                                        $new.find('#chatbubble4').addClass('chatbubble4_animate');
-                                        $new.find('#chatbubble5').addClass('chatbubble5_animate');
-                                        $new.find('#chatbubble6').addClass('chatbubble6_animate');
-                                    }, 50);
-                                }
-                            }, 50); // Wait for fade-in transition - minimal delay
-                        }
-                        
-                        // For session page, trigger scrambled brightness initialization after fade-in completes
-                        var isSessionPage = url.indexOf('session.html') !== -1;
-                        if (isSessionPage) {
-                            // Check if scrambling effect has already been shown in this session
-                            if (!sessionStorage.getItem('sessionScramblingShown')) {
-                                // Wait for fade-in transition to complete (350ms) plus small buffer
-                                setTimeout(function() {
-                                    var $workimgs = $new.find('.workimg');
-                                    if ($workimgs.length > 0) {
-                                        // Set transition for smooth blinking
-                                        $workimgs.css({
-                                            '-webkit-transition': 'filter 0.15s ease',
-                                            '-moz-transition': 'filter 0.15s ease',
-                                            '-ms-transition': 'filter 0.15s ease',
-                                            '-o-transition': 'filter 0.15s ease',
-                                            'transition': 'filter 0.15s ease'
-                                        });
-                                        
-                                        // Blink effect: change brightness multiple times during 1 second
-                                        var blinkInterval = setInterval(function() {
-                                            $workimgs.each(function() {
-                                                var randomBrightness = 0.3 + Math.random() * 1.5; // Random between 0.3 and 1.8
-                                                $(this).css({
-                                                    '-webkit-filter': 'brightness(' + randomBrightness + ')',
-                                                    '-moz-filter': 'brightness(' + randomBrightness + ')',
-                                                    '-ms-filter': 'brightness(' + randomBrightness + ')',
-                                                    '-o-filter': 'brightness(' + randomBrightness + ')',
-                                                    'filter': 'brightness(' + randomBrightness + ')'
-                                                });
-                                            });
-                                        }, 150); // Blink every 150ms
-                                        
-                                        // After 1 second, stop blinking and animate all to normal brightness (1)
-                                        setTimeout(function() {
-                                            clearInterval(blinkInterval);
-                                            // Change transition to slower for final animation
-                                            $workimgs.css({
-                                                '-webkit-transition': 'filter 0.8s ease',
-                                                '-moz-transition': 'filter 0.8s ease',
-                                                '-ms-transition': 'filter 0.8s ease',
-                                                '-o-transition': 'filter 0.8s ease',
-                                                'transition': 'filter 0.8s ease'
-                                            });
-                                            $workimgs.css({
-                                                '-webkit-filter': 'brightness(1)',
-                                                '-moz-filter': 'brightness(1)',
-                                                '-ms-filter': 'brightness(1)',
-                                                '-o-filter': 'brightness(1)',
-                                                'filter': 'brightness(1)'
-                                            });
-                                            
-                                            // After animation completes, remove inline styles to allow CSS hover to work
-                                            setTimeout(function() {
-                                                $workimgs.css({
-                                                    '-webkit-filter': '',
-                                                    '-moz-filter': '',
-                                                    '-ms-filter': '',
-                                                    '-o-filter': '',
-                                                    'filter': '',
-                                                    '-webkit-transition': '',
-                                                    '-moz-transition': '',
-                                                    '-ms-transition': '',
-                                                    '-o-transition': '',
-                                                    'transition': ''
-                                                });
-                                                // Mark scrambling effect as shown for this session
-                                                sessionStorage.setItem('sessionScramblingShown', '1');
-                                            }, 800); // Wait for 0.8s transition to complete
-                                        }, 1000);
-                                    }
-                                }, 400); // Wait for fade-in transition (350ms) + small buffer
-                            }
-                        }
+                        triggerPageAnimations($new, $in, url);
                     });
                 }
                 
-                if ($content.length && !$content.is('#fade-out-wrap'))
-                    $content.wrapAll('<div id="fade-out-wrap"></div>');
-                var $wrap = $('#page-content #fade-out-wrap');
-                if ($wrap.length) {
-                    $wrap.css('transition', 'opacity 0.3s ease');
-                    $wrap[0].offsetHeight;
-                    $wrap.css('opacity', '0');
-                    $wrap.one('transitionend', function () {
-                        $pc.empty();
-                        // Reset loading percentage to 0
-                        resetLoadingPercentage();
-                        // Don't show loader immediately - wait 1 second
-                        
-                        // Load HTML immediately
-                        $pc.load(url, function () {
-                            // Hide content immediately when loaded (before loader is removed)
-                            var $loadedContent = $pc.children().not('.loaderContainer');
-                            $loadedContent.css('visibility', 'hidden');
-                            
-                            // HTML loaded, jump to 50%
-                            updateLoadingPercentage(50);
-                            
-                            // For connect page, prevent premature chat bubble animations
-                            var isConnectPage = url.indexOf('connect.html') !== -1;
-                            if (isConnectPage) {
-                                // Remove animation classes that might have been added by connect.html's script
-                                setTimeout(function() {
-                                    $loadedContent.find('#chatbubble, #chatbubble2, #chatbubble3, #chatbubble4, #chatbubble5, #chatbubble6')
-                                        .removeClass('chatbubble_animate chatbubble2_animate chatbubble3_animate chatbubble4_animate chatbubble5_animate chatbubble6_animate')
-                                        .css('display', 'none');
-                                }, 10);
-                            }
-                            
-                            // Pre-load page background image first (for genesis, narrative, connect, session)
-                            preloadPageBackground(60, function() {
-                                // Background loaded (now at 60%), now handle page-specific images
-                                if (isSession) {
-                                    // Pre-load session workimg images
-                                    preloadSessionImages(function() {
-                                        // Ensure we're at 100% - preloadSessionImages already sets it
-                                        updateLoadingPercentage(100);
-                                        // Small delay to ensure 100% is visible, then complete
-                                        setTimeout(function() {
-                                            completePageLoad();
-                                        }, 100);
-                                    });
-                                } else {
-                                    // No additional images to load, jump directly to 100%
-                                    updateLoadingPercentage(100);
-                                    // Small delay to ensure 100% is visible, then complete
-                                    setTimeout(function() {
-                                        completePageLoad();
-                                    }, 100);
-                                }
-                            });
+                // Load page-specific CSS first (before content loads)
+                var pageCSS = null;
+                if (isGenesis) pageCSS = 'genesis';
+                else if (isSession) pageCSS = 'session';
+                else if (isNarrative) pageCSS = 'narrative';
+                else if (isConnect) pageCSS = 'connect';
+                else if (isGenoma) pageCSS = 'genoma';
+                
+                // Function to proceed with content loading after CSS is loaded
+                function proceedWithContentLoad() {
+                    if ($content.length && !$content.is('#fade-out-wrap'))
+                        $content.wrapAll('<div id="fade-out-wrap"></div>');
+                    var $wrap = $('#page-content #fade-out-wrap');
+                    if ($wrap.length) {
+                        $wrap.css('transition', 'opacity 0.3s ease');
+                        $wrap[0].offsetHeight;
+                        $wrap.css('opacity', '0');
+                        $wrap.one('transitionend', function () {
+                            $pc.empty();
+                            resetLoadingPercentage();
+                            loadPageContent();
                         });
-                    });
-                } else {
-                    $pc.empty();
-                    // Reset loading percentage to 0
-                    resetLoadingPercentage();
-                    // Don't show loader immediately - wait 1 second
-                    
+                    } else {
+                        $pc.empty();
+                        resetLoadingPercentage();
+                        loadPageContent();
+                    }
+                }
+                
+                // Helper function to load page content (refactored to reduce nesting)
+                function loadPageContent() {
                     // Load HTML immediately
                     $pc.load(url, function () {
-                        // Hide content immediately when loaded
+                        // Hide content immediately when loaded (before loader is removed)
                         var $loadedContent = $pc.children().not('.loaderContainer');
                         $loadedContent.css('visibility', 'hidden');
                         
@@ -433,8 +485,8 @@
                         updateLoadingPercentage(50);
                         
                         // For connect page, prevent premature chat bubble animations
-                        var isConnectPageElse = url.indexOf('connect.html') !== -1;
-                        if (isConnectPageElse) {
+                        var isConnectPage = url.indexOf('connect.html') !== -1;
+                        if (isConnectPage) {
                             // Remove animation classes that might have been added by connect.html's script
                             setTimeout(function() {
                                 $loadedContent.find('#chatbubble, #chatbubble2, #chatbubble3, #chatbubble4, #chatbubble5, #chatbubble6')
@@ -451,283 +503,30 @@
                                 preloadSessionImages(function() {
                                     // Ensure we're at 100% - preloadSessionImages already sets it
                                     updateLoadingPercentage(100);
-                                    // Clear the 1-second loader timeout since we're done loading
-                                    clearTimeout(loaderTimeout);
-                                    // Small delay to ensure 100% is visible, then remove loader and fade in content
+                                    // Small delay to ensure 100% is visible, then complete
                                     setTimeout(function() {
-                                        // Remove loader if it appeared
-                                        $pc.find('.loaderContainer').remove();
-                                        $pc.find('header').first().remove();
-                                            
-                                            // Get content
-                                            var $new = $pc.children();
-                                            if ($new.length > 0) {
-                                                // Make content visible
-                                                $new.css('visibility', 'visible');
-                                                
-                                                // Remove any existing fade-in-wrap
-                                                var $existingFadeIn = $('#fade-in-wrap');
-                                                if ($existingFadeIn.length) {
-                                                    $existingFadeIn.children().unwrap();
-                                                    $new = $pc.children();
-                                                }
-                                                
-                                                // Wrap and set initial opacity
-                                                $new.wrapAll('<div id="fade-in-wrap"></div>');
-                                                var $in = $('#fade-in-wrap');
-                                                $in.css({ 'opacity': '0', 'transition': 'opacity 0.35s ease' });
-                                                
-                                                // Force reflow
-                                                $in[0].offsetHeight;
-                                                
-                                                // Fade in
-                                                requestAnimationFrame(function () {
-                                                    $in.css('opacity', '1');
-                                                    
-                                                    // For connect page, trigger chat bubble animations after fade-in completes
-                                                    var isConnectPage = url.indexOf('connect.html') !== -1;
-                                                    if (isConnectPage) {
-                                                        // Remove any animation classes that might have been added prematurely
-                                                        $new.find('#chatbubble, #chatbubble2, #chatbubble3, #chatbubble4, #chatbubble5, #chatbubble6')
-                                                            .removeClass('chatbubble_animate chatbubble2_animate chatbubble3_animate chatbubble4_animate chatbubble5_animate chatbubble6_animate');
-                                                        
-                                                        // Wait for fade-in transition to complete (350ms) plus small buffer
-                                                        setTimeout(function() {
-                                                            // Trigger chat bubble animations after fade-in completes
-                                                            var $chatbubbles = $new.find('#chatbubble, #chatbubble2, #chatbubble3, #chatbubble4, #chatbubble5, #chatbubble6');
-                                                            if ($chatbubbles.length > 0) {
-                                                                $chatbubbles.css('display', 'block');
-                                                                // Small delay to ensure elements are visible
-                                                                setTimeout(function() {
-                                                                    $new.find('#chatbubble').addClass('chatbubble_animate');
-                                                                    $new.find('#chatbubble2').addClass('chatbubble2_animate');
-                                                                    $new.find('#chatbubble3').addClass('chatbubble3_animate');
-                                                                    $new.find('#chatbubble4').addClass('chatbubble4_animate');
-                                                                    $new.find('#chatbubble5').addClass('chatbubble5_animate');
-                                                                    $new.find('#chatbubble6').addClass('chatbubble6_animate');
-                                                                }, 50);
-                                                            }
-                                                        }, 400); // Wait for fade-in transition (350ms) + small buffer
-                                                    }
-                                                    
-                                                    // For session page, trigger scrambled brightness initialization after fade-in completes
-                                                    var isSessionPage = url.indexOf('session.html') !== -1;
-                                                    if (isSessionPage) {
-                                                        // Check if scrambling effect has already been shown in this session
-                                                        if (!sessionStorage.getItem('sessionScramblingShown')) {
-                                                            // Wait for fade-in transition to complete (350ms) plus small buffer
-                                                            setTimeout(function() {
-                                                                var $workimgs = $new.find('.workimg');
-                                                                if ($workimgs.length > 0) {
-                                                                    // Set transition for smooth blinking
-                                                                    $workimgs.css({
-                                                                        '-webkit-transition': 'filter 0.15s ease',
-                                                                        '-moz-transition': 'filter 0.15s ease',
-                                                                        '-ms-transition': 'filter 0.15s ease',
-                                                                        '-o-transition': 'filter 0.15s ease',
-                                                                        'transition': 'filter 0.15s ease'
-                                                                    });
-                                                                    
-                                                                    // Blink effect: change brightness multiple times during 1 second
-                                                                    var blinkInterval = setInterval(function() {
-                                                                        $workimgs.each(function() {
-                                                                            var randomBrightness = 0.3 + Math.random() * 1.5; // Random between 0.3 and 1.8
-                                                                            $(this).css({
-                                                                                '-webkit-filter': 'brightness(' + randomBrightness + ')',
-                                                                                '-moz-filter': 'brightness(' + randomBrightness + ')',
-                                                                                '-ms-filter': 'brightness(' + randomBrightness + ')',
-                                                                                '-o-filter': 'brightness(' + randomBrightness + ')',
-                                                                                'filter': 'brightness(' + randomBrightness + ')'
-                                                                            });
-                                                                        });
-                                                                    }, 150); // Blink every 150ms
-                                                                    
-                                                                    // After 1 second, stop blinking and animate all to normal brightness (1)
-                                                                    setTimeout(function() {
-                                                                        clearInterval(blinkInterval);
-                                                                        // Change transition to slower for final animation
-                                                                        $workimgs.css({
-                                                                            '-webkit-transition': 'filter 0.8s ease',
-                                                                            '-moz-transition': 'filter 0.8s ease',
-                                                                            '-ms-transition': 'filter 0.8s ease',
-                                                                            '-o-transition': 'filter 0.8s ease',
-                                                                            'transition': 'filter 0.8s ease'
-                                                                        });
-                                                                        $workimgs.css({
-                                                                            '-webkit-filter': 'brightness(1)',
-                                                                            '-moz-filter': 'brightness(1)',
-                                                                            '-ms-filter': 'brightness(1)',
-                                                                            '-o-filter': 'brightness(1)',
-                                                                            'filter': 'brightness(1)'
-                                                                        });
-                                                                        
-                                                                        // After animation completes, remove inline styles to allow CSS hover to work
-                                                                        setTimeout(function() {
-                                                                            $workimgs.css({
-                                                                                '-webkit-filter': '',
-                                                                                '-moz-filter': '',
-                                                                                '-ms-filter': '',
-                                                                                '-o-filter': '',
-                                                                                'filter': '',
-                                                                                '-webkit-transition': '',
-                                                                                '-moz-transition': '',
-                                                                                '-ms-transition': '',
-                                                                                '-o-transition': '',
-                                                                                'transition': ''
-                                                                            });
-                                                                            // Mark scrambling effect as shown for this session
-                                                                            sessionStorage.setItem('sessionScramblingShown', '1');
-                                                                        }, 800); // Wait for 0.8s transition to complete
-                                                                    }, 1000);
-                                                                }
-                                                            }, 400); // Wait for fade-in transition (350ms) + small buffer
-                                                        }
-                                                    }
-                                                });
-                                            }
-                                        }, 100);
-                                    });
+                                        completePageLoad();
+                                    }, 100);
+                                });
                             } else {
                                 // No additional images to load, jump directly to 100%
                                 updateLoadingPercentage(100);
-                                // Clear the 1-second loader timeout since we're done loading
-                                clearTimeout(loaderTimeout);
-                                // Small delay to ensure 100% is visible, then remove loader and fade in content
+                                // Small delay to ensure 100% is visible, then complete
                                 setTimeout(function() {
-                                    // Remove loader if it appeared
-                                    $pc.find('.loaderContainer').remove();
-                                    $pc.find('header').first().remove();
-                                    
-                                    // Get content
-                                    var $new = $pc.children();
-                                    if ($new.length > 0) {
-                                        // Make content visible
-                                        $new.css('visibility', 'visible');
-                                        
-                                        // Remove any existing fade-in-wrap
-                                        var $existingFadeIn = $('#fade-in-wrap');
-                                        if ($existingFadeIn.length) {
-                                            $existingFadeIn.children().unwrap();
-                                            $new = $pc.children();
-                                        }
-                                        
-                                        // Wrap and set initial opacity
-                                        $new.wrapAll('<div id="fade-in-wrap"></div>');
-                                        var $in = $('#fade-in-wrap');
-                                        $in.css({ 'opacity': '0', 'transition': 'opacity 0.35s ease' });
-                                        
-                                        // Force reflow
-                                        $in[0].offsetHeight;
-                                        
-                                        // Fade in
-                                        requestAnimationFrame(function () {
-                                            $in.css('opacity', '1');
-                                            
-                                            // For connect page, trigger chat bubble animations after fade-in completes
-                                            var isConnectPage = url.indexOf('connect.html') !== -1;
-                                            if (isConnectPage) {
-                                                // Remove any animation classes that might have been added prematurely
-                                                $new.find('#chatbubble, #chatbubble2, #chatbubble3, #chatbubble4, #chatbubble5, #chatbubble6')
-                                                    .removeClass('chatbubble_animate chatbubble2_animate chatbubble3_animate chatbubble4_animate chatbubble5_animate chatbubble6_animate');
-                                                
-                                                // Wait for fade-in transition to complete (350ms) plus small buffer
-                                                setTimeout(function() {
-                                                    // Trigger chat bubble animations after fade-in completes
-                                                    var $chatbubbles = $new.find('#chatbubble, #chatbubble2, #chatbubble3, #chatbubble4, #chatbubble5, #chatbubble6');
-                                                    if ($chatbubbles.length > 0) {
-                                                        $chatbubbles.css('display', 'block');
-                                                        // Small delay to ensure elements are visible
-                                                        setTimeout(function() {
-                                                            $new.find('#chatbubble').addClass('chatbubble_animate');
-                                                            $new.find('#chatbubble2').addClass('chatbubble2_animate');
-                                                            $new.find('#chatbubble3').addClass('chatbubble3_animate');
-                                                            $new.find('#chatbubble4').addClass('chatbubble4_animate');
-                                                            $new.find('#chatbubble5').addClass('chatbubble5_animate');
-                                                            $new.find('#chatbubble6').addClass('chatbubble6_animate');
-                                                        }, 50);
-                                                    }
-                                                }, 400); // Wait for fade-in transition (350ms) + small buffer
-                                            }
-                                            
-                                            // For session page, trigger scrambled brightness initialization after fade-in completes
-                                            var isSessionPage = url.indexOf('session.html') !== -1;
-                                            if (isSessionPage) {
-                                                // Check if scrambling effect has already been shown in this session
-                                                if (!sessionStorage.getItem('sessionScramblingShown')) {
-                                                    // Wait for fade-in transition to complete (350ms) plus small buffer
-                                                    setTimeout(function() {
-                                                        var $workimgs = $new.find('.workimg');
-                                                        if ($workimgs.length > 0) {
-                                                            // Set transition for smooth blinking
-                                                            $workimgs.css({
-                                                                '-webkit-transition': 'filter 0.15s ease',
-                                                                '-moz-transition': 'filter 0.15s ease',
-                                                                '-ms-transition': 'filter 0.15s ease',
-                                                                '-o-transition': 'filter 0.15s ease',
-                                                                'transition': 'filter 0.15s ease'
-                                                            });
-                                                            
-                                                            // Blink effect: change brightness multiple times during 1 second
-                                                            var blinkInterval = setInterval(function() {
-                                                                $workimgs.each(function() {
-                                                                    var randomBrightness = 0.3 + Math.random() * 1.5; // Random between 0.3 and 1.8
-                                                                    $(this).css({
-                                                                        '-webkit-filter': 'brightness(' + randomBrightness + ')',
-                                                                        '-moz-filter': 'brightness(' + randomBrightness + ')',
-                                                                        '-ms-filter': 'brightness(' + randomBrightness + ')',
-                                                                        '-o-filter': 'brightness(' + randomBrightness + ')',
-                                                                        'filter': 'brightness(' + randomBrightness + ')'
-                                                                    });
-                                                                });
-                                                            }, 150); // Blink every 150ms
-                                                            
-                                                            // After 1 second, stop blinking and animate all to normal brightness (1)
-                                                            setTimeout(function() {
-                                                                clearInterval(blinkInterval);
-                                                                // Change transition to slower for final animation
-                                                                $workimgs.css({
-                                                                    '-webkit-transition': 'filter 0.8s ease',
-                                                                    '-moz-transition': 'filter 0.8s ease',
-                                                                    '-ms-transition': 'filter 0.8s ease',
-                                                                    '-o-transition': 'filter 0.8s ease',
-                                                                    'transition': 'filter 0.8s ease'
-                                                                });
-                                                                $workimgs.css({
-                                                                    '-webkit-filter': 'brightness(1)',
-                                                                    '-moz-filter': 'brightness(1)',
-                                                                    '-ms-filter': 'brightness(1)',
-                                                                    '-o-filter': 'brightness(1)',
-                                                                    'filter': 'brightness(1)'
-                                                                });
-                                                                
-                                                                // After animation completes, remove inline styles to allow CSS hover to work
-                                                                setTimeout(function() {
-                                                                    $workimgs.css({
-                                                                        '-webkit-filter': '',
-                                                                        '-moz-filter': '',
-                                                                        '-ms-filter': '',
-                                                                        '-o-filter': '',
-                                                                        'filter': '',
-                                                                        '-webkit-transition': '',
-                                                                        '-moz-transition': '',
-                                                                        '-ms-transition': '',
-                                                                        '-o-transition': '',
-                                                                        'transition': ''
-                                                                    });
-                                                                    // Mark scrambling effect as shown for this session
-                                                                    sessionStorage.setItem('sessionScramblingShown', '1');
-                                                                }, 800); // Wait for 0.8s transition to complete
-                                                            }, 1000);
-                                                        }
-                                                    }, 400); // Wait for fade-in transition (350ms) + small buffer
-                                                }
-                                            }
-                                        });
-                                    }
+                                    completePageLoad();
                                 }, 100);
                             }
                         });
                     });
+                }
+                
+                // Load CSS first, then proceed with content loading
+                if (pageCSS) {
+                    loadPageCSSPromise(pageCSS).then(function() {
+                        proceedWithContentLoad();
+                    });
+                } else {
+                    proceedWithContentLoad();
                 }
             };
 
@@ -748,8 +547,10 @@
             // Reset loading percentage to 0 for initial load
             resetLoadingPercentage();
             
-            // Load HTML immediately
-            $preloadContainer.load('genesis.html', function () {
+            // Load genesis CSS first for initial page
+            loadPageCSSPromise('genesis').then(function() {
+                // Load HTML immediately after CSS is loaded
+                $preloadContainer.load('genesis.html', function () {
                 var $preloadedContent = $preloadContainer.children();
                 // Hide preloaded content initially
                 $preloadedContent.css('visibility', 'hidden');
@@ -888,6 +689,7 @@
                         $preloadContainer.remove();
                     }, 100);
                 }
+                });
             });
         });
     </script>
