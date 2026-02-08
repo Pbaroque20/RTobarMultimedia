@@ -12,7 +12,11 @@
     <link href="css/meyer_reset.css" rel="stylesheet" type="text/css" />
     <link href="css/index.css" rel="stylesheet" type="text/css" />
     <link href="css/fontloader.css" rel="stylesheet" type="text/css" />
-    <!-- Page-specific CSS will be loaded lazily when needed -->
+    <link href="css/genesis.css" rel="stylesheet" type="text/css" />
+    <link href="css/session.css" rel="stylesheet" type="text/css" />
+    <link href="css/narrative.css" rel="stylesheet" type="text/css" />
+    <link href="css/connect.css" rel="stylesheet" type="text/css" />
+    <link href="css/genoma.css" rel="stylesheet" type="text/css" />
     <script src="js/jquery-2.1.1.min.js"></script>
     <script src="js/ajaxLoader.js"></script>
 </head>
@@ -59,84 +63,6 @@
             document.head.appendChild(universObliqueLink);
         })();
 
-        // Lazy CSS loading system
-        var loadedCSS = {
-            genesis: false,
-            session: false,
-            narrative: false,
-            connect: false,
-            genoma: false
-        };
-        
-        function loadPageCSS(pageName, callback) {
-            if (!pageName) {
-                if (callback) callback();
-                return;
-            }
-            
-            if (loadedCSS[pageName]) {
-                // Already loaded
-                if (callback) callback();
-                return;
-            }
-            
-            var link = document.createElement('link');
-            link.rel = 'stylesheet';
-            link.type = 'text/css';
-            link.href = 'css/' + pageName + '.css';
-            
-            // For older browsers that don't support onload on link elements
-            var checkLoaded = setInterval(function() {
-                if (link.sheet || link.styleSheet) {
-                    clearInterval(checkLoaded);
-                    loadedCSS[pageName] = true;
-                    if (callback) callback();
-                }
-            }, 10);
-            
-            // Modern browsers
-            link.onload = function() {
-                clearInterval(checkLoaded);
-                loadedCSS[pageName] = true;
-                if (callback) callback();
-            };
-            
-            link.onerror = function() {
-                clearInterval(checkLoaded);
-                console.warn('Failed to load CSS for ' + pageName);
-                loadedCSS[pageName] = true; // Mark as attempted to prevent retries
-                if (callback) callback(); // Continue anyway
-            };
-            
-            // Timeout after 5 seconds
-            setTimeout(function() {
-                if (!loadedCSS[pageName]) {
-                    clearInterval(checkLoaded);
-                    loadedCSS[pageName] = true;
-                    console.warn('CSS load timeout for ' + pageName);
-                    if (callback) callback(); // Continue anyway
-                }
-            }, 5000);
-            
-            document.head.appendChild(link);
-        }
-        
-        // Promise wrapper for compatibility
-        function loadPageCSSPromise(pageName) {
-            if (typeof Promise !== 'undefined' && Promise.resolve) {
-                return new Promise(function(resolve) {
-                    loadPageCSS(pageName, resolve);
-                });
-            } else {
-                // Fallback: use jQuery Deferred
-                var dfd = $.Deferred();
-                loadPageCSS(pageName, function() {
-                    dfd.resolve();
-                });
-                return dfd.promise();
-            }
-        }
-        
         $(document).ready(function () {
             $('#copyright-year').text('©' + new Date().getFullYear());
 
@@ -444,40 +370,72 @@
                     });
                 }
                 
-                // Load page-specific CSS first (before content loads)
-                var pageCSS = null;
-                if (isGenesis) pageCSS = 'genesis';
-                else if (isSession) pageCSS = 'session';
-                else if (isNarrative) pageCSS = 'narrative';
-                else if (isConnect) pageCSS = 'connect';
-                else if (isGenoma) pageCSS = 'genoma';
-                
-                // Function to proceed with content loading after CSS is loaded
-                function proceedWithContentLoad() {
-                    if ($content.length && !$content.is('#fade-out-wrap'))
-                        $content.wrapAll('<div id="fade-out-wrap"></div>');
-                    var $wrap = $('#page-content #fade-out-wrap');
-                    if ($wrap.length) {
-                        $wrap.css('transition', 'opacity 0.3s ease');
-                        $wrap[0].offsetHeight;
-                        $wrap.css('opacity', '0');
-                        $wrap.one('transitionend', function () {
-                            $pc.empty();
-                            resetLoadingPercentage();
-                            loadPageContent();
-                        });
-                    } else {
+                if ($content.length && !$content.is('#fade-out-wrap'))
+                    $content.wrapAll('<div id="fade-out-wrap"></div>');
+                var $wrap = $('#page-content #fade-out-wrap');
+                if ($wrap.length) {
+                    $wrap.css('transition', 'opacity 0.3s ease');
+                    $wrap[0].offsetHeight;
+                    $wrap.css('opacity', '0');
+                    $wrap.one('transitionend', function () {
                         $pc.empty();
+                        // Reset loading percentage to 0
                         resetLoadingPercentage();
-                        loadPageContent();
-                    }
-                }
-                
-                // Helper function to load page content (refactored to reduce nesting)
-                function loadPageContent() {
+                        // Don't show loader immediately - wait 1 second
+                        
+                        // Load HTML immediately
+                        $pc.load(url, function () {
+                            // Hide content immediately when loaded (before loader is removed)
+                            var $loadedContent = $pc.children().not('.loaderContainer');
+                            $loadedContent.css('visibility', 'hidden');
+                            
+                            // HTML loaded, jump to 50%
+                            updateLoadingPercentage(50);
+                            
+                            // For connect page, prevent premature chat bubble animations
+                            var isConnectPage = url.indexOf('connect.html') !== -1;
+                            if (isConnectPage) {
+                                // Remove animation classes that might have been added by connect.html's script
+                                setTimeout(function() {
+                                    $loadedContent.find('#chatbubble, #chatbubble2, #chatbubble3, #chatbubble4, #chatbubble5, #chatbubble6')
+                                        .removeClass('chatbubble_animate chatbubble2_animate chatbubble3_animate chatbubble4_animate chatbubble5_animate chatbubble6_animate')
+                                        .css('display', 'none');
+                                }, 10);
+                            }
+                            
+                            // Pre-load page background image first (for genesis, narrative, connect, session)
+                            preloadPageBackground(60, function() {
+                                // Background loaded (now at 60%), now handle page-specific images
+                                if (isSession) {
+                                    // Pre-load session workimg images
+                                    preloadSessionImages(function() {
+                                        // Ensure we're at 100% - preloadSessionImages already sets it
+                                        updateLoadingPercentage(100);
+                                        // Small delay to ensure 100% is visible, then complete
+                                        setTimeout(function() {
+                                            completePageLoad();
+                                        }, 100);
+                                    });
+                                } else {
+                                    // No additional images to load, jump directly to 100%
+                                    updateLoadingPercentage(100);
+                                    // Small delay to ensure 100% is visible, then complete
+                                    setTimeout(function() {
+                                        completePageLoad();
+                                    }, 100);
+                                }
+                            });
+                        });
+                    });
+                } else {
+                    $pc.empty();
+                    // Reset loading percentage to 0
+                    resetLoadingPercentage();
+                    // Don't show loader immediately - wait 1 second
+                    
                     // Load HTML immediately
                     $pc.load(url, function () {
-                        // Hide content immediately when loaded (before loader is removed)
+                        // Hide content immediately when loaded
                         var $loadedContent = $pc.children().not('.loaderContainer');
                         $loadedContent.css('visibility', 'hidden');
                         
@@ -485,8 +443,8 @@
                         updateLoadingPercentage(50);
                         
                         // For connect page, prevent premature chat bubble animations
-                        var isConnectPage = url.indexOf('connect.html') !== -1;
-                        if (isConnectPage) {
+                        var isConnectPageElse = url.indexOf('connect.html') !== -1;
+                        if (isConnectPageElse) {
                             // Remove animation classes that might have been added by connect.html's script
                             setTimeout(function() {
                                 $loadedContent.find('#chatbubble, #chatbubble2, #chatbubble3, #chatbubble4, #chatbubble5, #chatbubble6')
@@ -503,30 +461,85 @@
                                 preloadSessionImages(function() {
                                     // Ensure we're at 100% - preloadSessionImages already sets it
                                     updateLoadingPercentage(100);
-                                    // Small delay to ensure 100% is visible, then complete
+                                    // Clear the 1-second loader timeout since we're done loading
+                                    clearTimeout(loaderTimeout);
+                                    // Small delay to ensure 100% is visible, then remove loader and fade in content
                                     setTimeout(function() {
-                                        completePageLoad();
+                                        // Remove loader if it appeared
+                                        $pc.find('.loaderContainer').remove();
+                                        $pc.find('header').first().remove();
+                                        
+                                        // Get content
+                                        var $new = $pc.children();
+                                        if ($new.length > 0) {
+                                            // Make content visible
+                                            $new.css('visibility', 'visible');
+                                            
+                                            // Remove any existing fade-in-wrap
+                                            var $existingFadeIn = $('#fade-in-wrap');
+                                            if ($existingFadeIn.length) {
+                                                $existingFadeIn.children().unwrap();
+                                                $new = $pc.children();
+                                            }
+                                            
+                                            // Wrap and set initial opacity
+                                            $new.wrapAll('<div id="fade-in-wrap"></div>');
+                                            var $in = $('#fade-in-wrap');
+                                            $in.css({ 'opacity': '0', 'transition': 'opacity 0.35s ease' });
+                                            
+                                            // Force reflow
+                                            $in[0].offsetHeight;
+                                            
+                                            // Fade in
+                                            requestAnimationFrame(function () {
+                                                $in.css('opacity', '1');
+                                                triggerPageAnimations($new, $in, url);
+                                            });
+                                        }
                                     }, 100);
                                 });
                             } else {
                                 // No additional images to load, jump directly to 100%
                                 updateLoadingPercentage(100);
-                                // Small delay to ensure 100% is visible, then complete
+                                // Clear the 1-second loader timeout since we're done loading
+                                clearTimeout(loaderTimeout);
+                                // Small delay to ensure 100% is visible, then remove loader and fade in content
                                 setTimeout(function() {
-                                    completePageLoad();
+                                    // Remove loader if it appeared
+                                    $pc.find('.loaderContainer').remove();
+                                    $pc.find('header').first().remove();
+                                    
+                                    // Get content
+                                    var $new = $pc.children();
+                                    if ($new.length > 0) {
+                                        // Make content visible
+                                        $new.css('visibility', 'visible');
+                                        
+                                        // Remove any existing fade-in-wrap
+                                        var $existingFadeIn = $('#fade-in-wrap');
+                                        if ($existingFadeIn.length) {
+                                            $existingFadeIn.children().unwrap();
+                                            $new = $pc.children();
+                                        }
+                                        
+                                        // Wrap and set initial opacity
+                                        $new.wrapAll('<div id="fade-in-wrap"></div>');
+                                        var $in = $('#fade-in-wrap');
+                                        $in.css({ 'opacity': '0', 'transition': 'opacity 0.35s ease' });
+                                        
+                                        // Force reflow
+                                        $in[0].offsetHeight;
+                                        
+                                        // Fade in
+                                        requestAnimationFrame(function () {
+                                            $in.css('opacity', '1');
+                                            triggerPageAnimations($new, $in, url);
+                                        });
+                                    }
                                 }, 100);
                             }
                         });
                     });
-                }
-                
-                // Load CSS first, then proceed with content loading
-                if (pageCSS) {
-                    loadPageCSSPromise(pageCSS).then(function() {
-                        proceedWithContentLoad();
-                    });
-                } else {
-                    proceedWithContentLoad();
                 }
             };
 
@@ -547,10 +560,8 @@
             // Reset loading percentage to 0 for initial load
             resetLoadingPercentage();
             
-            // Load genesis CSS first for initial page
-            loadPageCSSPromise('genesis').then(function() {
-                // Load HTML immediately after CSS is loaded
-                $preloadContainer.load('genesis.html', function () {
+            // Load HTML immediately
+            $preloadContainer.load('genesis.html', function () {
                 var $preloadedContent = $preloadContainer.children();
                 // Hide preloaded content initially
                 $preloadedContent.css('visibility', 'hidden');
