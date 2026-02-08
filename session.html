@@ -70,6 +70,11 @@
             var scrollLeft = 0;
             var $wrapper = null;
             
+            // Track workimg drag state (accessible to click handler)
+            var workimgDragData = {
+                moved: false
+            };
+            
             function setupDragPanning() {
                 $wrapper = $('.wrapper.session-page');
                 var windowWidth = window.innerWidth;
@@ -98,18 +103,84 @@
                         return;
                     }
                     
+                    // Prevent default image dragging globally for workimgs
+                    $wrapper.find('.workimg img').on('dragstart', function(e) {
+                        e.preventDefault();
+                        return false;
+                    });
+                    
                     $wrapper.on('mousedown.pan', function(e) {
-                        // Don't drag if clicking on interactive elements
                         var $target = $(e.target);
                         var tagName = e.target.tagName.toLowerCase();
                         
-                        // Allow drag on section, main, div (but not workimg containers)
-                        if (tagName === 'img' || tagName === 'a' || tagName === 'button' ||
-                            $target.closest('.workimg, #lightbox, #videoLightboxWrap, #overlay, nav, #close, #closelightbox, #demoreel').length) {
-                            return true;
+                        // Check if clicking on workimg or its container
+                        var isWorkimg = $target.closest('.workimg').length > 0 || 
+                                       $target.hasClass('workimg') || 
+                                       $target.parent().hasClass('workimg') ||
+                                       tagName === 'img';
+                        
+                        // Don't start drag on other interactive elements
+                        if (tagName === 'a' || tagName === 'button' ||
+                            $target.closest('#lightbox, #videoLightboxWrap, #overlay, nav, #close, #closelightbox, #demoreel').length) {
+                            return true; // Allow default behavior
                         }
                         
-                        console.log('Drag started');
+                        // For workimgs: prevent image drag but allow click
+                        if (isWorkimg) {
+                            var initialX = e.pageX;
+                            var initialY = e.pageY;
+                            workimgDragData.moved = false;
+                            
+                            // Prevent default image dragging
+                            e.preventDefault();
+                            e.stopPropagation();
+                            
+                            // Track mouse movement to detect drag
+                            $(document).on('mousemove.pancheck', function(moveE) {
+                                var deltaX = Math.abs(moveE.pageX - initialX);
+                                var deltaY = Math.abs(moveE.pageY - initialY);
+                                // If moved more than 5px, it's a drag (pan)
+                                if (deltaX > 5 || deltaY > 5) {
+                                    workimgDragData.moved = true;
+                                    // Start panning
+                                    isDragging = true;
+                                    startX = initialX;
+                                    scrollLeft = wrapperEl.scrollLeft;
+                                    $wrapper.css({
+                                        'cursor': 'grabbing',
+                                        'user-select': 'none'
+                                    });
+                                    $(document).off('mousemove.pancheck');
+                                }
+                            });
+                            
+                            // On mouseup: if no drag, trigger click manually
+                            $(document).one('mouseup.pancheck', function(upE) {
+                                $(document).off('mousemove.pancheck');
+                                // Check if drag occurred
+                                if (!workimgDragData.moved && !isDragging) {
+                                    // It was a click (no drag), trigger click event
+                                    var $workimg = $target.closest('.workimg');
+                                    if ($workimg.length) {
+                                        // Create a synthetic click event that won't be blocked
+                                        var clickEvent = $.Event('click', {
+                                            originalEvent: { isTrusted: false },
+                                            bubbles: true,
+                                            cancelable: true
+                                        });
+                                        $workimg.trigger(clickEvent);
+                                    }
+                                }
+                                // Reset drag state
+                                workimgDragData.moved = false;
+                            });
+                            
+                            return false;
+                        }
+                        
+                        // For non-workimg areas: start panning immediately
+                        e.preventDefault();
+                        e.stopPropagation();
                         isDragging = true;
                         startX = e.pageX;
                         scrollLeft = wrapperEl.scrollLeft;
@@ -117,15 +188,18 @@
                             'cursor': 'grabbing',
                             'user-select': 'none'
                         });
-                        e.preventDefault();
-                        e.stopPropagation();
                         return false;
                     });
                     
                     $(document).on('mousemove.pan', function(e) {
                         if (!isDragging) return;
-                        e.preventDefault();
-                        e.stopPropagation();
+                        
+                        // If dragging started from workimg, prevent click from firing
+                        if (workimgDragData.moved) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                        }
+                        
                         var deltaX = e.pageX - startX;
                         wrapperEl.scrollLeft = scrollLeft - (deltaX * 2);
                         return false;
@@ -142,9 +216,11 @@
                         }
                     });
                     
-                    // Show grab cursor on hover - apply to wrapper and its children
+                    // Show grab cursor on hover - but not on workimgs
                     $wrapper.css('cursor', 'grab');
                     $wrapper.find('section, main').css('cursor', 'grab');
+                    // Ensure workimgs keep their pointer cursor
+                    $wrapper.find('.workimg').css('cursor', 'pointer');
                 } else {
                     // Disable drag
                     if ($wrapper.length) {
@@ -286,7 +362,16 @@
             else $('.wrapper').css('height', '');
         });
 
-        $('.workimg').on('click', function () {
+        $('.workimg').on('click', function (e) {
+            // Prevent click if we were dragging (but allow manually triggered clicks)
+            // Check if this is a manually triggered event or a real user click
+            var isManualTrigger = e.originalEvent === undefined || e.originalEvent.isTrusted === false;
+            
+            if (!isManualTrigger && (workimgDragData.moved || isDragging)) {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }
             switch ($(this).attr('id')) {
                 case "birth":
                     $('#lightbox').css({ 'display': 'block', 'width': '598px', 'height': '804px', 'left': '195px', 'top': '45px' });
