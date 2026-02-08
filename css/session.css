@@ -226,11 +226,11 @@ body {
     }
 
     .workimg:hover {
-        -webkit-filter: brightness(1.4);
-        -moz-filter: brightness(1.4);
-        -ms-filter: brightness(1.4);
-        -o-filter: brightness(1.4);
-        filter: brightness(1.4);
+        -webkit-filter: brightness(1.15);
+        -moz-filter: brightness(1.15);
+        -ms-filter: brightness(1.15);
+        -o-filter: brightness(1.15);
+        filter: brightness(1.15);
     }
 }
 
