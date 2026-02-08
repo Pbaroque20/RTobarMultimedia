@@ -283,6 +283,75 @@
                                 }
                             }, 400); // Wait for fade-in transition (350ms) + small buffer
                         }
+                        
+                        // For session page, trigger scrambled brightness initialization after fade-in completes
+                        var isSessionPage = url.indexOf('session.html') !== -1;
+                        if (isSessionPage) {
+                            // Wait for fade-in transition to complete (350ms) plus small buffer
+                            setTimeout(function() {
+                                var $workimgs = $new.find('.workimg');
+                                if ($workimgs.length > 0) {
+                                    // Set transition for smooth blinking
+                                    $workimgs.css({
+                                        '-webkit-transition': 'filter 0.15s ease',
+                                        '-moz-transition': 'filter 0.15s ease',
+                                        '-ms-transition': 'filter 0.15s ease',
+                                        '-o-transition': 'filter 0.15s ease',
+                                        'transition': 'filter 0.15s ease'
+                                    });
+                                    
+                                    // Blink effect: change brightness multiple times during 1 second
+                                    var blinkInterval = setInterval(function() {
+                                        $workimgs.each(function() {
+                                            var randomBrightness = 0.3 + Math.random() * 1.5; // Random between 0.3 and 1.8
+                                            $(this).css({
+                                                '-webkit-filter': 'brightness(' + randomBrightness + ')',
+                                                '-moz-filter': 'brightness(' + randomBrightness + ')',
+                                                '-ms-filter': 'brightness(' + randomBrightness + ')',
+                                                '-o-filter': 'brightness(' + randomBrightness + ')',
+                                                'filter': 'brightness(' + randomBrightness + ')'
+                                            });
+                                        });
+                                    }, 150); // Blink every 150ms
+                                    
+                                    // After 1 second, stop blinking and animate all to normal brightness (1)
+                                    setTimeout(function() {
+                                        clearInterval(blinkInterval);
+                                        // Change transition to slower for final animation
+                                        $workimgs.css({
+                                            '-webkit-transition': 'filter 0.8s ease',
+                                            '-moz-transition': 'filter 0.8s ease',
+                                            '-ms-transition': 'filter 0.8s ease',
+                                            '-o-transition': 'filter 0.8s ease',
+                                            'transition': 'filter 0.8s ease'
+                                        });
+                                        $workimgs.css({
+                                            '-webkit-filter': 'brightness(1)',
+                                            '-moz-filter': 'brightness(1)',
+                                            '-ms-filter': 'brightness(1)',
+                                            '-o-filter': 'brightness(1)',
+                                            'filter': 'brightness(1)'
+                                        });
+                                        
+                                        // After animation completes, remove inline styles to allow CSS hover to work
+                                        setTimeout(function() {
+                                            $workimgs.css({
+                                                '-webkit-filter': '',
+                                                '-moz-filter': '',
+                                                '-ms-filter': '',
+                                                '-o-filter': '',
+                                                'filter': '',
+                                                '-webkit-transition': '',
+                                                '-moz-transition': '',
+                                                '-ms-transition': '',
+                                                '-o-transition': '',
+                                                'transition': ''
+                                            });
+                                        }, 800); // Wait for 0.8s transition to complete
+                                    }, 1000);
+                                }
+                            }, 400); // Wait for fade-in transition (350ms) + small buffer
+                        }
                     });
                 }
                 
@@ -435,6 +504,75 @@
                                                             }
                                                         }, 400); // Wait for fade-in transition (350ms) + small buffer
                                                     }
+                                                    
+                                                    // For session page, trigger scrambled brightness initialization after fade-in completes
+                                                    var isSessionPage = url.indexOf('session.html') !== -1;
+                                                    if (isSessionPage) {
+                                                        // Wait for fade-in transition to complete (350ms) plus small buffer
+                                                        setTimeout(function() {
+                                                            var $workimgs = $new.find('.workimg');
+                                                            if ($workimgs.length > 0) {
+                                                                // Set transition for smooth blinking
+                                                                $workimgs.css({
+                                                                    '-webkit-transition': 'filter 0.15s ease',
+                                                                    '-moz-transition': 'filter 0.15s ease',
+                                                                    '-ms-transition': 'filter 0.15s ease',
+                                                                    '-o-transition': 'filter 0.15s ease',
+                                                                    'transition': 'filter 0.15s ease'
+                                                                });
+                                                                
+                                                                // Blink effect: change brightness multiple times during 1 second
+                                                                var blinkInterval = setInterval(function() {
+                                                                    $workimgs.each(function() {
+                                                                        var randomBrightness = 0.3 + Math.random() * 1.5; // Random between 0.3 and 1.8
+                                                                        $(this).css({
+                                                                            '-webkit-filter': 'brightness(' + randomBrightness + ')',
+                                                                            '-moz-filter': 'brightness(' + randomBrightness + ')',
+                                                                            '-ms-filter': 'brightness(' + randomBrightness + ')',
+                                                                            '-o-filter': 'brightness(' + randomBrightness + ')',
+                                                                            'filter': 'brightness(' + randomBrightness + ')'
+                                                                        });
+                                                                    });
+                                                                }, 150); // Blink every 150ms
+                                                                
+                                                                // After 1 second, stop blinking and animate all to normal brightness (1)
+                                                                setTimeout(function() {
+                                                                    clearInterval(blinkInterval);
+                                                                    // Change transition to slower for final animation
+                                                                    $workimgs.css({
+                                                                        '-webkit-transition': 'filter 0.8s ease',
+                                                                        '-moz-transition': 'filter 0.8s ease',
+                                                                        '-ms-transition': 'filter 0.8s ease',
+                                                                        '-o-transition': 'filter 0.8s ease',
+                                                                        'transition': 'filter 0.8s ease'
+                                                                    });
+                                                                    $workimgs.css({
+                                                                        '-webkit-filter': 'brightness(1)',
+                                                                        '-moz-filter': 'brightness(1)',
+                                                                        '-ms-filter': 'brightness(1)',
+                                                                        '-o-filter': 'brightness(1)',
+                                                                        'filter': 'brightness(1)'
+                                                                    });
+                                                                    
+                                                                    // After animation completes, remove inline styles to allow CSS hover to work
+                                                                    setTimeout(function() {
+                                                                        $workimgs.css({
+                                                                            '-webkit-filter': '',
+                                                                            '-moz-filter': '',
+                                                                            '-ms-filter': '',
+                                                                            '-o-filter': '',
+                                                                            'filter': '',
+                                                                            '-webkit-transition': '',
+                                                                            '-moz-transition': '',
+                                                                            '-ms-transition': '',
+                                                                            '-o-transition': '',
+                                                                            'transition': ''
+                                                                        });
+                                                                    }, 800); // Wait for 0.8s transition to complete
+                                                                }, 1000);
+                                                            }
+                                                        }, 400); // Wait for fade-in transition (350ms) + small buffer
+                                                    }
                                                 });
                                             }
                                         }, 100);
@@ -497,6 +635,75 @@
                                                             $new.find('#chatbubble5').addClass('chatbubble5_animate');
                                                             $new.find('#chatbubble6').addClass('chatbubble6_animate');
                                                         }, 50);
+                                                    }
+                                                }, 400); // Wait for fade-in transition (350ms) + small buffer
+                                            }
+                                            
+                                            // For session page, trigger scrambled brightness initialization after fade-in completes
+                                            var isSessionPage = url.indexOf('session.html') !== -1;
+                                            if (isSessionPage) {
+                                                // Wait for fade-in transition to complete (350ms) plus small buffer
+                                                setTimeout(function() {
+                                                    var $workimgs = $new.find('.workimg');
+                                                    if ($workimgs.length > 0) {
+                                                        // Set transition for smooth blinking
+                                                        $workimgs.css({
+                                                            '-webkit-transition': 'filter 0.15s ease',
+                                                            '-moz-transition': 'filter 0.15s ease',
+                                                            '-ms-transition': 'filter 0.15s ease',
+                                                            '-o-transition': 'filter 0.15s ease',
+                                                            'transition': 'filter 0.15s ease'
+                                                        });
+                                                        
+                                                        // Blink effect: change brightness multiple times during 1 second
+                                                        var blinkInterval = setInterval(function() {
+                                                            $workimgs.each(function() {
+                                                                var randomBrightness = 0.3 + Math.random() * 1.5; // Random between 0.3 and 1.8
+                                                                $(this).css({
+                                                                    '-webkit-filter': 'brightness(' + randomBrightness + ')',
+                                                                    '-moz-filter': 'brightness(' + randomBrightness + ')',
+                                                                    '-ms-filter': 'brightness(' + randomBrightness + ')',
+                                                                    '-o-filter': 'brightness(' + randomBrightness + ')',
+                                                                    'filter': 'brightness(' + randomBrightness + ')'
+                                                                });
+                                                            });
+                                                        }, 150); // Blink every 150ms
+                                                        
+                                                        // After 1 second, stop blinking and animate all to normal brightness (1)
+                                                        setTimeout(function() {
+                                                            clearInterval(blinkInterval);
+                                                            // Change transition to slower for final animation
+                                                            $workimgs.css({
+                                                                '-webkit-transition': 'filter 0.8s ease',
+                                                                '-moz-transition': 'filter 0.8s ease',
+                                                                '-ms-transition': 'filter 0.8s ease',
+                                                                '-o-transition': 'filter 0.8s ease',
+                                                                'transition': 'filter 0.8s ease'
+                                                            });
+                                                            $workimgs.css({
+                                                                '-webkit-filter': 'brightness(1)',
+                                                                '-moz-filter': 'brightness(1)',
+                                                                '-ms-filter': 'brightness(1)',
+                                                                '-o-filter': 'brightness(1)',
+                                                                'filter': 'brightness(1)'
+                                                            });
+                                                            
+                                                            // After animation completes, remove inline styles to allow CSS hover to work
+                                                            setTimeout(function() {
+                                                                $workimgs.css({
+                                                                    '-webkit-filter': '',
+                                                                    '-moz-filter': '',
+                                                                    '-ms-filter': '',
+                                                                    '-o-filter': '',
+                                                                    'filter': '',
+                                                                    '-webkit-transition': '',
+                                                                    '-moz-transition': '',
+                                                                    '-ms-transition': '',
+                                                                    '-o-transition': '',
+                                                                    'transition': ''
+                                                                });
+                                                            }, 800); // Wait for 0.8s transition to complete
+                                                        }, 1000);
                                                     }
                                                 }, 400); // Wait for fade-in transition (350ms) + small buffer
                                             }
