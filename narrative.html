@@ -231,6 +231,7 @@ and deploy glTF and AR furniture content.
                     var hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
                     var isDesktopTouch = window.innerWidth >= 960 && hasTouch;
                     var touchUsed = false;
+                    var clickTapModeActive = false; // Track if user has used click/tap (disables hover)
                     
                     // Track if touch was used recently to prevent mouse events from firing
                     $(document).on('touchstart', function() {
@@ -260,6 +261,7 @@ and deploy glTF and AR furniture content.
                     
                     // Mouse handlers (only if not desktop touchscreen, or if mouse is being used)
                     if (!isDesktopTouch) {
+                        // Non-desktop touchscreen: always use hover
                         $('#broken1').on('mouseover mouseout', function (e) {
                             e.stopPropagation();
                             togglePopup('skillsedu');
@@ -275,9 +277,9 @@ and deploy glTF and AR furniture content.
                             togglePopup('history');
                         });
                     } else {
-                        // Desktop touchscreen: use mouseover/mouseout but prevent if touch was just used
+                        // Desktop touchscreen: use mouseover/mouseout but disable once click/tap is used
                         $('#broken1').on('mouseover mouseout', function (e) {
-                            if (touchUsed) {
+                            if (clickTapModeActive || touchUsed) {
                                 e.stopPropagation();
                                 return;
                             }
@@ -286,7 +288,7 @@ and deploy glTF and AR furniture content.
                         });
 
                         $('#broken2').on('mouseover mouseout', function (e) {
-                            if (touchUsed) {
+                            if (clickTapModeActive || touchUsed) {
                                 e.stopPropagation();
                                 return;
                             }
@@ -295,7 +297,7 @@ and deploy glTF and AR furniture content.
                         });
 
                         $('#broken3').on('mouseover mouseout', function (e) {
-                            if (touchUsed) {
+                            if (clickTapModeActive || touchUsed) {
                                 e.stopPropagation();
                                 return;
                             }
@@ -315,6 +317,7 @@ and deploy glTF and AR furniture content.
                             $('#broken1').on('click.touch touchstart.touch', function (e) {
                                 e.stopPropagation();
                                 e.preventDefault();
+                                clickTapModeActive = true; // Disable hover behavior permanently
                                 touchUsed = true;
                                 setTimeout(function() {
                                     touchUsed = false;
@@ -325,6 +328,7 @@ and deploy glTF and AR furniture content.
                             $('#broken2').on('click.touch touchstart.touch', function (e) {
                                 e.stopPropagation();
                                 e.preventDefault();
+                                clickTapModeActive = true; // Disable hover behavior permanently
                                 touchUsed = true;
                                 setTimeout(function() {
                                     touchUsed = false;
@@ -335,6 +339,7 @@ and deploy glTF and AR furniture content.
                             $('#broken3').on('click.touch touchstart.touch', function (e) {
                                 e.stopPropagation();
                                 e.preventDefault();
+                                clickTapModeActive = true; // Disable hover behavior permanently
                                 touchUsed = true;
                                 setTimeout(function() {
                                     touchUsed = false;
