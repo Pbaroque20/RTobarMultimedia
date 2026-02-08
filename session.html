@@ -301,8 +301,19 @@
                 case "2020":
                     $('#videoLightboxWrap').css('display', window.innerWidth > 959 ? 'block' : 'flex');
                     $('#close').css('display', 'block');
-                    $('#changeImg').attr("src", "");
-                    $('#videobox').css('display', 'block').attr({ 'src': 'https://www.youtube.com/embed/U_TxnYCHKeA', 'width': '500', 'height': 281, 'frameborder': 0 });
+                    $('#videobox').css('display', 'none');
+                    var videoPath = 'videos/2020_trailer.mp4';
+                    var videoElement = $('#localVideo').get(0);
+                    $('#localVideoSource').attr('src', videoPath);
+                    videoElement.load();
+                    $('#localVideo').css('display', 'block');
+                    // Try to play the video
+                    var playPromise = videoElement.play();
+                    if (playPromise !== undefined) {
+                        playPromise.catch(function(error) {
+                            console.log('Video play failed:', error);
+                        });
+                    }
                     $('#overlay').css('display', 'block');
                     break;
                 case "rw":
