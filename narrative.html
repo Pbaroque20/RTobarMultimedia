@@ -306,17 +306,17 @@ and deploy glTF and AR furniture content.
                         });
                     }
                     
-                    // Touch/click handlers for desktop touchscreens
+                    // Touch/click handlers for desktop touchscreens (all desktop sizes >= 960px)
                     function setupTouchHandlers() {
                         // Remove existing touch handlers
                         $('#broken1, #broken2, #broken3').off('click.touch touchstart.touch');
                         
-                        // Only enable for desktop screens (>= 960px) with touch capability
+                        // Enable for all desktop screens (>= 960px) with touch capability
                         if (window.innerWidth >= 960 && hasTouch) {
                             // Desktop screen with touch capability - add click/touch handlers
-                            $('#broken1').on('click.touch touchstart.touch', function (e) {
+                            // Use click event (works for both mouse clicks and touch taps on desktop)
+                            $('#broken1').on('click.touch', function (e) {
                                 e.stopPropagation();
-                                e.preventDefault();
                                 clickTapModeActive = true; // Disable hover behavior permanently
                                 touchUsed = true;
                                 setTimeout(function() {
@@ -325,9 +325,8 @@ and deploy glTF and AR furniture content.
                                 togglePopup('skillsedu');
                             });
                             
-                            $('#broken2').on('click.touch touchstart.touch', function (e) {
+                            $('#broken2').on('click.touch', function (e) {
                                 e.stopPropagation();
-                                e.preventDefault();
                                 clickTapModeActive = true; // Disable hover behavior permanently
                                 touchUsed = true;
                                 setTimeout(function() {
@@ -336,9 +335,8 @@ and deploy glTF and AR furniture content.
                                 togglePopup('bio');
                             });
                             
-                            $('#broken3').on('click.touch touchstart.touch', function (e) {
+                            $('#broken3').on('click.touch', function (e) {
                                 e.stopPropagation();
-                                e.preventDefault();
                                 clickTapModeActive = true; // Disable hover behavior permanently
                                 touchUsed = true;
                                 setTimeout(function() {
