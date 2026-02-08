@@ -203,34 +203,12 @@
                     $(this).removeClass('nav-desktop-hover');
                 });
 
-                // Dynamic scroll stop: do not scroll past the "2013 Motion Graphics Demo Reel" block
-                // Increased clamping to prevent lightboxes from overlapping the demo reel
-                (function () {
-                    var $stop = $('#demoreel');
-                    if (!$stop.length) return;
-                    var originalMaxScrollY = null;
-                    function getMaxScrollY() {
-                        var rect = $stop[0].getBoundingClientRect();
-                        // Add extra padding (200px) to account for lightbox heights and prevent overlap
-                        var extraPadding = 200;
-                        var calculatedMax = rect.top + window.scrollY - window.innerHeight + extraPadding;
-                        // Store the original max scroll value before any lightbox opens
-                        if (originalMaxScrollY === null) {
-                            originalMaxScrollY = calculatedMax;
-                        }
-                        // Always use the original max scroll, don't allow it to increase
-                        return originalMaxScrollY;
+                // Prevent vertical scrolling on desktop
+                $(window).on('scroll', function() {
+                    if (window.scrollY !== 0) {
+                        window.scrollTo(0, 0);
                     }
-                    function clampScroll() {
-                        // Don't clamp if lightbox is open - prevent scrolling entirely instead
-                        if ($('#lightbox').is(':visible') || $('#videoLightboxWrap').is(':visible')) {
-                            return;
-                        }
-                        var maxY = getMaxScrollY();
-                        if (maxY > 0 && window.scrollY > maxY) window.scrollTo(0, maxY);
-                    }
-                    $(window).on('scroll', clampScroll).on('resize', clampScroll);
-                })();
+                });
             }
         });
         // portfolio windows and ajax

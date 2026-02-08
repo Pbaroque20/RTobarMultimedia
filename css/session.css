@@ -210,8 +210,18 @@ body {
     left: 14px;
 }
 
-/* Desktop only: brightness hover effect for workimg */
+/* Desktop only: brightness hover effect for workimg and disable vertical scroll */
 @media (min-width: 960px) {
+    html, body {
+        overflow-y: hidden !important;
+        height: 100%;
+    }
+    
+    .wrapper.session-page {
+        overflow-y: hidden !important;
+        height: 100vh;
+    }
+    
     .workimg {
         -webkit-filter: brightness(1);
         -moz-filter: brightness(1);
@@ -528,6 +538,7 @@ ul {
             overflow-y: visible !important;
         }
     }
+}
 
     .wrapper.session-page .imageContainer2 {
         min-width: 960px;
