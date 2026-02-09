@@ -272,7 +272,7 @@ and deploy glTF and AR furniture content for interactive browser experience. dev
                         $('#bio').html(showBio ? bioContentHTML : historyContentHTML);
                     }
                     
-                    // Non-desktop: bio crystal tap — show popup with bio, then cycle on tap between bio and history
+                    // Non-desktop: bio crystal tap — open popup with bio (or close if already open). Cycle is on popup tap.
                     function onBioCrystalTapNonDesktop() {
                         var isBioVisible = $('#bio').is(':visible');
                         if (!isBioVisible) {
@@ -283,8 +283,14 @@ and deploy glTF and AR furniture content for interactive browser experience. dev
                             $('#bio').show();
                             $('.instruct').css('display', 'none');
                         } else {
-                            setBioPopupContent(!bioPopupShowingBio);
+                            $('#bio').hide();
                         }
+                    }
+                    
+                    // Non-desktop: tap on the popup itself cycles between biography and work history
+                    function onBioPopupTapNonDesktop(e) {
+                        e.stopPropagation();
+                        setBioPopupContent(!bioPopupShowingBio);
                     }
                     
                     // Non-desktop: history crystal tap — show same #bio popup with history content
@@ -316,7 +322,7 @@ and deploy glTF and AR furniture content for interactive browser experience. dev
                         }
                         
                         if (isNonDesktop) {
-                            // Non-desktop: broken1 = hover skills; broken2 = tap show/cycle bio↔history; broken3 = tap show bio with history
+                            // Non-desktop: broken1 = hover skills; broken2 = tap open/close bio popup; popup tap = cycle content; broken3 = tap show history
                             $('#broken1').on('mouseover.narrative mouseout.narrative', function (e) {
                                 e.stopPropagation();
                                 togglePopup('skillsedu');
@@ -329,7 +335,9 @@ and deploy glTF and AR furniture content for interactive browser experience. dev
                                 e.stopPropagation();
                                 onHistoryCrystalTapNonDesktop();
                             });
+                            $('#bio').off('click.narrative').on('click.narrative', onBioPopupTapNonDesktop);
                         } else {
+                            $('#bio').off('click.narrative');
                             // Desktop: hover (and optional click.touch when touch device)
                             if (!isDesktopTouch) {
                                 $('#broken1').on('mouseover.narrative mouseout.narrative', function (e) {

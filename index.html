@@ -360,13 +360,13 @@
                     // Set initial opacity to 0 and transition on wrapper
                     $in.css({ 'opacity': '0', 'transition': 'opacity 0.35s ease' });
                     
-                    // Force reflow to ensure initial opacity: 0 is applied
-                    $in[0].offsetHeight;
-                    
-                    // Fade in
+                    // Defer reflow to next frame so styles are applied (avoids "layout forced before load" warning)
                     requestAnimationFrame(function () {
-                        $in.css('opacity', '1');
-                        triggerPageAnimations($new, $in, url);
+                        $in[0].offsetHeight;
+                        requestAnimationFrame(function () {
+                            $in.css('opacity', '1');
+                            triggerPageAnimations($new, $in, url);
+                        });
                     });
                 }
                 
@@ -375,8 +375,10 @@
                 var $wrap = $('#page-content #fade-out-wrap');
                 if ($wrap.length) {
                     $wrap.css('transition', 'opacity 0.3s ease');
-                    $wrap[0].offsetHeight;
-                    $wrap.css('opacity', '0');
+                    requestAnimationFrame(function () {
+                        $wrap[0].offsetHeight;
+                        $wrap.css('opacity', '0');
+                    });
                     $wrap.one('transitionend', function () {
                         $pc.empty();
                         // Reset loading percentage to 0
@@ -486,14 +488,12 @@
                                             $new.wrapAll('<div id="fade-in-wrap"></div>');
                                             var $in = $('#fade-in-wrap');
                                             $in.css({ 'opacity': '0', 'transition': 'opacity 0.35s ease' });
-                                            
-                                            // Force reflow
-                                            $in[0].offsetHeight;
-                                            
-                                            // Fade in
                                             requestAnimationFrame(function () {
-                                                $in.css('opacity', '1');
-                                                triggerPageAnimations($new, $in, url);
+                                                $in[0].offsetHeight;
+                                                requestAnimationFrame(function () {
+                                                    $in.css('opacity', '1');
+                                                    triggerPageAnimations($new, $in, url);
+                                                });
                                             });
                                         }
                                     }, 100);
@@ -526,14 +526,12 @@
                                         $new.wrapAll('<div id="fade-in-wrap"></div>');
                                         var $in = $('#fade-in-wrap');
                                         $in.css({ 'opacity': '0', 'transition': 'opacity 0.35s ease' });
-                                        
-                                        // Force reflow
-                                        $in[0].offsetHeight;
-                                        
-                                        // Fade in
                                         requestAnimationFrame(function () {
-                                            $in.css('opacity', '1');
-                                            triggerPageAnimations($new, $in, url);
+                                            $in[0].offsetHeight;
+                                            requestAnimationFrame(function () {
+                                                $in.css('opacity', '1');
+                                                triggerPageAnimations($new, $in, url);
+                                            });
                                         });
                                     }
                                 }, 100);
@@ -687,13 +685,11 @@
                             $new.wrapAll('<div id="fade-in-wrap"></div>');
                             var $in = $('#fade-in-wrap');
                             $in.css({ 'opacity': '0', 'transition': 'opacity 0.35s ease' });
-                            
-                            // Force reflow to ensure initial state is applied
-                            $in[0].offsetHeight;
-                            
-                            // Fade in
                             requestAnimationFrame(function () {
-                                $in.css('opacity', '1');
+                                $in[0].offsetHeight;
+                                requestAnimationFrame(function () {
+                                    $in.css('opacity', '1');
+                                });
                             });
                         }
                         

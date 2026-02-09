@@ -410,60 +410,51 @@
             $('#overlay').css('display', 'block');
             $('#changeImg').css({ 'max-width': '100%', 'max-height': 'none', 'width': 'auto', 'height': 'auto', 'object-fit': 'contain' });
             $('#changeImg').off('load.lightbox');
-            var isNonDesktop = window.innerWidth < 960;
-            if (isNonDesktop) {
-                $('#lightbox').css({
-                    'display': 'block',
-                    'width': '320px',
-                    'min-width': '320px',
-                    'height': 'auto',
-                    'left': '50%',
-                    'top': '50px',
-                    'transform': 'translateX(-50%)',
-                    'opacity': '1'
-                });
-                $('#lightboxLoader').show().css('display', 'flex');
-                $('#lightboxLoaderPct').text('0%');
-                $('#changeImg').hide().attr('src', '');
-                var xhr = new XMLHttpRequest();
-                xhr.open('GET', imgUrl, true);
-                xhr.responseType = 'arraybuffer';
-                xhr.onprogress = function(ev) {
-                    if (ev.lengthComputable) {
-                        var pct = Math.min(100, Math.round((ev.loaded / ev.total) * 100));
-                        $('#lightboxLoaderPct').text(pct + '%');
-                    }
-                };
-                xhr.onload = function() {
-                    if (xhr.status !== 200) {
-                        $('#lightboxLoaderPct').text('Error');
-                        $('#changeImg').attr('src', imgUrl).show();
-                        $('#changeImg').on('load.lightbox', function() { applyFinalLightboxSize(); });
-                        $('#lightboxLoader').hide();
-                        return;
-                    }
-                    var blob = new Blob([xhr.response], { type: xhr.getResponseHeader('Content-Type') || 'image/png' });
-                    var url = URL.createObjectURL(blob);
-                    lightboxBlobUrl = url;
-                    $('#lightboxLoaderPct').text('100%');
-                    $('#changeImg').attr('src', url).on('load.lightbox', function() {
-                        applyFinalLightboxSize();
-                    });
-                };
-                xhr.onerror = function() {
+            $('#lightbox').css({
+                'display': 'block',
+                'width': '320px',
+                'min-width': '320px',
+                'height': 'auto',
+                'left': '50%',
+                'top': '50px',
+                'transform': 'translateX(-50%)',
+                'opacity': '1'
+            });
+            $('#lightboxLoader').show().css('display', 'flex');
+            $('#lightboxLoaderPct').text('0%');
+            $('#changeImg').hide().attr('src', '');
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', imgUrl, true);
+            xhr.responseType = 'arraybuffer';
+            xhr.onprogress = function(ev) {
+                if (ev.lengthComputable) {
+                    var pct = Math.min(100, Math.round((ev.loaded / ev.total) * 100));
+                    $('#lightboxLoaderPct').text(pct + '%');
+                }
+            };
+            xhr.onload = function() {
+                if (xhr.status !== 200) {
                     $('#lightboxLoaderPct').text('Error');
                     $('#changeImg').attr('src', imgUrl).show();
                     $('#changeImg').on('load.lightbox', function() { applyFinalLightboxSize(); });
                     $('#lightboxLoader').hide();
-                };
-                xhr.send();
-            } else {
-                $('#lightbox').css({ 'display': 'block', 'width': 'auto', 'height': 'auto', 'left': '50%', 'top': '50px', 'transform': 'translateX(-50%)', 'opacity': '0' });
-                $('#lightboxLoader').hide();
-                $('#changeImg').show().attr('src', imgUrl).on('load.lightbox', function() {
+                    return;
+                }
+                var blob = new Blob([xhr.response], { type: xhr.getResponseHeader('Content-Type') || 'image/png' });
+                var url = URL.createObjectURL(blob);
+                lightboxBlobUrl = url;
+                $('#lightboxLoaderPct').text('100%');
+                $('#changeImg').attr('src', url).on('load.lightbox', function() {
                     applyFinalLightboxSize();
                 });
-            }
+            };
+            xhr.onerror = function() {
+                $('#lightboxLoaderPct').text('Error');
+                $('#changeImg').attr('src', imgUrl).show();
+                $('#changeImg').on('load.lightbox', function() { applyFinalLightboxSize(); });
+                $('#lightboxLoader').hide();
+            };
+            xhr.send();
         }
 
         $('.workimg').on('click', function (e) {
