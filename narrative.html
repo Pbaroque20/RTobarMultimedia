@@ -33,7 +33,7 @@
                         <tbody>
                             <tr class="header">
                                 <td>
-                                    Naughty Americas
+                                    Naughty America
                                 </td>
                                 <td>
                                     12/20 - 1/24
@@ -234,6 +234,12 @@ and deploy glTF and AR furniture content for interactive browser experience. dev
                     var touchUsed = false;
                     var clickTapModeActive = false; // Track if user has used click/tap (disables hover)
                     
+                    // Cached content for non-desktop bio crystal: single popup, swap body content
+                    var bioContentHTML = $('#bio').html();
+                    var historyContentHTML = $('#history').html();
+                    var bioPopupShowingBio = true; // true = biography, false = work history
+                    var allPopups = ['skillsedu', 'bio', 'history'];
+                    
                     // Track if touch was used recently to prevent mouse events from firing
                     $(document).on('touchstart', function() {
                         touchUsed = true;
@@ -260,100 +266,138 @@ and deploy glTF and AR furniture content for interactive browser experience. dev
                         $('.instruct').css('display', 'none');
                     }
                     
-                    // Mouse handlers (only if not desktop touchscreen, or if mouse is being used)
-                    if (!isDesktopTouch) {
-                        // Non-desktop touchscreen: always use hover
-                        $('#broken1').on('mouseover mouseout', function (e) {
-                            e.stopPropagation();
-                            togglePopup('skillsedu');
-                        });
-
-                        $('#broken2').on('mouseover mouseout', function (e) {
-                            e.stopPropagation();
-                            togglePopup('bio');
-                        });
-
-                        $('#broken3').on('mouseover mouseout', function (e) {
-                            e.stopPropagation();
-                            togglePopup('history');
-                        });
-                    } else {
-                        // Desktop touchscreen: use mouseover/mouseout but disable once click/tap is used
-                        $('#broken1').on('mouseover mouseout', function (e) {
-                            if (clickTapModeActive || touchUsed) {
-                                e.stopPropagation();
-                                return;
-                            }
-                            e.stopPropagation();
-                            togglePopup('skillsedu');
-                        });
-
-                        $('#broken2').on('mouseover mouseout', function (e) {
-                            if (clickTapModeActive || touchUsed) {
-                                e.stopPropagation();
-                                return;
-                            }
-                            e.stopPropagation();
-                            togglePopup('bio');
-                        });
-
-                        $('#broken3').on('mouseover mouseout', function (e) {
-                            if (clickTapModeActive || touchUsed) {
-                                e.stopPropagation();
-                                return;
-                            }
-                            e.stopPropagation();
-                            togglePopup('history');
-                        });
+                    // Non-desktop: show #bio popup and set its body content (bio or history)
+                    function setBioPopupContent(showBio) {
+                        bioPopupShowingBio = showBio;
+                        $('#bio').html(showBio ? bioContentHTML : historyContentHTML);
                     }
                     
-                    // Touch/click handlers for desktop touchscreens (all desktop sizes >= 960px)
-                    function setupTouchHandlers() {
-                        // Remove existing touch handlers
-                        $('#broken1, #broken2, #broken3').off('click.touch touchstart.touch');
+                    // Non-desktop: bio crystal tap — show popup with bio, then cycle on tap between bio and history
+                    function onBioCrystalTapNonDesktop() {
+                        var isBioVisible = $('#bio').is(':visible');
+                        if (!isBioVisible) {
+                            allPopups.forEach(function(id) {
+                                if (id !== 'bio' && $('#' + id).is(':visible')) { $('#' + id).hide(); }
+                            });
+                            setBioPopupContent(true);
+                            $('#bio').show();
+                            $('.instruct').css('display', 'none');
+                        } else {
+                            setBioPopupContent(!bioPopupShowingBio);
+                        }
+                    }
+                    
+                    // Non-desktop: history crystal tap — show same #bio popup with history content
+                    function onHistoryCrystalTapNonDesktop() {
+                        allPopups.forEach(function(id) {
+                            if (id !== 'bio' && $('#' + id).is(':visible')) { $('#' + id).hide(); }
+                        });
+                        setBioPopupContent(false);
+                        $('#bio').show();
+                        $('.instruct').css('display', 'none');
+                    }
+                    
+                    // Reset popups and cycling state when returning to desktop (e.g. after resize >= 960px)
+                    function resetToDesktopPopups() {
+                        $('#skillsedu, #bio, #history').hide();
+                        $('#bio').html(bioContentHTML);
+                        bioPopupShowingBio = true;
+                    }
+                    
+                    // Crystal handlers: non-desktop uses tap-to-cycle for bio/history in one popup; desktop uses hover/click
+                    function setupNarrativeCrystalHandlers() {
+                        var isNonDesktop = window.innerWidth < 960;
+                        $('#broken1').off('mouseover.narrative mouseout.narrative click.narrative');
+                        $('#broken2').off('mouseover.narrative mouseout.narrative click.narrative');
+                        $('#broken3').off('mouseover.narrative mouseout.narrative click.narrative');
                         
-                        // Enable for all desktop screens (>= 960px) with touch capability
-                        if (window.innerWidth >= 960 && hasTouch) {
-                            // Desktop screen with touch capability - add click/touch handlers
-                            // Use click event (works for both mouse clicks and touch taps on desktop)
-                            $('#broken1').on('click.touch', function (e) {
+                        if (!isNonDesktop) {
+                            resetToDesktopPopups();
+                        }
+                        
+                        if (isNonDesktop) {
+                            // Non-desktop: broken1 = hover skills; broken2 = tap show/cycle bio↔history; broken3 = tap show bio with history
+                            $('#broken1').on('mouseover.narrative mouseout.narrative', function (e) {
                                 e.stopPropagation();
-                                clickTapModeActive = true; // Disable hover behavior permanently
-                                touchUsed = true;
-                                setTimeout(function() {
-                                    touchUsed = false;
-                                }, 300);
                                 togglePopup('skillsedu');
                             });
-                            
+                            $('#broken2').on('click.narrative', function (e) {
+                                e.stopPropagation();
+                                onBioCrystalTapNonDesktop();
+                            });
+                            $('#broken3').on('click.narrative', function (e) {
+                                e.stopPropagation();
+                                onHistoryCrystalTapNonDesktop();
+                            });
+                        } else {
+                            // Desktop: hover (and optional click.touch when touch device)
+                            if (!isDesktopTouch) {
+                                $('#broken1').on('mouseover.narrative mouseout.narrative', function (e) {
+                                    e.stopPropagation();
+                                    togglePopup('skillsedu');
+                                });
+                                $('#broken2').on('mouseover.narrative mouseout.narrative', function (e) {
+                                    e.stopPropagation();
+                                    togglePopup('bio');
+                                });
+                                $('#broken3').on('mouseover.narrative mouseout.narrative', function (e) {
+                                    e.stopPropagation();
+                                    togglePopup('history');
+                                });
+                            } else {
+                                $('#broken1').on('mouseover.narrative mouseout.narrative', function (e) {
+                                    if (clickTapModeActive || touchUsed) { e.stopPropagation(); return; }
+                                    e.stopPropagation();
+                                    togglePopup('skillsedu');
+                                });
+                                $('#broken2').on('mouseover.narrative mouseout.narrative', function (e) {
+                                    if (clickTapModeActive || touchUsed) { e.stopPropagation(); return; }
+                                    e.stopPropagation();
+                                    togglePopup('bio');
+                                });
+                                $('#broken3').on('mouseover.narrative mouseout.narrative', function (e) {
+                                    if (clickTapModeActive || touchUsed) { e.stopPropagation(); return; }
+                                    e.stopPropagation();
+                                    togglePopup('history');
+                                });
+                            }
+                        }
+                    }
+                    
+                    // Touch/click handlers for desktop touchscreens (>= 960px with touch)
+                    function setupTouchHandlers() {
+                        $('#broken1, #broken2, #broken3').off('click.touch touchstart.touch');
+                        if (window.innerWidth >= 960 && hasTouch) {
+                            $('#broken1').on('click.touch', function (e) {
+                                e.stopPropagation();
+                                clickTapModeActive = true;
+                                touchUsed = true;
+                                setTimeout(function() { touchUsed = false; }, 300);
+                                togglePopup('skillsedu');
+                            });
                             $('#broken2').on('click.touch', function (e) {
                                 e.stopPropagation();
-                                clickTapModeActive = true; // Disable hover behavior permanently
+                                clickTapModeActive = true;
                                 touchUsed = true;
-                                setTimeout(function() {
-                                    touchUsed = false;
-                                }, 300);
+                                setTimeout(function() { touchUsed = false; }, 300);
                                 togglePopup('bio');
                             });
-                            
                             $('#broken3').on('click.touch', function (e) {
                                 e.stopPropagation();
-                                clickTapModeActive = true; // Disable hover behavior permanently
+                                clickTapModeActive = true;
                                 touchUsed = true;
-                                setTimeout(function() {
-                                    touchUsed = false;
-                                }, 300);
+                                setTimeout(function() { touchUsed = false; }, 300);
                                 togglePopup('history');
                             });
                         }
                     }
                     
-                    // Initialize touch handlers
+                    setupNarrativeCrystalHandlers();
                     setupTouchHandlers();
                     
-                    // Update on window resize
                     $(window).on('resize', function() {
                         isDesktopTouch = window.innerWidth >= 960 && hasTouch;
+                        setupNarrativeCrystalHandlers();
                         setupTouchHandlers();
                     });
 

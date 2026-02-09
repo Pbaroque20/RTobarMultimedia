@@ -457,6 +457,12 @@ ul {
         display: none !important;
     }
 
+    /* Work history: hide description text for non-desktop (lighter view) */
+    #bio tr:has(.descrip),
+    #history tr:has(.descrip) {
+        display: none !important;
+    }
+
     #bio {
         display: block !important;
         position: absolute;
