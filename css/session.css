@@ -289,6 +289,30 @@ body {
     margin: 0 auto;
 }
 
+#lightboxLoader {
+    background: #000;
+    padding: 2em;
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+#lightboxLoaderGif {
+    display: block;
+    margin: 0 auto;
+}
+
+#lightboxLoaderPct {
+    display: block;
+    margin-top: 0.5em;
+    font-size: 12px;
+    color: #fff;
+    font-family: "Fedra Sans Light", sans-serif;
+}
+
 #topHeader {
     width: 960px;
     height: 19px;
