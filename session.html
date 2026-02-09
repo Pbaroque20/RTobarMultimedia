@@ -15,10 +15,13 @@
                     <div id="lightbox"><div id="closelightbox">PRESS WINDOW TO CLOSE</div><div id="lightboxLoader" style="display:none;"><img id="lightboxLoaderGif" src="loader/white_loader.gif" alt="" /><span id="lightboxLoaderPct">0%</span></div><img id="changeImg" /><div id="inform"></div></div>
                     <div id="videoLightboxWrap">
                         <div id="close">CLOSE WINDOW</div>
-                        <iframe id="videobox" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-                        <video id="localVideo" controls preload="none">
-                            Your browser does not support the video tag.
-                        </video>
+                        <div class="video-player-wrap">
+                            <iframe id="videobox" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                            <video id="localVideo" controls preload="none">
+                                Your browser does not support the video tag.
+                            </video>
+                            <div id="videoInform"></div>
+                        </div>
                     </div>
                     <div class="birth"><img style="cursor:pointer;" class="workimg" id="birth" src="images/birth.png" /></div>
                     <div class="ances"><img style="cursor:pointer;" class="workimg" id="ances" src="images/ances.png" /></div>
@@ -27,18 +30,18 @@
                     <div class="contactus2gameplay"><img style="cursor:pointer;" class="workimg" id="contactus2gameplay" src="images/contactus2gameplay.png" /></div>
                     <div class="beaver"><img style="cursor:pointer;" class="workimg" id="beaver" src="images/beaver.png" /></div>
                     <div class="essence"><img style="cursor:pointer;" class="workimg" id="essence" src="images/colli.png" /></div>
-                    <div class="experi"><img style="cursor:pointer;" class="workimg" id="experi" src="images/experi.png" /></div>
+                    <div class="tomi"><img style="cursor:pointer;" class="workimg" id="tomi" src="images/tomi.png" /></div>
                     <div class="bomb"><img style="cursor:pointer;" class="workimg" id="bomb" src="images/bomb.png" /></div>
                     <div class="fortstandard"><img style="cursor:pointer;" class="workimg" id="fortstandard" src="images/FS.png" /></div>
                     <div class="lifeisjazz"><img style="cursor:pointer;" class="workimg" id="lifeisjazz" src="images/lifeisjazz.png" /></div>
-                    <div class="m"><img style="cursor:pointer;" class="workimg" id="m" src="images/M.png" /></div>
+                    <div class="kitchen"><img style="cursor:pointer;" class="workimg" id="kitchen" src="images/archviz.png" /></div>
                     <div class="mirror"><img style="cursor:pointer;" class="workimg" id="mirror" src="images/mirror.png" /></div>
                     <div class="work2020"><img style="cursor:pointer;" class="workimg" id="2020" src="images/2020.png" /></div>
                     <div class="rw"><img style="cursor:pointer;" class="workimg" id="rw" src="images/rw.png" /></div>
                     <div class="eledonkey2020"><img style="cursor:pointer;" class="workimg" id="eledonkey2020" src="images/2020eledonkey.png" /></div>
                     <div class="surgeons"><img style="cursor:pointer;" class="workimg" id="surgeons" src="images/surgeons.png" /></div>
                     <div class="vaniads"><img style="cursor:pointer;" class="workimg" id="vaniads" src="images/vaniads.png" /></div>
-                    <div class="logod"><img style="cursor:pointer;" class="workimg" id="logod" src="images/logodesigns.png" /></div>
+                    <div class="NA"><img style="cursor:pointer;" class="workimg" id="NA" src="images/NA.png" /></div>
                     <div class="giphy"><img style="cursor:pointer;" class="workimg" id="giphy" src="images/giphy.png" /></div>
                 </section>
             </main>
@@ -289,14 +292,18 @@
         // portfolio windows and ajax – data loaded from data.json
         var info = null;
 
-        function openVimeoVideo(vimeoId, width, height, left, top) {
-            $('#videoLightboxWrap').css('display', window.innerWidth > 959 ? 'block' : 'flex');
-            $('#videobox').css({ 'display': 'block', 'width': width + 'px', 'height': height + 'px', 'left': left + 'px', 'top': top + 'px' }).attr({ 'src': '//player.vimeo.com/video/' + vimeoId + '?title=0&amp;byline=0&amp;portrait=0', 'width': width, 'height': height, 'frameborder': 0 });
+        function openVimeoVideo(vimeoId, width, height, left, top, label) {
+            $('#videoLightboxWrap').css('display', window.innerWidth > 959 ? 'block' : 'block');
+            $('.video-player-wrap').css({ 'position': 'absolute', 'left': left + 'px', 'top': top + 'px', 'width': width + 'px', 'paddingTop': height + 'px' });
+            $('#videobox').css({ 'display': 'block', 'position': 'absolute', 'left': '0', 'top': '0', 'width': '100%', 'height': height + 'px' }).attr({ 'src': '//player.vimeo.com/video/' + vimeoId + '?title=0&amp;byline=0&amp;portrait=0', 'width': width, 'height': height, 'frameborder': 0 });
+            $('#localVideo').css('display', 'none');
             $('#close').css({ 'display': 'block', 'left': left + 'px', 'top': (top - 30) + 'px' });
+            $('#videoInform').text(label || '').css('display', label ? 'block' : 'none');
             $('#overlay').css('display', 'block');
         }
-        function openLocalVideo(videoPath, width, height, left, top) {
-            $('#videoLightboxWrap').css('display', window.innerWidth > 959 ? 'block' : 'flex');
+        function openLocalVideo(videoPath, width, height, left, top, label) {
+            $('#videoLightboxWrap').css('display', window.innerWidth > 959 ? 'block' : 'block');
+            $('.video-player-wrap').css({ 'position': 'absolute', 'left': left + 'px', 'top': top + 'px', 'width': width + 'px', 'paddingTop': height + 'px' });
             $('#videobox').css('display', 'none');
             var videoElement = $('#localVideo').get(0);
             $('#localVideo source').remove();
@@ -305,18 +312,21 @@
             sourceElement.type = 'video/mp4';
             videoElement.appendChild(sourceElement);
             videoElement.load();
-            $('#localVideo').css({ 'display': 'block', 'width': width + 'px', 'height': height + 'px', 'left': left + 'px', 'top': top + 'px' });
+            $('#localVideo').css({ 'display': 'block', 'position': 'absolute', 'left': '0', 'top': '0', 'width': '100%', 'height': height + 'px' });
             $('#close').css({ 'display': 'block', 'left': left + 'px', 'top': (top - 30) + 'px' });
+            $('#videoInform').text(label || '').css('display', label ? 'block' : 'none');
             var playPromise = videoElement.play();
             if (playPromise !== undefined) playPromise.catch(function(err) { console.log('Video play failed:', err); });
             $('#overlay').css('display', 'block');
         }
 
         $('#demoreel').on('click', function () {
-            openVimeoVideo(88704801, 750, 421, 105, 150);
+            openVimeoVideo(88704801, 750, 421, 105, 150, '2013 Motion Graphics Demo Reel');
         });
         $('#close').on('click', function () {
             $('#videoLightboxWrap').css('display', 'none');
+            $('.video-player-wrap').css({ 'position': '', 'left': '', 'top': '', 'width': '', 'paddingTop': '' });
+            $('#videoInform').text('').css('display', 'none');
             $(this).css('display', 'none');
             $('#videobox').css('display', 'none').attr('src', '');
             var localVideoEl = $('#localVideo').get(0);
@@ -327,6 +337,7 @@
             // Reset video size to default
             $('#localVideo').css({
                 'display': 'none',
+                'position': '',
                 'width': '',
                 'height': '',
                 'left': '',
@@ -458,9 +469,9 @@
                     openImageLightbox(item.image, label, item.scale);
                     if (item.wrapperHeight) $('.wrapper').css('height', window.innerWidth > 959 ? item.wrapperHeight + 'px' : '');
                 } else if (item.type === 'vimeo') {
-                    openVimeoVideo(item.vimeoId, item.width, item.height, item.left, item.top);
+                    openVimeoVideo(item.vimeoId, item.width, item.height, item.left, item.top, label);
                 } else if (item.type === 'video') {
-                    openLocalVideo(item.video, item.width, item.height, item.left, item.top);
+                    openLocalVideo(item.video, item.width, item.height, item.left, item.top, label);
                 }
             });
         }); // end getJSON
