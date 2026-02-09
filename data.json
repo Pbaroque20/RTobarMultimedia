@@ -63,7 +63,7 @@
       "rw": { "type": "image", "image": "images/portfolio/rwwork.jpg", "wrapperHeight": 1185 },
       "eledonkey2020": { "type": "image", "image": "images/portfolio/work/2020posters.jpg" },
       "surgeons": { "type": "vimeo", "vimeoId": 48152700, "width": 750, "height": 421, "left": 105, "top": 150 },
-      "vaniads": { "type": "image", "image": "images/portfolio/vanitystuff2.jpg?v=2", "scale": 0.7 },
+      "vaniads": { "type": "image", "image": "images/portfolio/vanitystuff2.jpg?v=2", "scale": 1 },
       "NA": { "type": "image", "image": "images/portfolio/work/NA_space.jpg" }
     }
   },
