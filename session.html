@@ -326,12 +326,11 @@
 
         $('#demoreel').on('click', function () {
             $('#videoLightboxWrap').css('display', window.innerWidth > 959 ? 'block' : 'flex');
-            $('#videobox').css('display', 'block').attr({ 'src': '//player.vimeo.com/video/88704801?title=0&amp;byline=0&amp;portrait=0', 'width': '500', 'height': 281, 'frameborder': 0 });
-            // Position close button above the video (default size: 500px x 281px at left: 225px, top: 150px)
+            $('#videobox').css({ 'display': 'block', 'width': '750px', 'height': '421px', 'left': '105px', 'top': '150px' }).attr({ 'src': '//player.vimeo.com/video/88704801?title=0&amp;byline=0&amp;portrait=0', 'width': '750', 'height': 421, 'frameborder': 0 });
             $('#close').css({
                 'display': 'block',
-                'left': '225px',
-                'top': '120px' // 30px above the video
+                'left': '105px',
+                'top': '120px'
             });
             $('#overlay').css('display', 'block');
         });
@@ -437,9 +436,9 @@
                     sourceElement.type = 'video/mp4';
                     videoElement.appendChild(sourceElement);
                     videoElement.load();
-                    // Increase video size for contactus2 (750px x 422px, maintaining 16:9 aspect ratio)
-                    var videoLeft = 105; // Adjusted to center: (960 - 750) / 2 = 105px
-                    var videoTop = 100;  // Adjusted top position
+                    // contactus2: 750px x 422px (16:9), centered
+                    var videoLeft = 105;
+                    var videoTop = 100;
                     $('#localVideo').css({
                         'display': 'block',
                         'width': '750px',
@@ -464,12 +463,11 @@
                     break;
                 case "min":
                     $('#videoLightboxWrap').css('display', window.innerWidth > 959 ? 'block' : 'flex');
-                    $('#videobox').css('display', 'block').attr({ 'src': '//player.vimeo.com/video/52028294?title=0&amp;byline=0&amp;portrait=0', 'width': '500', 'height': 281, 'frameborder': 0 });
-                    // Position close button above the video (default size: 500px x 281px at left: 225px, top: 150px)
+                    $('#videobox').css({ 'display': 'block', 'width': '750px', 'height': '421px', 'left': '105px', 'top': '150px' }).attr({ 'src': '//player.vimeo.com/video/52028294?title=0&amp;byline=0&amp;portrait=0', 'width': '750', 'height': 421, 'frameborder': 0 });
                     $('#close').css({
                         'display': 'block',
-                        'left': '225px',
-                        'top': '120px' // 30px above the video
+                        'left': '105px',
+                        'top': '120px'
                     });
                     $('#overlay').css('display', 'block');
                     break;
@@ -641,12 +639,11 @@
                     break;
                 case "gelfenstein":
                     $('#videoLightboxWrap').css('display', window.innerWidth > 959 ? 'block' : 'flex');
-                    $('#videobox').css('display', 'block').attr({ 'src': '//player.vimeo.com/video/88657994?title=0&amp;byline=0&amp;portrait=0', 'width': '500', 'height': 281, 'frameborder': 0 });
-                    // Position close button above the video (default size: 500px x 281px at left: 225px, top: 150px)
+                    $('#videobox').css({ 'display': 'block', 'width': '750px', 'height': '421px', 'left': '105px', 'top': '150px' }).attr({ 'src': '//player.vimeo.com/video/88657994?title=0&amp;byline=0&amp;portrait=0', 'width': '750', 'height': 421, 'frameborder': 0 });
                     $('#close').css({
                         'display': 'block',
-                        'left': '225px',
-                        'top': '120px' // 30px above the video
+                        'left': '105px',
+                        'top': '120px'
                     });
                     $('#overlay').css('display', 'block');
                     break;
@@ -676,12 +673,11 @@
                     break;
                 case "mirror":
                     $('#videoLightboxWrap').css('display', window.innerWidth > 959 ? 'block' : 'flex');
-                    $('#videobox').css('display', 'block').attr({ 'src': '//player.vimeo.com/video/56375759?title=0&amp;byline=0&amp;portrait=0', 'width': '500', 'height': 281, 'frameborder': 0 });
-                    // Position close button above the video (default size: 500px x 281px at left: 225px, top: 150px)
+                    $('#videobox').css({ 'display': 'block', 'width': '750px', 'height': '421px', 'left': '105px', 'top': '150px' }).attr({ 'src': '//player.vimeo.com/video/56375759?title=0&amp;byline=0&amp;portrait=0', 'width': '750', 'height': 421, 'frameborder': 0 });
                     $('#close').css({
                         'display': 'block',
-                        'left': '225px',
-                        'top': '120px' // 30px above the video
+                        'left': '105px',
+                        'top': '120px'
                     });
                     $('#overlay').css('display', 'block');
                     break;
@@ -771,12 +767,11 @@
                     break;
                 case "surgeons":
                     $('#videoLightboxWrap').css('display', window.innerWidth > 959 ? 'block' : 'flex');
-                    $('#videobox').css('display', 'block').attr({ 'src': '//player.vimeo.com/video/48152700?title=0&amp;byline=0&amp;portrait=0', 'width': '500', 'height': 281, 'frameborder': 0 });
-                    // Position close button above the video (default size: 500px x 281px at left: 225px, top: 150px)
+                    $('#videobox').css({ 'display': 'block', 'width': '750px', 'height': '421px', 'left': '105px', 'top': '150px' }).attr({ 'src': '//player.vimeo.com/video/48152700?title=0&amp;byline=0&amp;portrait=0', 'width': '750', 'height': 421, 'frameborder': 0 });
                     $('#close').css({
                         'display': 'block',
-                        'left': '225px',
-                        'top': '120px' // 30px above the video
+                        'left': '105px',
+                        'top': '120px'
                     });
                     $('#overlay').css('display', 'block');
                     break;
@@ -790,6 +785,8 @@
                         var nh = this.naturalHeight;
                         var displayWidth = nw > 960 ? nw * 0.7 : nw;
                         var displayHeight = nh * (displayWidth / nw);
+                        displayWidth = Math.round(displayWidth * 0.7);
+                        displayHeight = Math.round(displayHeight * 0.7);
                         var informHeight = $('#inform').outerHeight(true);
                         var closelightboxHeight = $('#closelightbox').outerHeight(true);
                         $('#changeImg').css({ 'width': displayWidth + 'px', 'height': displayHeight + 'px' });
