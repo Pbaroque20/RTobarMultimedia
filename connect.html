@@ -51,7 +51,7 @@
                             </td>
                             <td>
                                 <input type="email" id="email" required placeholder="required" name="email"
-                                       pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" />
+                                       pattern="[a-zA-Z0-9._%\+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}" />
                                     <span id="email-error" class="email-error"></span>
                             </td>
                         </tr>
@@ -141,7 +141,7 @@
                     });
 
                     // Email validation (same regex as in connect.css comment and HTML pattern)
-                    var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                    var emailRegex = /^[a-zA-Z0-9._%\+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
                     var $emailInput = $('#email');
                     var $emailError = $('#email-error');
 
