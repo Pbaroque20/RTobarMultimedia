@@ -380,7 +380,7 @@
             }
             switch ($(this).attr('id')) {
                 case "birth":
-                    $('#lightbox').css({ 'display': 'block', 'width': 'auto', 'height': 'auto', 'left': '50%', 'top': '50px' });
+                    $('#lightbox').css({ 'display': 'block', 'width': 'auto', 'height': 'auto', 'left': '50%', 'top': '50px', 'transform': 'translateX(-50%)' });
                     $('#changeImg').attr("src", "");
                     $('#changeImg').css({ 'max-width': '100%', 'max-height': 'none', 'width': 'auto', 'height': 'auto', 'object-fit': 'contain' });
                     $('#changeImg').attr("src", "images/portfolio/BirthoftheUniverse_RaphaelTobar_2011.png");
@@ -395,14 +395,15 @@
                         $('#lightbox').css({
                             'width': displayWidth + 'px',
                             'height': (displayHeight + informHeight + closelightboxHeight + 20) + 'px',
-                            'left': 'calc(50% - ' + (displayWidth / 2) + 'px)'
+                            'left': '50%',
+                            'transform': 'translateX(-50%)'
                         });
                     });
                     $('#inform').text(info.information[0].birth);
                     $('#overlay').css('display', 'block');
                     break;
                 case "ances":
-                    $('#lightbox').css({ 'display': 'block', 'width': 'auto', 'height': 'auto', 'left': '50%', 'top': '50px' });
+                    $('#lightbox').css({ 'display': 'block', 'width': 'auto', 'height': 'auto', 'left': '50%', 'top': '50px', 'transform': 'translateX(-50%)' });
                     $('#changeImg').attr("src", "");
                     $('#changeImg').css({ 'max-width': '100%', 'max-height': 'none', 'width': 'auto', 'height': 'auto', 'object-fit': 'contain' });
                     $('#changeImg').attr("src", "images/portfolio/ancestor_by_raphaeltobar.png");
@@ -417,7 +418,8 @@
                         $('#lightbox').css({
                             'width': displayWidth + 'px',
                             'height': (displayHeight + informHeight + closelightboxHeight + 20) + 'px',
-                            'left': 'calc(50% - ' + (displayWidth / 2) + 'px)'
+                            'left': '50%',
+                            'transform': 'translateX(-50%)'
                         });
                     });
                     $('#inform').text(info.information[1].ances);
@@ -472,7 +474,7 @@
                     $('#overlay').css('display', 'block');
                     break;
                 case "contactus2gameplay":
-                    $('#lightbox').css({ 'display': 'block', 'width': 'auto', 'height': 'auto', 'left': '50%', 'top': '50px' });
+                    $('#lightbox').css({ 'display': 'block', 'width': 'auto', 'height': 'auto', 'left': '50%', 'top': '50px', 'transform': 'translateX(-50%)' });
                     $('#changeImg').attr("src", "");
                     $('#changeImg').css({ 'max-width': '100%', 'max-height': 'none', 'width': 'auto', 'height': 'auto', 'object-fit': 'contain' });
                     $('#changeImg').attr("src", "images/portfolio/work/contactusScreens.jpg");
@@ -487,14 +489,15 @@
                         $('#lightbox').css({
                             'width': displayWidth + 'px',
                             'height': (displayHeight + informHeight + closelightboxHeight + 20) + 'px',
-                            'left': 'calc(50% - ' + (displayWidth / 2) + 'px)'
+                            'left': '50%',
+                            'transform': 'translateX(-50%)'
                         });
                     });
                     $('#inform').text(info.information[4].contactus2gameplay);
                     $('#overlay').css('display', 'block');
                     break;
                 case "beaver":
-                    $('#lightbox').css({ 'display': 'block', 'width': 'auto', 'height': 'auto', 'left': '50%', 'top': '50px' });
+                    $('#lightbox').css({ 'display': 'block', 'width': 'auto', 'height': 'auto', 'left': '50%', 'top': '50px', 'transform': 'translateX(-50%)' });
                     $('#changeImg').attr("src", "");
                     $('#changeImg').css({ 'max-width': '100%', 'max-height': 'none', 'width': 'auto', 'height': 'auto', 'object-fit': 'contain' });
                     $('#changeImg').attr("src", "images/portfolio/beaver_walking_across_water.png");
@@ -509,14 +512,15 @@
                         $('#lightbox').css({
                             'width': displayWidth + 'px',
                             'height': (displayHeight + informHeight + closelightboxHeight + 20) + 'px',
-                            'left': 'calc(50% - ' + (displayWidth / 2) + 'px)'
+                            'left': '50%',
+                            'transform': 'translateX(-50%)'
                         });
                     });
                     $('#inform').text(info.information[5].beaver);
                     $('#overlay').css('display', 'block');
                     break;
                 case "essence":
-                    $('#lightbox').css({ 'display': 'block', 'width': 'auto', 'height': 'auto', 'left': '50%', 'top': '50px' });
+                    $('#lightbox').css({ 'display': 'block', 'width': 'auto', 'height': 'auto', 'left': '50%', 'top': '50px', 'transform': 'translateX(-50%)' });
                     $('#changeImg').attr("src", "");
                     $('#changeImg').css({ 'max-width': '100%', 'max-height': 'none', 'width': 'auto', 'height': 'auto', 'object-fit': 'contain' });
                     $('#changeImg').attr("src", "images/portfolio/collision_30x_small.jpg");
@@ -531,14 +535,15 @@
                         $('#lightbox').css({
                             'width': displayWidth + 'px',
                             'height': (displayHeight + informHeight + closelightboxHeight + 20) + 'px',
-                            'left': 'calc(50% - ' + (displayWidth / 2) + 'px)'
+                            'left': '50%',
+                            'transform': 'translateX(-50%)'
                         });
                     });
                     $('#inform').text(info.information[6].essence);
                     $('#overlay').css('display', 'block');
                     break;
                 case "experi":
-                    $('#lightbox').css({ 'display': 'block', 'width': 'auto', 'height': 'auto', 'left': '50%', 'top': '50px' });
+                    $('#lightbox').css({ 'display': 'block', 'width': 'auto', 'height': 'auto', 'left': '50%', 'top': '50px', 'transform': 'translateX(-50%)' });
                     $('#changeImg').attr("src", "");
                     $('#changeImg').css({ 'max-width': '100%', 'max-height': 'none', 'width': 'auto', 'height': 'auto', 'object-fit': 'contain' });
                     $('#changeImg').attr("src", "images/portfolio/typeposters.jpg");
@@ -553,14 +558,15 @@
                         $('#lightbox').css({
                             'width': displayWidth + 'px',
                             'height': (displayHeight + informHeight + closelightboxHeight + 20) + 'px',
-                            'left': 'calc(50% - ' + (displayWidth / 2) + 'px)'
+                            'left': '50%',
+                            'transform': 'translateX(-50%)'
                         });
                     });
                     $('#inform').text(info.information[7].experi);
                     $('#overlay').css('display', 'block');
                     break;
                 case "fish":
-                    $('#lightbox').css({ 'display': 'block', 'width': 'auto', 'height': 'auto', 'left': '50%', 'top': '50px' });
+                    $('#lightbox').css({ 'display': 'block', 'width': 'auto', 'height': 'auto', 'left': '50%', 'top': '50px', 'transform': 'translateX(-50%)' });
                     $('#changeImg').attr("src", "");
                     $('#changeImg').css({ 'max-width': '100%', 'max-height': 'none', 'width': 'auto', 'height': 'auto', 'object-fit': 'contain' });
                     $('#changeImg').attr("src", "images/portfolio/raphael-tobar-bombardier-screen-raphaeltobar.jpg");
@@ -575,7 +581,8 @@
                         $('#lightbox').css({
                             'width': displayWidth + 'px',
                             'height': (displayHeight + informHeight + closelightboxHeight + 20) + 'px',
-                            'left': 'calc(50% - ' + (displayWidth / 2) + 'px)'
+                            'left': '50%',
+                            'transform': 'translateX(-50%)'
                         });
                     });
                     $('#inform').text(info.information[8].fish);
@@ -616,7 +623,7 @@
                     $('#overlay').css('display', 'block');
                     break;
                 case "lifeisjazz":
-                    $('#lightbox').css({ 'display': 'block', 'width': 'auto', 'height': 'auto', 'left': '50%', 'top': '50px' });
+                    $('#lightbox').css({ 'display': 'block', 'width': 'auto', 'height': 'auto', 'left': '50%', 'top': '50px', 'transform': 'translateX(-50%)' });
                     $('#changeImg').attr("src", "");
                     $('#changeImg').css({ 'max-width': '100%', 'max-height': 'none', 'width': 'auto', 'height': 'auto', 'object-fit': 'contain' });
                     $('#changeImg').attr("src", "images/portfolio/life_is_jazz_remake.jpg");
@@ -631,7 +638,8 @@
                         $('#lightbox').css({
                             'width': displayWidth + 'px',
                             'height': (displayHeight + informHeight + closelightboxHeight + 20) + 'px',
-                            'left': 'calc(50% - ' + (displayWidth / 2) + 'px)'
+                            'left': '50%',
+                            'transform': 'translateX(-50%)'
                         });
                     });
                     $('#inform').text(info.information[10].lifeisjazz);
@@ -648,7 +656,7 @@
                     $('#overlay').css('display', 'block');
                     break;
                 case "m":
-                    $('#lightbox').css({ 'display': 'block', 'width': 'auto', 'height': 'auto', 'left': '50%', 'top': '50px' });
+                    $('#lightbox').css({ 'display': 'block', 'width': 'auto', 'height': 'auto', 'left': '50%', 'top': '50px', 'transform': 'translateX(-50%)' });
                     $('#changeImg').attr("src", "");
                     $('#changeImg').css({ 'max-width': '100%', 'max-height': 'none', 'width': 'auto', 'height': 'auto', 'object-fit': 'contain' });
                     $('#changeImg').attr("src", "images/portfolio/space.jpg");
@@ -663,7 +671,8 @@
                         $('#lightbox').css({
                             'width': displayWidth + 'px',
                             'height': (displayHeight + informHeight + closelightboxHeight + 20) + 'px',
-                            'left': 'calc(50% - ' + (displayWidth / 2) + 'px)'
+                            'left': '50%',
+                            'transform': 'translateX(-50%)'
                         });
                     });
                     $('#inform').text(info.information[12].m);
@@ -720,7 +729,7 @@
                     $('#overlay').css('display', 'block');
                     break;
                 case "rw":
-                    $('#lightbox').css({ 'display': 'block', 'width': 'auto', 'height': 'auto', 'left': '50%', 'top': '50px' });
+                    $('#lightbox').css({ 'display': 'block', 'width': 'auto', 'height': 'auto', 'left': '50%', 'top': '50px', 'transform': 'translateX(-50%)' });
                     $('#changeImg').attr("src", "");
                     $('#changeImg').css({ 'max-width': '100%', 'max-height': 'none', 'width': 'auto', 'height': 'auto', 'object-fit': 'contain' });
                     $('#changeImg').attr("src", "images/portfolio/rwwork.jpg");
@@ -735,7 +744,8 @@
                         $('#lightbox').css({
                             'width': displayWidth + 'px',
                             'height': (displayHeight + informHeight + closelightboxHeight + 20) + 'px',
-                            'left': 'calc(50% - ' + (displayWidth / 2) + 'px)'
+                            'left': '50%',
+                            'transform': 'translateX(-50%)'
                         });
                     });
                     $('#inform').text(info.information[15].rw);
@@ -744,7 +754,7 @@
                     else $('.wrapper').css('height', '');
                     break;
                 case "eledonkey2020":
-                    $('#lightbox').css({ 'display': 'block', 'width': 'auto', 'height': 'auto', 'left': '50%', 'top': '50px' });
+                    $('#lightbox').css({ 'display': 'block', 'width': 'auto', 'height': 'auto', 'left': '50%', 'top': '50px', 'transform': 'translateX(-50%)' });
                     $('#changeImg').attr("src", "");
                     $('#changeImg').css({ 'max-width': '100%', 'max-height': 'none', 'width': 'auto', 'height': 'auto', 'object-fit': 'contain' });
                     $('#changeImg').attr("src", "images/portfolio/work/2020posters.jpg");
@@ -759,7 +769,8 @@
                         $('#lightbox').css({
                             'width': displayWidth + 'px',
                             'height': (displayHeight + informHeight + closelightboxHeight + 20) + 'px',
-                            'left': 'calc(50% - ' + (displayWidth / 2) + 'px)'
+                            'left': '50%',
+                            'transform': 'translateX(-50%)'
                         });
                     });
                     $('#inform').text(info.information[16].eledonkey2020);
@@ -776,7 +787,7 @@
                     $('#overlay').css('display', 'block');
                     break;
                 case "vaniads":
-                    $('#lightbox').css({ 'display': 'block', 'width': 'auto', 'height': 'auto', 'left': '50%', 'top': '50px' });
+                    $('#lightbox').css({ 'display': 'block', 'width': 'auto', 'height': 'auto', 'left': '50%', 'top': '50px', 'transform': 'translateX(-50%)' });
                     $('#changeImg').attr("src", "");
                     $('#changeImg').css({ 'max-width': '100%', 'max-height': 'none', 'width': 'auto', 'height': 'auto', 'object-fit': 'contain' });
                     $('#changeImg').attr("src", "images/portfolio/vanitystuff2.jpg?v=2");
@@ -793,14 +804,15 @@
                         $('#lightbox').css({
                             'width': displayWidth + 'px',
                             'height': (displayHeight + informHeight + closelightboxHeight + 20) + 'px',
-                            'left': 'calc(50% - ' + (displayWidth / 2) + 'px)'
+                            'left': '50%',
+                            'transform': 'translateX(-50%)'
                         });
                     });
                     $('#inform').text(info.information[18].vaniads);
                     $('#overlay').css('display', 'block');
                     break;
                 case "logod":
-                    $('#lightbox').css({ 'display': 'block', 'width': 'auto', 'height': 'auto', 'left': '50%', 'top': '50px' });
+                    $('#lightbox').css({ 'display': 'block', 'width': 'auto', 'height': 'auto', 'left': '50%', 'top': '50px', 'transform': 'translateX(-50%)' });
                     $('#changeImg').attr("src", "");
                     $('#changeImg').css({ 'max-width': '100%', 'max-height': 'none', 'width': 'auto', 'height': 'auto', 'object-fit': 'contain' });
                     $('#changeImg').attr("src", "images/portfolio/logos2.jpg");
@@ -815,7 +827,8 @@
                         $('#lightbox').css({
                             'width': displayWidth + 'px',
                             'height': (displayHeight + informHeight + closelightboxHeight + 20) + 'px',
-                            'left': 'calc(50% - ' + (displayWidth / 2) + 'px)'
+                            'left': '50%',
+                            'transform': 'translateX(-50%)'
                         });
                     });
                     $('#inform').text(info.information[19].logod);
