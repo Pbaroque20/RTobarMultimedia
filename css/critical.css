@@ -1,0 +1,132 @@
+/* Critical CSS: above-the-fold styles for fast first paint.
+   This file is the source of truth. The same rules are inlined in index.html <style>
+   so the first paint has no CSS network delay. When editing, update both or re-copy into index. */
+
+/* Meyer reset (minimal) */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary, time, mark, audio, video {
+    margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline;
+}
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display: block; }
+body { line-height: 1; }
+ol, ul { list-style: none; }
+blockquote, q { quotes: none; }
+blockquote:before, blockquote:after, q:before, q:after { content: ''; content: none; }
+table { border-collapse: collapse; border-spacing: 0; }
+
+/* Font used by loader and header */
+/* Font paths: document-relative for inlining in index.html (url from document URL) */
+@font-face {
+    font-family: "Fedra Sans Light";
+    src: url("fonts/FedraSansStd-Light.eot") format('embedded-opentype');
+    src: url("fonts/FedraSansStd-Light.eot#?iefix") format('embedded-opentype');
+    src: url("fonts/FedraSansStd-Light.woff") format('woff');
+}
+
+:root {
+    --color-accent: yellow;
+}
+
+html { overflow-y: scroll; scrollbar-width: none; -ms-overflow-style: none; }
+html::-webkit-scrollbar { display: none; }
+
+body {
+    transition: background-color 0.5s ease;
+    -webkit-user-select: none;
+    user-select: none;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+body::-webkit-scrollbar { display: none; }
+
+#page-content { position: relative; }
+
+.loaderContainer {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-left: -150px;
+    margin-top: -150px;
+    width: 300px;
+    height: 300px;
+    text-align: center;
+    color: black;
+    font-family: "Fedra Sans Light";
+    z-index: 1000;
+    pointer-events: none;
+}
+
+#loader {
+    -webkit-transform: scale(.5);
+    transform: scale(.5);
+}
+
+#loading {
+    position: relative;
+    top: -25px;
+    left: 5px;
+    color: black;
+    -webkit-animation: pulse 0.3s infinite alternate;
+    animation: pulse 0.3s infinite alternate;
+}
+
+@-webkit-keyframes pulse { from { opacity: 0.25; } to { opacity: 1; } }
+@keyframes pulse { from { opacity: 0.25; } to { opacity: 1; } }
+
+/* Header: visible on first paint */
+#topHeader {
+    width: 960px;
+    height: 19px;
+    background-color: black;
+    position: fixed;
+    top: 0;
+    border-bottom: 1px solid gray;
+    z-index: 500;
+}
+
+header div {
+    width: 350px;
+    color: white;
+    vertical-align: middle;
+}
+
+header div:first-child {
+    text-align: left;
+    text-indent: 1em;
+    float: left;
+    top: 5px;
+    font-family: "Fedra Sans Light";
+}
+
+header div:nth-child(2) {
+    text-align: right;
+    padding-right: 1em;
+    float: right;
+    top: 5px;
+    font-family: "Fedra Sans Light";
+}
+
+#topHeader .multi { color: var(--color-accent); }
+
+@media (min-width: 960px) {
+    body > header #topHeader {
+        left: 50%;
+        margin-left: 0;
+        transform: translateX(-50%) translateZ(0);
+    }
+}
+
+@media (max-width: 960px) {
+    .loaderContainer {
+        width: 200px;
+        height: 200px;
+        top: 15vh;
+        max-width: 90vw;
+    }
+    #topHeader { width: 100%; max-width: 960px; box-sizing: border-box; }
+    header div { max-width: 50%; box-sizing: border-box; }
+}
