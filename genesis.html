@@ -30,40 +30,12 @@
         <div id="visit">Also visit me here at<br /><a href="https://www.behance.net/Genoma_digital"><img src="images/behancelogo.png" /></a>  <a href="https://www.linkedin.com/pub/raphael-tobar/62/1b2/993/"><img src="images/linkedinlogo.png" /></a>  <a href="https://twitter.com/rftobar"><img src="images/Twitter_logo_blue.png" /></a></div>
         <script>
             $(document).ready(function () {
-                $('#copyright-year').text('©' + new Date().getFullYear());
-
-                // Dynamic scroll stop: do not scroll past the "Also visit me here" block
-                (function () {
-                    var $stop = $('#visit');
-                    if (!$stop.length) return;
-                    function getMaxScrollY() {
-                        var rect = $stop[0].getBoundingClientRect();
-                        return rect.bottom + window.scrollY - window.innerHeight;
-                    }
-                    function clampScroll() {
-                        var maxY = getMaxScrollY();
-                        if (maxY > 0 && window.scrollY > maxY) window.scrollTo(0, maxY);
-                    }
-                    $(window).on('scroll', clampScroll).on('resize', clampScroll);
-                })();
-
-                //Site navigation and animation
-                //    $('.nav_page1').css({ 'left': '-180px', 'opacity': '1' });
-
-                $('.session').on('click', function (e) {
-                    navigateTo('session.html', '#1D5F89');
-                });
-
-                $('.narrative').on('click', function (e) {
-                    navigateTo('narrative.html', '#0E1037');
-                });
-
-                $('.connect').on('click', function (e) {
-                    navigateTo('connect.html', '#EA0C94');
-                });
-
+                SiteUtils.updateCopyrightYear();
+                SiteUtils.scrollClamp($('#visit'));
+                SiteUtils.initNavLinks();
                 $('#genoma_black').on('click', function (e) {
-                    navigateTo('genoma.html', '#3B002B');
+                    e.preventDefault();
+                    navigateTo(SiteUtils.NAV_PAGES.genoma.url, SiteUtils.NAV_PAGES.genoma.bg);
                 });
 
                 if (window.innerWidth >= 960) {

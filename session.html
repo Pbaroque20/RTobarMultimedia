@@ -28,8 +28,8 @@
                     <div class="beaver"><img style="cursor:pointer;" class="workimg" id="beaver" src="images/beaver.png" /></div>
                     <div class="essence"><img style="cursor:pointer;" class="workimg" id="essence" src="images/colli.png" /></div>
                     <div class="experi"><img style="cursor:pointer;" class="workimg" id="experi" src="images/experi.png" /></div>
-                    <div class="fish"><img style="cursor:pointer;" class="workimg" id="fish" src="images/bomb.png" /></div>
-                    <div class="ford"><img style="cursor:pointer;" class="workimg" id="ford" src="images/FS.png" /></div>
+                    <div class="bomb"><img style="cursor:pointer;" class="workimg" id="bomb" src="images/bomb.png" /></div>
+                    <div class="fortstandard"><img style="cursor:pointer;" class="workimg" id="fortstandard" src="images/FS.png" /></div>
                     <div class="lifeisjazz"><img style="cursor:pointer;" class="workimg" id="lifeisjazz" src="images/lifeisjazz.png" /></div>
                     <div class="m"><img style="cursor:pointer;" class="workimg" id="m" src="images/M.png" /></div>
                     <div class="mirror"><img style="cursor:pointer;" class="workimg" id="mirror" src="images/mirror.png" /></div>
@@ -39,7 +39,7 @@
                     <div class="surgeons"><img style="cursor:pointer;" class="workimg" id="surgeons" src="images/surgeons.png" /></div>
                     <div class="vaniads"><img style="cursor:pointer;" class="workimg" id="vaniads" src="images/vaniads.png" /></div>
                     <div class="logod"><img style="cursor:pointer;" class="workimg" id="logod" src="images/logodesigns.png" /></div>
-                    <div class="gelfenstein"><img style="cursor:pointer;" class="workimg" id="gelfenstein" src="images/giphy.png" /></div>
+                    <div class="giphy"><img style="cursor:pointer;" class="workimg" id="giphy" src="images/giphy.png" /></div>
                 </section>
             </main>
         </div>
@@ -56,7 +56,7 @@
     <div id="sessionPanHint" aria-live="polite">Pan screen with drag</div>
     <script>
         $(document).ready(function () {
-            $('#copyright-year').text('©' + new Date().getFullYear());
+            SiteUtils.updateCopyrightYear();
             
             // Disable image dragging on workimgs globally
             $('.workimg img').attr('draggable', 'false').on('dragstart', function(e) {
@@ -247,17 +247,7 @@
 
             //Site navigation and animation
 
-            $('.genesis').on('click', function (e) {
-                navigateTo('genesis.html', '#F5E10E');
-            });
-
-            $('.narrative').on('click', function (e) {
-                navigateTo('narrative.html', '#0E1037');
-            });
-
-            $('.connect').on('click', function (e) {
-                navigateTo('connect.html', '#EA0C94');
-            });
+            SiteUtils.initNavLinks();
 
             if (window.innerWidth >= 960) {
                 $('.nav_page2 ul li').not(':nth-child(2)').find('a').on('mouseenter', function () {
@@ -296,43 +286,34 @@
                 })();
             }
         });
-        // portfolio windows and ajax
+        // portfolio windows and ajax – data loaded from data.json
+        var info = null;
 
-        var info =
-        {
-            "information": [
-                { "birth": "Birth of the Universe, 2011" },
-                { "ances": "Ancestor, 2014" },
-                { "contactus2": "Contact Us 2 Trailer" },
-                { "min": "30 Minute Interview with Dr. Hasan on WSVN7 (Highlights Reel), 2012" },
-                { "contactus2gameplay": "Contact Us 2 - Gameplay Screenshots, 2022 (w/ Dark Igloo, Fuzzy Wobble, & Niles Fromm)" },
-                { "beaver": "Beaver Walking Across Water, 2011" },
-                { "essence": "Neighborhood I (Hummingbird Colliding Against A Surface), 2019" },
-                { "experi": "Typographical Posters, 2002-03" },
-                { "fish": "Neighborhood III (Defending Bombardier Beetle), 2021" },
-                { "ford": "Ford Infographic of Yearly Revenue (Study), 2014" },
-                { "lifeisjazz": "Life is Jazz, 2007 (left) | 2018 (right)" },
-                { "gelfenstein": "Gelfenstein Farm Promo, 2014" },
-                { "m": "Futura Posters (Study), 2013" },
-                { "mirror": "Vanity Cosmetic Surgery - 30 Second Spot on NBC6 and ABC10, 2012" },
-                { "2020": "2020: The Ride, 2021" },
-                { "rw": "Realty Estate Flyers for Realty World REC, 2013" },
-                { "eledonkey2020": "2020: The Ride, 2020 (w/ JenDotLu & Pariah Interactive)" },
-                { "surgeons": "Surgeon's Cosmetic Med & Spa, 2012" },
-                { "vaniads": "Vanity Cosmetic Surgery Designs, 2012" },
-                { "logod": "Logo Designs, 2015" }
-            ]
-        };
+        function openVimeoVideo(vimeoId, width, height, left, top) {
+            $('#videoLightboxWrap').css('display', window.innerWidth > 959 ? 'block' : 'flex');
+            $('#videobox').css({ 'display': 'block', 'width': width + 'px', 'height': height + 'px', 'left': left + 'px', 'top': top + 'px' }).attr({ 'src': '//player.vimeo.com/video/' + vimeoId + '?title=0&amp;byline=0&amp;portrait=0', 'width': width, 'height': height, 'frameborder': 0 });
+            $('#close').css({ 'display': 'block', 'left': left + 'px', 'top': (top - 30) + 'px' });
+            $('#overlay').css('display', 'block');
+        }
+        function openLocalVideo(videoPath, width, height, left, top) {
+            $('#videoLightboxWrap').css('display', window.innerWidth > 959 ? 'block' : 'flex');
+            $('#videobox').css('display', 'none');
+            var videoElement = $('#localVideo').get(0);
+            $('#localVideo source').remove();
+            var sourceElement = document.createElement('source');
+            sourceElement.src = videoPath;
+            sourceElement.type = 'video/mp4';
+            videoElement.appendChild(sourceElement);
+            videoElement.load();
+            $('#localVideo').css({ 'display': 'block', 'width': width + 'px', 'height': height + 'px', 'left': left + 'px', 'top': top + 'px' });
+            $('#close').css({ 'display': 'block', 'left': left + 'px', 'top': (top - 30) + 'px' });
+            var playPromise = videoElement.play();
+            if (playPromise !== undefined) playPromise.catch(function(err) { console.log('Video play failed:', err); });
+            $('#overlay').css('display', 'block');
+        }
 
         $('#demoreel').on('click', function () {
-            $('#videoLightboxWrap').css('display', window.innerWidth > 959 ? 'block' : 'flex');
-            $('#videobox').css({ 'display': 'block', 'width': '750px', 'height': '421px', 'left': '105px', 'top': '150px' }).attr({ 'src': '//player.vimeo.com/video/88704801?title=0&amp;byline=0&amp;portrait=0', 'width': '750', 'height': 421, 'frameborder': 0 });
-            $('#close').css({
-                'display': 'block',
-                'left': '105px',
-                'top': '120px'
-            });
-            $('#overlay').css('display', 'block');
+            openVimeoVideo(88704801, 750, 421, 105, 150);
         });
         $('#close').on('click', function () {
             $('#videoLightboxWrap').css('display', 'none');
@@ -457,249 +438,46 @@
             xhr.send();
         }
 
-        $('.workimg').on('click', function (e) {
-            // Prevent click if user was dragging (for desktop resized below 960px)
-            // Check if we're in drag mode and user actually dragged
-            if (window.innerWidth <= 959 && typeof hasDragged !== 'undefined' && hasDragged) {
-                e.preventDefault();
-                e.stopPropagation();
-                return false;
-            }
-            switch ($(this).attr('id')) {
-                case "birth":
-                    openImageLightbox("images/portfolio/BirthoftheUniverse_RaphaelTobar_2011.png", info.information[0].birth);
-                    break;
-                case "ances":
-                    openImageLightbox("images/portfolio/ancestor_by_raphaeltobar.png", info.information[1].ances);
-                    break;
-                case "contactus2":
-                    $('#videoLightboxWrap').css('display', window.innerWidth > 959 ? 'block' : 'flex');
-                    $('#videobox').css('display', 'none');
-                    var videoPath = 'videos/contactUs2_trailer.mp4';
-                    var videoElement = $('#localVideo').get(0);
-                    // Remove any existing source elements
-                    $('#localVideo source').remove();
-                    // Create and append new source element
-                    var sourceElement = document.createElement('source');
-                    sourceElement.src = videoPath;
-                    sourceElement.type = 'video/mp4';
-                    videoElement.appendChild(sourceElement);
-                    videoElement.load();
-                    // contactus2: 750px x 422px (16:9), centered
-                    var videoLeft = 105;
-                    var videoTop = 100;
-                    $('#localVideo').css({
-                        'display': 'block',
-                        'width': '750px',
-                        'height': '422px',
-                        'left': videoLeft + 'px',
-                        'top': videoTop + 'px'
-                    });
-                    // Position close button above the video
-                    $('#close').css({
-                        'display': 'block',
-                        'left': videoLeft + 'px',
-                        'top': (videoTop - 30) + 'px' // 30px above the video
-                    });
-                    // Try to play the video
-                    var playPromise = videoElement.play();
-                    if (playPromise !== undefined) {
-                        playPromise.catch(function(error) {
-                            console.log('Video play failed:', error);
-                        });
-                    }
-                    $('#overlay').css('display', 'block');
-                    break;
-                case "min":
-                    $('#videoLightboxWrap').css('display', window.innerWidth > 959 ? 'block' : 'flex');
-                    $('#videobox').css({ 'display': 'block', 'width': '750px', 'height': '421px', 'left': '105px', 'top': '150px' }).attr({ 'src': '//player.vimeo.com/video/52028294?title=0&amp;byline=0&amp;portrait=0', 'width': '750', 'height': 421, 'frameborder': 0 });
-                    $('#close').css({
-                        'display': 'block',
-                        'left': '105px',
-                        'top': '120px'
-                    });
-                    $('#overlay').css('display', 'block');
-                    break;
-                case "contactus2gameplay":
-                    openImageLightbox("images/portfolio/work/contactusScreens.jpg", info.information[4].contactus2gameplay);
-                    break;
-                case "beaver":
-                    openImageLightbox("images/portfolio/beaver_walking_across_water.png", info.information[5].beaver);
-                    break;
-                case "essence":
-                    openImageLightbox("images/portfolio/collision_30x_small.jpg", info.information[6].essence);
-                    break;
-                case "experi":
-                    openImageLightbox("images/portfolio/typeposters.jpg", info.information[7].experi);
-                    break;
-                case "fish":
-                    openImageLightbox("images/portfolio/raphael-tobar-bombardier-screen-raphaeltobar.jpg", info.information[8].fish);
-                    break;
-                case "ford":
-                    $('#videoLightboxWrap').css('display', window.innerWidth > 959 ? 'block' : 'flex');
-                    $('#videobox').css('display', 'none');
-                    var videoPath = 'videos/fs-demo-vid-02.mp4';
-                    var videoElement = $('#localVideo').get(0);
-                    $('#localVideo source').remove();
-                    var sourceElement = document.createElement('source');
-                    sourceElement.src = videoPath;
-                    sourceElement.type = 'video/mp4';
-                    videoElement.appendChild(sourceElement);
-                    videoElement.load();
-                    // 25% larger than 625x351: 781x439, centered on 960px
-                    var videoLeft = 90;
-                    var videoTop = 150;
-                    $('#localVideo').css({
-                        'display': 'block',
-                        'width': '781px',
-                        'height': '439px',
-                        'left': videoLeft + 'px',
-                        'top': videoTop + 'px'
-                    });
-                    $('#close').css({
-                        'display': 'block',
-                        'left': videoLeft + 'px',
-                        'top': (videoTop - 30) + 'px'
-                    });
-                    var playPromise = videoElement.play();
-                    if (playPromise !== undefined) {
-                        playPromise.catch(function(error) {
-                            console.log('Video play failed:', error);
-                        });
-                    }
-                    $('#overlay').css('display', 'block');
-                    break;
-                case "lifeisjazz":
-                    openImageLightbox("images/portfolio/life_is_jazz_remake.jpg", info.information[10].lifeisjazz);
-                    break;
-                case "gelfenstein":
-                    $('#videoLightboxWrap').css('display', window.innerWidth > 959 ? 'block' : 'flex');
-                    $('#videobox').css('display', 'none');
-                    var videoPath = 'videos/frame.mp4';
-                    var videoElement = $('#localVideo').get(0);
-                    $('#localVideo source').remove();
-                    var sourceElement = document.createElement('source');
-                    sourceElement.src = videoPath;
-                    sourceElement.type = 'video/mp4';
-                    videoElement.appendChild(sourceElement);
-                    videoElement.load();
-                    var videoLeft = 105;
-                    var videoTop = 150;
-                    $('#localVideo').css({
-                        'display': 'block',
-                        'width': '750px',
-                        'height': '421px',
-                        'left': videoLeft + 'px',
-                        'top': videoTop + 'px'
-                    });
-                    $('#close').css({
-                        'display': 'block',
-                        'left': videoLeft + 'px',
-                        'top': (videoTop - 30) + 'px'
-                    });
-                    var playPromise = videoElement.play();
-                    if (playPromise !== undefined) {
-                        playPromise.catch(function(error) {
-                            console.log('Video play failed:', error);
-                        });
-                    }
-                    $('#overlay').css('display', 'block');
-                    break;
-                case "m":
-                    openImageLightbox("images/portfolio/space.jpg", info.information[12].m);
-                    if (window.innerWidth > 959) $('.wrapper').css('height', '1487px');
-                    else $('.wrapper').css('height', '');
-                    break;
-                case "mirror":
-                    $('#videoLightboxWrap').css('display', window.innerWidth > 959 ? 'block' : 'flex');
-                    $('#videobox').css({ 'display': 'block', 'width': '750px', 'height': '421px', 'left': '105px', 'top': '150px' }).attr({ 'src': '//player.vimeo.com/video/56375759?title=0&amp;byline=0&amp;portrait=0', 'width': '750', 'height': 421, 'frameborder': 0 });
-                    $('#close').css({
-                        'display': 'block',
-                        'left': '105px',
-                        'top': '120px'
-                    });
-                    $('#overlay').css('display', 'block');
-                    break;
-                case "2020":
-                    $('#videoLightboxWrap').css('display', window.innerWidth > 959 ? 'block' : 'flex');
-                    $('#videobox').css('display', 'none');
-                    var videoPath = 'videos/2020_trailer.mp4';
-                    var videoElement = $('#localVideo').get(0);
-                    // Remove any existing source elements
-                    $('#localVideo source').remove();
-                    // Create and append new source element
-                    var sourceElement = document.createElement('source');
-                    sourceElement.src = videoPath;
-                    sourceElement.type = 'video/mp4';
-                    videoElement.appendChild(sourceElement);
-                    videoElement.load();
-                    // Use default video size for 2020 (ford: 781x439, 25% larger than 625x351)
-                    var videoLeft = 90;
-                    var videoTop = 150;
-                    $('#localVideo').css({
-                        'display': 'block',
-                        'width': '781px',
-                        'height': '439px',
-                        'left': videoLeft + 'px',
-                        'top': videoTop + 'px'
-                    });
-                    // Position close button above the video
-                    $('#close').css({
-                        'display': 'block',
-                        'left': videoLeft + 'px',
-                        'top': (videoTop - 30) + 'px' // 30px above the video
-                    });
-                    // Try to play the video
-                    var playPromise = videoElement.play();
-                    if (playPromise !== undefined) {
-                        playPromise.catch(function(error) {
-                            console.log('Video play failed:', error);
-                        });
-                    }
-                    $('#overlay').css('display', 'block');
-                    break;
-                case "rw":
-                    openImageLightbox("images/portfolio/rwwork.jpg", info.information[15].rw);
-                    if (window.innerWidth > 959) $('.wrapper').css('height', '1185px');
-                    else $('.wrapper').css('height', '');
-                    break;
-                case "eledonkey2020":
-                    openImageLightbox("images/portfolio/work/2020posters.jpg", info.information[16].eledonkey2020);
-                    break;
-                case "surgeons":
-                    $('#videoLightboxWrap').css('display', window.innerWidth > 959 ? 'block' : 'flex');
-                    $('#videobox').css({ 'display': 'block', 'width': '750px', 'height': '421px', 'left': '105px', 'top': '150px' }).attr({ 'src': '//player.vimeo.com/video/48152700?title=0&amp;byline=0&amp;portrait=0', 'width': '750', 'height': 421, 'frameborder': 0 });
-                    $('#close').css({
-                        'display': 'block',
-                        'left': '105px',
-                        'top': '120px'
-                    });
-                    $('#overlay').css('display', 'block');
-                    break;
-                case "vaniads":
-                    openImageLightbox("images/portfolio/vanitystuff2.jpg?v=2", info.information[18].vaniads, 0.7);
-                    break;
-                case "logod":
-                    openImageLightbox("images/portfolio/logos2.jpg", info.information[19].logod);
-                    if (window.innerWidth > 959) $('.wrapper').css('height', '1198px');
-                    else $('.wrapper').css('height', '');
-                    break;
-            }
-            $('#lightbox').on('click', function () {
-                $(this).css({ 'display': 'none', 'opacity': '1' });
-                $('#overlay').css('display', 'none');
-                $('#videoLightboxWrap').css('display', 'none');
-                $('#close').css('display', 'none');
-                $('#videobox').css('display', 'none').attr('src', '');
-                $('#lightboxLoader').hide();
-                if (typeof lightboxBlobUrl !== 'undefined' && lightboxBlobUrl) {
-                    URL.revokeObjectURL(lightboxBlobUrl);
-                    lightboxBlobUrl = null;
+        $.getJSON('data.json').done(function (data) {
+            info = data;
+        }).fail(function () {
+            info = { information: {} };
+        }).always(function () {
+            var items = (info && info.session && info.session.items) ? info.session.items : {};
+            $('.workimg').on('click', function (e) {
+                if (window.innerWidth <= 959 && typeof hasDragged !== 'undefined' && hasDragged) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return false;
                 }
-                if (window.innerWidth > 959) $('.wrapper').css('height', '1014px');
-                else $('.wrapper').css('height', '');
+                var id = $(this).attr('id');
+                var item = items[id];
+                if (!item) return;
+                var label = (info && info.information && info.information[id]) ? info.information[id] : '';
+                if (item.type === 'image') {
+                    openImageLightbox(item.image, label, item.scale);
+                    if (item.wrapperHeight) $('.wrapper').css('height', window.innerWidth > 959 ? item.wrapperHeight + 'px' : '');
+                } else if (item.type === 'vimeo') {
+                    openVimeoVideo(item.vimeoId, item.width, item.height, item.left, item.top);
+                } else if (item.type === 'video') {
+                    openLocalVideo(item.video, item.width, item.height, item.left, item.top);
+                }
             });
+        }); // end getJSON
 
+        $('#lightbox').on('click', function () {
+            $(this).css({ 'display': 'none', 'opacity': '1' });
+            $('#overlay').css('display', 'none');
+            $('#videoLightboxWrap').css('display', 'none');
+            $('#close').css('display', 'none');
+            $('#videobox').css('display', 'none').attr('src', '');
+            $('#lightboxLoader').hide();
+            if (typeof lightboxBlobUrl !== 'undefined' && lightboxBlobUrl) {
+                URL.revokeObjectURL(lightboxBlobUrl);
+                lightboxBlobUrl = null;
+            }
+            if (window.innerWidth > 959) $('.wrapper').css('height', '1014px');
+            else $('.wrapper').css('height', '');
         });
         $('.imageContainer1').css('opacity', '1');
         

@@ -70,22 +70,8 @@
             </main>
             <script>
                 $(document).ready(function () {
-                    $('#copyright-year').text('©' + new Date().getFullYear());
-
-                    // Dynamic scroll stop: do not scroll past the form buttons (Send/Reset)
-                    (function () {
-                        var $stop = $('#contact_form');
-                        if (!$stop.length) return;
-                        function getMaxScrollY() {
-                            var rect = $stop[0].getBoundingClientRect();
-                            return rect.bottom + window.scrollY - window.innerHeight;
-                        }
-                        function clampScroll() {
-                            var maxY = getMaxScrollY();
-                            if (maxY > 0 && window.scrollY > maxY) window.scrollTo(0, maxY);
-                        }
-                        $(window).on('scroll', clampScroll).on('resize', clampScroll);
-                    })();
+                    SiteUtils.updateCopyrightYear();
+                    SiteUtils.scrollClamp($('#contact_form'));
 
                     // Only run chat bubble animations if NOT loaded via AJAX into #page-content
                     // (Animations will be triggered by index.html after fade-in completes)
@@ -111,17 +97,7 @@
                     $('.nav_page1').css({ 'left': '-180px', 'opacity': '1' });
                     $('.imageContainer1').css('opacity', '1');
 
-                    $('.genesis').on('click', function (e) {
-                        navigateTo('genesis.html', '#F5E10E');
-                    });
-
-                    $('.session').on('click', function (e) {
-                        navigateTo('session.html', '#1D5F89');
-                    });
-
-                    $('.narrative').on('click', function (e) {
-                        navigateTo('narrative.html', '#0E1037');
-                    });
+                    SiteUtils.initNavLinks();
 
                     //remaining letters in message
                     $('.maxlength').after('<span class="remaining">').next().hide().end().keydown(function (event) {

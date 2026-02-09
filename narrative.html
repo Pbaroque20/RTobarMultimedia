@@ -211,22 +211,12 @@ and deploy glTF and AR furniture content for interactive browser experience. dev
             </main>
             <script>
                 $(document).ready(function () {
-                    $('#copyright-year').text('©' + new Date().getFullYear());
+                    SiteUtils.updateCopyrightYear();
                     //Site navigation and animation
                     $('.nav_page1').css({ 'left': '-180px', 'opacity': '1' });
                     $('.imageContainer1').css('opacity', '1');
 
-                    $('.genesis').on('click', function (e) {
-                        navigateTo('genesis.html', '#F5E10E');
-                    });
-
-                    $('.session').on('click', function (e) {
-                        navigateTo('session.html', '#1D5F89');
-                    });
-
-                    $('.connect').on('click', function (e) {
-                        navigateTo('connect.html', '#EA0C94');
-                    });
+                    SiteUtils.initNavLinks();
 
                     // Detect touch capability
                     var hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
@@ -234,6 +224,19 @@ and deploy glTF and AR furniture content for interactive browser experience. dev
                     var touchUsed = false;
                     var clickTapModeActive = false; // Track if user has used click/tap (disables hover)
                     
+                    $.getJSON('data.json').done(function (d) {
+                        if (d.narrative) {
+                            var n = d.narrative;
+                            $('#bio').html('<img src="' + (n.portraitUrl || 'images/portrait.png') + '" alt="Portrait" style="display: block; margin: 0 auto 1em auto; width: 38%; height: auto;" />' + (n.bioHtml || ''));
+                            var tbody = '';
+                            (n.workHistory || []).forEach(function (job) {
+                                tbody += '<tr class="header"><td>' + (job.company || '') + '</td><td>' + (job.dates || '') + '</td><td>' + (job.role || '') + '</td></tr>';
+                                tbody += '<tr><td colspan="3" class="descrip">' + (job.description || '') + '</td></tr>';
+                                tbody += '<tr><td colspan="3" class="spacer"></td></tr>';
+                            });
+                            $('#history').html(tbody ? '<table><tbody>' + tbody + '</tbody></table>' : $('#history').html());
+                        }
+                    }).always(function () {
                     // Cached content for non-desktop bio crystal: single popup, swap body content
                     var bioContentHTML = $('#bio').html();
                     var historyContentHTML = $('#history').html();
@@ -416,7 +419,8 @@ and deploy glTF and AR furniture content for interactive browser experience. dev
                             $(this).removeClass('nav-desktop-hover');
                         });
                     }
-                })
+                    }); // end getJSON always
+                });
             </script>
         </div>
         <div id="broken1"><img src="images/crystal_broken2_03.jpg"></div>

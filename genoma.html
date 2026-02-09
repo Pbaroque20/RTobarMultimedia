@@ -15,11 +15,10 @@
     </div>
     <script>
         $(document).ready(function () {
-            $('#copyright-year').text('©' + new Date().getFullYear());
-
+            SiteUtils.updateCopyrightYear();
             $('.genoma-back-link').on('click', function (e) {
                 e.preventDefault();
-                navigateTo('genesis.html', '#F5E10E');
+                navigateTo(SiteUtils.NAV_PAGES.genesis.url, SiteUtils.NAV_PAGES.genesis.bg);
             });
         });
     </script>

@@ -2,6 +2,8 @@
 
 This guide explains how to minify CSS and JavaScript files for production deployment.
 
+**Current state:** The site loads **non-minified** CSS and JS from `index.html`. No `.min.css` or project `.min.js` files are referenced. Generated minified files were removed as unused; follow this guide to regenerate them and then update `index.html` to reference the `.min.css` / `.min.js` assets if you want to use them in production.
+
 ## Tools Needed
 
 ### Option 1: Online Tools (Quick & Easy)
@@ -41,7 +43,8 @@ terser input.js -o output.min.js -c -m
 - `css/genoma.css` → `css/genoma.min.css`
 
 ### JavaScript Files:
-- `js/jquery-2.1.1.min.js` (already minified)
+- `js/jquery-2.1.1.min.js` (already minified, vendor)
+- `js/site-common.js` → `js/site-common.min.js`
 - `js/ajaxLoader.js` → `js/ajaxLoader.min.js`
 
 ## Build Script (Optional)
@@ -67,8 +70,9 @@ const cssFiles = [
     'css/genoma.css'
 ];
 
-// JS files to minify
+// JS files to minify (excluding jquery, which is already minified)
 const jsFiles = [
+    'js/site-common.js',
     'js/ajaxLoader.js'
 ];
 

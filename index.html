@@ -18,6 +18,7 @@
     <link href="css/connect.css" rel="stylesheet" type="text/css" />
     <link href="css/genoma.css" rel="stylesheet" type="text/css" />
     <script src="js/jquery-2.1.1.min.js"></script>
+    <script src="js/site-common.js"></script>
     <script src="js/ajaxLoader.js"></script>
 </head>
 <body style="background-color:#F5E10E;">
@@ -64,7 +65,7 @@
         })();
 
         $(document).ready(function () {
-            $('#copyright-year').text('©' + new Date().getFullYear());
+            SiteUtils.updateCopyrightYear();
 
             // Track the highest percentage reached to prevent going backwards
             var maxLoadingPercent = 0;
@@ -259,71 +260,45 @@
                     img.src = backgroundImage;
                 }
                 
-                // Function to pre-load session workimg images and background
+                // Function to pre-load session workimg images (sources from data.json or fallback)
+                var defaultSessionPreload = [
+                    'images/birth.png', 'images/ances.png', 'images/contactus2.png', 'images/30min.png',
+                    'images/contactus2gameplay.png', 'images/beaver.png', 'images/colli.png', 'images/experi.png',
+                    'images/bomb.png', 'images/FS.png', 'images/lifeisjazz.png', 'images/M.png', 'images/mirror.png',
+                    'images/2020.png', 'images/rw.png', 'images/2020eledonkey.png', 'images/surgeons.png',
+                    'images/vaniads.png', 'images/logodesigns.png', 'images/giphy.png'
+                ];
                 function preloadSessionImages(callback) {
                     if (!isSession) {
                         callback();
                         return;
                     }
-                    
-                    // Include all workimg images (background already loaded via preloadPageBackground)
-                    var imageSources = [
-                        'images/birth.png',
-                        'images/ances.png',
-                        'images/contactus2.png',
-                        'images/30min.png',
-                        'images/contactus2gameplay.png',
-                        'images/beaver.png',
-                        'images/colli.png',
-                        'images/experi.png',
-                        'images/bomb.png',
-                        'images/FS.png',
-                        'images/lifeisjazz.png',
-                        'images/M.png',
-                        'images/mirror.png',
-                        'images/2020.png',
-                        'images/rw.png',
-                        'images/2020eledonkey.png',
-                        'images/surgeons.png',
-                        'images/vaniads.png',
-                        'images/logodesigns.png',
-                        'images/giphy.png'
-                    ];
-                    
-                    var imagesToLoad = imageSources.length;
-                    var imagesLoaded = 0;
-                    var startPercent = 60; // Start after background (50% HTML + 10% background = 60%)
-                    var percentPerImage = (100 - startPercent) / imagesToLoad; // Remaining 40% divided by number of images
-                    
-                    if (imagesToLoad === 0) {
-                        if (callback) callback();
-                        return;
-                    }
-                    
-                    // Update percentage as images load (jumps based on completion)
-                    imageSources.forEach(function(src) {
-                        var img = new Image();
-                        img.onload = function() {
-                            imageLoaded();
-                        };
-                        img.onerror = function() {
-                            imageLoaded(); // Count errors as loaded to not block forever
-                        };
-                        img.src = src;
-                    });
-                    
-                    function imageLoaded() {
-                        imagesLoaded++;
-                        // Jump to percentage based on how many images are loaded
-                        var targetPercent = startPercent + (imagesLoaded / imagesToLoad) * (100 - startPercent);
-                        updateLoadingPercentage(Math.min(targetPercent, 100));
-                        
-                        if (imagesLoaded >= imagesToLoad) {
-                            // All images loaded, ensure we show 100%
-                            updateLoadingPercentage(100);
+                    function runPreload(imageSources) {
+                        var imagesToLoad = imageSources.length;
+                        var imagesLoaded = 0;
+                        var startPercent = 60;
+                        if (imagesToLoad === 0) {
                             if (callback) callback();
+                            return;
                         }
+                        imageSources.forEach(function (src) {
+                            var img = new Image();
+                            img.onload = img.onerror = function () {
+                                imagesLoaded++;
+                                updateLoadingPercentage(Math.min(startPercent + (imagesLoaded / imagesToLoad) * (100 - startPercent), 100));
+                                if (imagesLoaded >= imagesToLoad) {
+                                    updateLoadingPercentage(100);
+                                    if (callback) callback();
+                                }
+                            };
+                            img.src = src;
+                        });
                     }
+                    $.getJSON('data.json').done(function (d) {
+                        runPreload((d.session && d.session.preloadImages) ? d.session.preloadImages : defaultSessionPreload);
+                    }).fail(function () {
+                        runPreload(defaultSessionPreload);
+                    });
                 }
                 
                 // Function to complete page load and transition
