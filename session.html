@@ -29,7 +29,7 @@
                     <div class="essence"><img style="cursor:pointer;" class="workimg" id="essence" src="images/colli.png" /></div>
                     <div class="experi"><img style="cursor:pointer;" class="workimg" id="experi" src="images/experi.png" /></div>
                     <div class="fish"><img style="cursor:pointer;" class="workimg" id="fish" src="images/bomb.png" /></div>
-                    <div class="ford"><img style="cursor:pointer;" class="workimg" id="ford" src="images/ford.png" /></div>
+                    <div class="ford"><img style="cursor:pointer;" class="workimg" id="ford" src="images/FS.png" /></div>
                     <div class="lifeisjazz"><img style="cursor:pointer;" class="workimg" id="lifeisjazz" src="images/lifeisjazz.png" /></div>
                     <div class="m"><img style="cursor:pointer;" class="workimg" id="m" src="images/M.png" /></div>
                     <div class="mirror"><img style="cursor:pointer;" class="workimg" id="mirror" src="images/mirror.png" /></div>
@@ -522,10 +522,37 @@
                     $('#overlay').css('display', 'block');
                     break;
                 case "ford":
-                    $('#lightbox').css({ 'display': 'block', 'width': '744px', 'height': '805px', 'left': '115px', 'top': '50px' });
-                    $('#changeImg').attr("src", "");
-                    $('#changeImg').attr("src", "images/portfolio/ford.jpg");
-                    $('#inform').text(info.information[9].ford);
+                    $('#videoLightboxWrap').css('display', window.innerWidth > 959 ? 'block' : 'flex');
+                    $('#videobox').css('display', 'none');
+                    var videoPath = 'videos/fs-demo-vid-02.mp4';
+                    var videoElement = $('#localVideo').get(0);
+                    $('#localVideo source').remove();
+                    var sourceElement = document.createElement('source');
+                    sourceElement.src = videoPath;
+                    sourceElement.type = 'video/mp4';
+                    videoElement.appendChild(sourceElement);
+                    videoElement.load();
+                    // 25% larger than 625x351: 781x439, centered on 960px
+                    var videoLeft = 90;
+                    var videoTop = 150;
+                    $('#localVideo').css({
+                        'display': 'block',
+                        'width': '781px',
+                        'height': '439px',
+                        'left': videoLeft + 'px',
+                        'top': videoTop + 'px'
+                    });
+                    $('#close').css({
+                        'display': 'block',
+                        'left': videoLeft + 'px',
+                        'top': (videoTop - 30) + 'px'
+                    });
+                    var playPromise = videoElement.play();
+                    if (playPromise !== undefined) {
+                        playPromise.catch(function(error) {
+                            console.log('Video play failed:', error);
+                        });
+                    }
                     $('#overlay').css('display', 'block');
                     break;
                 case "lifeisjazz":
@@ -586,13 +613,13 @@
                     sourceElement.type = 'video/mp4';
                     videoElement.appendChild(sourceElement);
                     videoElement.load();
-                    // Use default video size for 2020 (500px x 281px)
-                    var videoLeft = 225;
+                    // Use default video size for 2020 (ford: 781x439, 25% larger than 625x351)
+                    var videoLeft = 90;
                     var videoTop = 150;
                     $('#localVideo').css({
                         'display': 'block',
-                        'width': '500px',
-                        'height': '281px',
+                        'width': '781px',
+                        'height': '439px',
                         'left': videoLeft + 'px',
                         'top': videoTop + 'px'
                     });
