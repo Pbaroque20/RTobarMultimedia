@@ -545,14 +545,14 @@ ul {
     #lightbox {
         position: fixed !important;
         left: 50% !important;
-        top: 50% !important;
+        top: 50px !important;
         width: 95vw !important;
         max-width: 95vw;
         height: auto !important;
-        max-height: 90vh;
-        -webkit-transform: translate(-50%, -50%);
-        -ms-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%);
+        max-height: calc(100vh - 70px);
+        -webkit-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+        transform: translateX(-50%);
         box-sizing: border-box;
     }
 

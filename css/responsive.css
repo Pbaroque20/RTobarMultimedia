@@ -226,10 +226,10 @@
         width: 95vw !important;
         height: auto !important;
         left: 50% !important;
-        top: 50% !important;
-        transform: translate(-50%, -50%);
-        -webkit-transform: translate(-50%, -50%);
-        -ms-transform: translate(-50%, -50%);
+        top: 50px !important;
+        transform: translateX(-50%);
+        -webkit-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
     }
 
     #lightbox #changeImg {
@@ -430,7 +430,7 @@
     #lightbox {
         width: 100% !important;
         max-width: 100%;
-        top: 50% !important;
+        top: 50px !important;
     }
 
     #videobox {
