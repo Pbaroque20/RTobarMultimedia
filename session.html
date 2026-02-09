@@ -26,9 +26,9 @@
                     <div class="min"><img style="cursor:pointer;" class="workimg" id="min" src="images/30min.png" /></div>
                     <div class="contactus2gameplay"><img style="cursor:pointer;" class="workimg" id="contactus2gameplay" src="images/contactus2gameplay.png" /></div>
                     <div class="beaver"><img style="cursor:pointer;" class="workimg" id="beaver" src="images/beaver.png" /></div>
-                    <div class="essence"><img style="cursor:pointer;" class="workimg" id="essence" src="images/essence.png" /></div>
+                    <div class="essence"><img style="cursor:pointer;" class="workimg" id="essence" src="images/colli.png" /></div>
                     <div class="experi"><img style="cursor:pointer;" class="workimg" id="experi" src="images/experi.png" /></div>
-                    <div class="fish"><img style="cursor:pointer;" class="workimg" id="fish" src="images/fish.png" /></div>
+                    <div class="fish"><img style="cursor:pointer;" class="workimg" id="fish" src="images/bomb.png" /></div>
                     <div class="ford"><img style="cursor:pointer;" class="workimg" id="ford" src="images/ford.png" /></div>
                     <div class="lifeisjazz"><img style="cursor:pointer;" class="workimg" id="lifeisjazz" src="images/lifeisjazz.png" /></div>
                     <div class="m"><img style="cursor:pointer;" class="workimg" id="m" src="images/M.png" /></div>
@@ -307,11 +307,11 @@
                 { "min": "30 Minute Interview with Dr. Hasan on WSVN7 (Highlights Reel), 2012" },
                 { "contactus2gameplay": "Contact Us 2 - Gameplay Screenshots, 2022 (w/ Dark Igloo, Fuzzy Wobble, & Niles Fromm)" },
                 { "beaver": "Beaver Walking Across Water, 2011" },
-                { "essence": "The Essence of Morals, 2013" },
+                { "essence": "Neighborhood I (Hummingbird Colliding Against A Surface), 2019" },
                 { "experi": "Typographical Posters, 2002-03" },
-                { "fish": "Injured Fish(Technical Study), 2013" },
+                { "fish": "Neighborhood III (Defending Bombardier Beetle), 2021" },
                 { "ford": "Ford Infographic of Yearly Revenue (Study), 2014" },
-                { "lifeisjazz": "Life is Jazz, 2007" },
+                { "lifeisjazz": "Life is Jazz, 2007 (left) | 2018 (right)" },
                 { "gelfenstein": "Gelfenstein Farm Promo, 2014" },
                 { "m": "Futura Posters (Study), 2013" },
                 { "mirror": "Vanity Cosmetic Surgery - 30 Second Spot on NBC6 and ABC10, 2012" },
@@ -471,9 +471,21 @@
                     $('#overlay').css('display', 'block');
                     break;
                 case "essence":
-                    $('#lightbox').css({ 'display': 'block', 'width': '683px', 'height': '752px', 'left': '155px' });
+                    $('#lightbox').css({ 'display': 'block', 'width': 'auto', 'height': 'auto', 'left': '50%', 'top': '50px' });
                     $('#changeImg').attr("src", "");
-                    $('#changeImg').attr("src", "images/portfolio/the_essence_of_morals.png");
+                    $('#changeImg').css({ 'max-width': '100%', 'max-height': 'none', 'width': 'auto', 'height': 'auto', 'object-fit': 'contain' });
+                    $('#changeImg').attr("src", "images/portfolio/collision_30x_small.jpg");
+                    $('#changeImg').on('load', function() {
+                        var imgWidth = $(this).width();
+                        var imgHeight = $(this).height();
+                        var informHeight = $('#inform').outerHeight(true);
+                        var closelightboxHeight = $('#closelightbox').outerHeight(true);
+                        $('#lightbox').css({
+                            'width': imgWidth + 'px',
+                            'height': (imgHeight + informHeight + closelightboxHeight + 20) + 'px',
+                            'left': 'calc(50% - ' + (imgWidth / 2) + 'px)'
+                        });
+                    });
                     $('#inform').text(info.information[6].essence);
                     $('#overlay').css('display', 'block');
                     break;
@@ -485,9 +497,27 @@
                     $('#overlay').css('display', 'block');
                     break;
                 case "fish":
-                    $('#lightbox').css({ 'display': 'block', 'width': '569px', 'height': '638px', 'left': '220px' });
+                    $('#lightbox').css({ 'display': 'block', 'width': 'auto', 'height': 'auto', 'left': '50%', 'top': '50px' });
                     $('#changeImg').attr("src", "");
-                    $('#changeImg').attr("src", "images/portfolio/fish.png");
+                    $('#changeImg').css({ 'max-width': '100%', 'max-height': 'none', 'width': 'auto', 'height': 'auto', 'object-fit': 'contain' });
+                    $('#changeImg').attr("src", "images/portfolio/raphael-tobar-bombardier-screen-raphaeltobar.jpg");
+                    $('#changeImg').on('load', function() {
+                        var imgWidth = $(this).width();
+                        var imgHeight = $(this).height();
+                        var scaledWidth = imgWidth * 1.2; // Increase width by 20%
+                        var scaledHeight = imgHeight * 1.2; // Scale height proportionally
+                        var informHeight = $('#inform').outerHeight(true);
+                        var closelightboxHeight = $('#closelightbox').outerHeight(true);
+                        $('#changeImg').css({
+                            'width': scaledWidth + 'px',
+                            'height': scaledHeight + 'px'
+                        });
+                        $('#lightbox').css({
+                            'width': scaledWidth + 'px',
+                            'height': (scaledHeight + informHeight + closelightboxHeight + 20) + 'px',
+                            'left': 'calc(50% - ' + (scaledWidth / 2) + 'px)'
+                        });
+                    });
                     $('#inform').text(info.information[8].fish);
                     $('#overlay').css('display', 'block');
                     break;
@@ -499,9 +529,16 @@
                     $('#overlay').css('display', 'block');
                     break;
                 case "lifeisjazz":
-                    $('#lightbox').css({ 'display': 'block', 'width': '565px', 'height': '801px', 'left': '205px', 'top': '50px' });
+                    $('#lightbox').css({ 'display': 'block', 'width': '768px', 'height': 'auto', 'left': '96px', 'top': '50px' });
                     $('#changeImg').attr("src", "");
-                    $('#changeImg').attr("src", "images/portfolio/life_is_jazz.png");
+                    $('#changeImg').css({ 'max-width': '100%', 'max-height': 'none', 'width': 'auto', 'height': 'auto', 'object-fit': 'contain' });
+                    $('#changeImg').attr("src", "images/portfolio/life_is_jazz_remake.jpg");
+                    $('#changeImg').on('load', function() {
+                        var imgHeight = $(this).height();
+                        var informHeight = $('#inform').outerHeight(true);
+                        var closelightboxHeight = $('#closelightbox').outerHeight(true);
+                        $('#lightbox').css('height', (imgHeight + informHeight + closelightboxHeight + 20) + 'px');
+                    });
                     $('#inform').text(info.information[10].lifeisjazz);
                     $('#overlay').css('display', 'block');
                     break;
