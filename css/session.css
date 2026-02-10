@@ -669,6 +669,7 @@ ul {
         position: relative !important;
         margin-top: 0.5rem;
         max-width: 100%;
+        font-size: 10pt;
     }
 
     .nav_page2 {
