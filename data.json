@@ -2,7 +2,7 @@
   "information": {
     "2020": "2020: The Ride, 2021. Lead 3D Artist. Project is a 2021 Webby Awards nominee in the category \"Best VR Headset Experience 2021\"",
     "birth": "Birth of the Universe, 2011",
-    "ances": "Ancestor, 2014",
+    "ltb": "Lions, Tigers, & Bears, 2018",
     "contactus2": "Contact Us 2, 2022. 3D Level Modeler authored in glTF/GLB",
     "min": "30 Minute Interview with Dr. Hasan on WSVN7 (Motion Graphics Highlights), 2012",
     "contactus2gameplay": "Contact Us 2 - Gameplay Screenshots, 2022 (w/ Dark Igloo, Fuzzy Wobble, & Niles Fromm)",
@@ -24,7 +24,7 @@
   "session": {
     "preloadImages": [
       "images/birth.png",
-      "images/ances.png",
+      "images/ltb.png",
       "images/contactus2.png",
       "images/30min.png",
       "images/contactus2gameplay.png",
@@ -46,7 +46,7 @@
     ],
     "items": {
       "birth": { "type": "image", "image": "images/portfolio/BirthoftheUniverse_RaphaelTobar_2011.png" },
-      "ances": { "type": "image", "image": "images/portfolio/ancestor_by_raphaeltobar.png" },
+      "ltb": { "type": "image", "image": "images/portfolio/lionstigersbears.jpg" },
       "contactus2": { "type": "video", "video": "videos/contactUs2_trailer.mp4", "width": 750, "height": 422, "left": 105, "top": 100 },
       "min": { "type": "vimeo", "vimeoId": 52028294, "width": 750, "height": 421, "left": 105, "top": 150 },
       "contactus2gameplay": { "type": "image", "image": "images/portfolio/work/contactusScreens.jpg" },

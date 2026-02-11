@@ -1,14 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <!-- Bump meta asset-version and all ?v= in link/script on deploy to invalidate caches -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="TobarMediaDesign – Raphael Tobar's interactive multimedia portfolio. 3D & graphics generalist specializing in glTF/GLB pipelines, AR-ready assets, and marketing design. Lead 3D Artist on Webby-nominated projects. Explore work, biography, and connect." />
+    <link rel="canonical" href="https://www.tobarmediadesign.com/" />
     <meta property="og:title" content="TobarMediaDesign" />
     <meta property="og:description" content="Raphael Tobar's interactive multimedia portfolio. 3D & graphics generalist specializing in glTF/GLB pipelines, AR-ready assets, and marketing design. Lead 3D Artist on Webby-nominated projects." />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="images/page1.png" />
-    <title>TobarMediaDesign</title>
+    <meta property="og:url" content="https://www.tobarmediadesign.com/" />
+    <meta property="og:image" content="https://www.tobarmediadesign.com/images/page1.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="TobarMediaDesign" />
+    <meta name="twitter:description" content="Raphael Tobar's interactive multimedia portfolio. 3D & graphics generalist specializing in glTF/GLB pipelines, AR-ready assets, and marketing design." />
+    <meta name="twitter:image" content="https://www.tobarmediadesign.com/images/page1.png" />
+    <meta name="asset-version" content="1.0.0" />
+    <title>TobarMediaDesign – 3D &amp; Graphics Portfolio | Raphael Tobar</title>
+    <link rel="preload" href="fonts/FedraSansStd-Light.woff" as="font" type="font/woff" crossorigin />
     <!-- Critical CSS inlined for fast first paint (loader + header). Source: css/critical.css -->
     <style>
 /* Meyer reset (minimal) */
@@ -57,7 +66,7 @@ input, textarea { -webkit-user-select: text; user-select: text; }
     border-bottom: 1px solid gray; z-index: 500;
 }
 header div { width: 350px; color: white; vertical-align: middle; }
-header div:first-child { text-align: left; text-indent: 1em; float: left; top: 5px; font-family: "Fedra Sans Light"; }
+header .site-name, header h1 { margin: 0; font-size: inherit; font-weight: inherit; text-align: left; text-indent: 1em; float: left; top: 5px; font-family: "Fedra Sans Light"; }
 header div:nth-child(2) { text-align: right; padding-right: 1em; float: right; top: 5px; font-family: "Fedra Sans Light"; }
 #topHeader .multi { color: var(--color-accent); }
 
@@ -70,33 +79,30 @@ header div:nth-child(2) { text-align: right; padding-right: 1em; float: right; t
     header div { max-width: 50%; box-sizing: border-box; }
 }
     </style>
-    <!-- Full stylesheets load async so they don't block first paint -->
-    <link href="css/meyer_reset.css" rel="stylesheet" media="print" onload="this.media='all'" />
-    <link href="css/index.css" rel="stylesheet" media="print" onload="this.media='all'" />
-    <link href="css/fontloader.css" rel="stylesheet" media="print" onload="this.media='all'" />
-    <link href="css/genesis.css" rel="stylesheet" media="print" onload="this.media='all'" />
-    <link href="css/session.css" rel="stylesheet" media="print" onload="this.media='all'" />
-    <link href="css/narrative.css" rel="stylesheet" media="print" onload="this.media='all'" />
-    <link href="css/connect.css" rel="stylesheet" media="print" onload="this.media='all'" />
-    <link href="css/genoma.css" rel="stylesheet" media="print" onload="this.media='all'" />
+    <!-- Full stylesheets load async; ?v= matches meta name="asset-version" for cache invalidation -->
+    <link href="css/meyer_reset.css?v=1.0.0" rel="stylesheet" media="print" onload="this.media='all'" />
+    <link href="css/index.css?v=1.0.0" rel="stylesheet" media="print" onload="this.media='all'" />
+    <link href="css/fontloader.css?v=1.0.0" rel="stylesheet" media="print" onload="this.media='all'" />
+    <link href="css/genesis.css?v=1.0.0" rel="stylesheet" media="print" onload="this.media='all'" />
+    <link href="css/session.css?v=1.0.0" rel="stylesheet" media="print" onload="this.media='all'" />
+    <link href="css/narrative.css?v=1.0.0" rel="stylesheet" media="print" onload="this.media='all'" />
+    <link href="css/connect.css?v=1.0.0" rel="stylesheet" media="print" onload="this.media='all'" />
+    <link href="css/genoma.css?v=1.0.0" rel="stylesheet" media="print" onload="this.media='all'" />
     <noscript>
-    <link href="css/meyer_reset.css" rel="stylesheet" />
-    <link href="css/index.css" rel="stylesheet" />
-    <link href="css/fontloader.css" rel="stylesheet" />
-    <link href="css/genesis.css" rel="stylesheet" />
-    <link href="css/session.css" rel="stylesheet" />
-    <link href="css/narrative.css" rel="stylesheet" />
-    <link href="css/connect.css" rel="stylesheet" />
-    <link href="css/genoma.css" rel="stylesheet" />
+    <link href="css/meyer_reset.css?v=1.0.0" rel="stylesheet" />
+    <link href="css/index.css?v=1.0.0" rel="stylesheet" />
+    <link href="css/fontloader.css?v=1.0.0" rel="stylesheet" />
+    <link href="css/genesis.css?v=1.0.0" rel="stylesheet" />
+    <link href="css/session.css?v=1.0.0" rel="stylesheet" />
+    <link href="css/narrative.css?v=1.0.0" rel="stylesheet" />
+    <link href="css/connect.css?v=1.0.0" rel="stylesheet" />
+    <link href="css/genoma.css?v=1.0.0" rel="stylesheet" />
     </noscript>
-    <script src="js/jquery-2.1.1.min.js"></script>
-    <script src="js/site-common.js"></script>
-    <script src="js/ajaxLoader.js"></script>
 </head>
 <body style="background-color:#F5E10E;">
     <header>
         <div id="topHeader">
-            <div>Tobar<span class="multi">MediaDesign</span></div>
+            <h1 class="site-name">Tobar<span class="multi">MediaDesign</span></h1>
             <div id="copyright-year">©2026</div>
         </div>
     </header>
@@ -106,6 +112,9 @@ header div:nth-child(2) { text-align: right; padding-right: 1em; float: right; t
             <span id="loading">loading 0%</span>
         </div>
     </div>
+    <script src="js/jquery-2.1.1.min.js?v=1.0.0"></script>
+    <script src="js/site-common.js?v=1.0.0"></script>
+    <script src="js/ajaxLoader.js?v=1.0.0"></script>
     <script>
         // Pre-load loader animation gifs immediately on page load
         (function() {
@@ -141,34 +150,37 @@ header div:nth-child(2) { text-align: right; padding-right: 1em; float: right; t
 
             // Track the highest percentage reached to prevent going backwards
             var maxLoadingPercent = 0;
+            // Current loading phase label (e.g. "transmission", "platform", "screens") for "loading [file]... #%"
+            var currentLoadingPhase = '';
 
-            // Function to update loading percentage (only increases, never decreases)
-            function updateLoadingPercentage(percent) {
+            // Function to update loading percentage and optional phase (only percent increases, never decreases)
+            // phase: optional string shown in lower-case as "loading [phase]... #%"
+            function updateLoadingPercentage(percent, phase) {
+                if (phase !== undefined && phase !== null) currentLoadingPhase = String(phase).toLowerCase();
                 var roundedPercent = Math.round(percent);
-                // Only update if the new percentage is higher than the current maximum
-                if (roundedPercent > maxLoadingPercent) {
-                    maxLoadingPercent = roundedPercent;
-                    var $loading = $('#loading');
-                    if ($loading.length) {
-                        $loading.text('loading ' + maxLoadingPercent + '%');
-                    }
+                if (roundedPercent > maxLoadingPercent) maxLoadingPercent = roundedPercent;
+                var $loading = $('#loading');
+                if ($loading.length) {
+                    var text = currentLoadingPhase
+                        ? ('loading ' + currentLoadingPhase + '... ' + maxLoadingPercent + '%')
+                        : ('loading ' + maxLoadingPercent + '%');
+                    $loading.text(text);
                 }
             }
-            
+
             // Function to reset loading percentage to 0
             function resetLoadingPercentage() {
                 maxLoadingPercent = 0;
-                // Force update to 0%
+                currentLoadingPhase = '';
                 var $loading = $('#loading');
-                if ($loading.length) {
-                    $loading.text('loading 0%');
-                }
+                if ($loading.length) $loading.text('loading 0%');
             }
             
             // Helper function to trigger page-specific animations (refactored to reduce nesting)
             function triggerPageAnimations($new, $in, url) {
                 var isConnectPage = url.indexOf('connect.html') !== -1;
                 var isSessionPage = url.indexOf('session.html') !== -1;
+                var isGenesisPage = url.indexOf('genesis.html') !== -1;
                 
                 if (isConnectPage) {
                     triggerConnectAnimations($new);
@@ -182,6 +194,54 @@ header div:nth-child(2) { text-align: right; padding-right: 1em; float: right; t
                         }
                     });
                 }
+                
+                if (isGenesisPage) {
+                    setTimeout(runGenesisFirstLoadWhiteFade, 80);
+                    setTimeout(startGenesisShine, 600);
+                }
+            }
+            
+            // Genesis: one-time-per-session quick white fade-out over the whole page
+            function runGenesisFirstLoadWhiteFade() {
+                if (sessionStorage.getItem('genesisWhiteFadeShown')) return;
+                var $overlay = $('<div class="genesis-first-fade" style="position:fixed;top:0;left:0;right:0;bottom:0;background:#fff;z-index:99999;pointer-events:none;opacity:1;transition:opacity 0.35s ease-out;"></div>');
+                $('body').append($overlay);
+                requestAnimationFrame(function() {
+                    requestAnimationFrame(function() {
+                        $overlay.css('opacity', '0');
+                    });
+                });
+                $overlay.one('transitionend', function() {
+                    $overlay.remove();
+                    sessionStorage.setItem('genesisWhiteFadeShown', '1');
+                });
+            }
+            
+            // Genesis background: white shine sweeps top-to-bottom from time to time (only after page fully loaded)
+            var genesisShineInterval;
+            function startGenesisShine() {
+                var $container = $('#page-content .imageContainer1');
+                if (!$container.length) return;
+                if ($container.find('.genesis-shine-wrap').length) return;
+                var $wrap = $('<div class="genesis-shine-wrap"><div class="genesis-shine-bar"></div></div>');
+                $container.append($wrap);
+                var $bar = $wrap.find('.genesis-shine-bar');
+                function runShine() {
+                    $bar.removeClass('genesis-shine-run');
+                    $bar[0].offsetHeight;
+                    $bar.addClass('genesis-shine-run');
+                    setTimeout(function() { $bar.removeClass('genesis-shine-run'); }, 500);
+                }
+                setTimeout(function() {
+                    runShine();
+                    genesisShineInterval = setInterval(function() {
+                        if (!$('#page-content .genesis-shine-wrap').length) {
+                            clearInterval(genesisShineInterval);
+                            return;
+                        }
+                        runShine();
+                    }, 8000 + Math.random() * 6000);
+                }, 3000);
             }
             
             // Helper function for connect page chat bubble animations
@@ -261,6 +321,7 @@ header div:nth-child(2) { text-align: right; padding-right: 1em; float: right; t
                             '-o-transition': '',
                             'transition': ''
                         });
+                        $new.find('#workimg-pulse-wrap').addClass('workimg-tv-pulse');
                         sessionStorage.setItem('sessionScramblingShown', '1');
                     }, 800);
                 }, 1000);
@@ -279,8 +340,8 @@ header div:nth-child(2) { text-align: right; padding-right: 1em; float: right; t
                 var isGenesis = url.indexOf('genesis.html') !== -1;
                 var isConnect = url.indexOf('connect.html') !== -1;
                 var isGenoma = url.indexOf('genoma.html') !== -1;
-                var loaderSrc = (isNarrative || isSession || isGenoma) ? 'loader/white_loader.gif' : 'loader/black_loader.gif';
-                var loaderColor = (isNarrative || isSession || isGenoma) ? 'white' : 'black';
+                var loaderSrc = (isNarrative || isSession || isGenoma || isConnect) ? 'loader/white_loader.gif' : 'loader/black_loader.gif';
+                var loaderColor = (isNarrative || isSession || isGenoma || isConnect) ? 'white' : 'black';
                 
                 // Determine which CSS to load
                 var pageCSS = null;
@@ -290,14 +351,34 @@ header div:nth-child(2) { text-align: right; padding-right: 1em; float: right; t
                 else if (isConnect) pageCSS = 'connect';
                 else if (isGenoma) pageCSS = 'genoma';
                 
+                // Phase label for background step (page-specific)
+                var backgroundPhase = isGenesis ? 'transmission' : isSession ? 'platform' : isNarrative ? 'space-time coordinates' : isConnect ? 'network' : isGenoma ? 'strain' : 'background';
+                
                 // Timer to show loader after 1 second if loading is still in progress
                 loaderTimeout = setTimeout(function() {
                     showLoader = true;
                     if (!$pc.find('.loaderContainer').length) {
-                        resetLoadingPercentage();
+                        if (maxLoadingPercent === 0) resetLoadingPercentage();
                         $pc.prepend('<div class="loaderContainer"><img id="loader" src="' + loaderSrc + '" /><br /><span id="loading" style="color:' + loaderColor + ';">loading 0%</span></div>');
+                        var $loading = $pc.find('#loading');
+                        if ($loading.length && (maxLoadingPercent > 0 || currentLoadingPhase)) {
+                            var text = currentLoadingPhase ? ('loading ' + currentLoadingPhase + '... ' + maxLoadingPercent + '%') : ('loading ' + maxLoadingPercent + '%');
+                            $loading.text(text);
+                        }
                     }
                 }, 1000);
+                
+                // Ensure loader is visible (e.g. after load() replaces $pc contents and removes a previously shown loader)
+                function ensureLoaderVisible() {
+                    if (!$pc.find('.loaderContainer').length) {
+                        $pc.prepend('<div class="loaderContainer"><img id="loader" src="' + loaderSrc + '" /><br /><span id="loading" style="color:' + loaderColor + ';">loading 0%</span></div>');
+                    }
+                    var $loading = $pc.find('#loading');
+                    if ($loading.length) {
+                        var text = currentLoadingPhase ? ('loading ' + currentLoadingPhase + '... ' + maxLoadingPercent + '%') : ('loading ' + maxLoadingPercent + '%');
+                        $loading.text(text);
+                    }
+                }
                 
                 // Function to pre-load page background images
                 function preloadPageBackground(targetPercent, callback) {
@@ -322,19 +403,41 @@ header div:nth-child(2) { text-align: right; padding-right: 1em; float: right; t
                     
                     var img = new Image();
                     img.onload = function() {
-                        updateLoadingPercentage(targetPercent);
+                        updateLoadingPercentage(targetPercent, backgroundPhase);
                         if (callback) callback();
                     };
                     img.onerror = function() {
-                        updateLoadingPercentage(targetPercent);
+                        updateLoadingPercentage(targetPercent, backgroundPhase);
                         if (callback) callback(); // Count errors as loaded to not block forever
                     };
                     img.src = backgroundImage;
                 }
                 
-                // Function to pre-load session workimg images (sources from data.json or fallback)
+                // Generic: preload image URLs, report progress 60→100% with phase label, then callback
+                function preloadImages(sources, phase, callback) {
+                    var n = (sources && sources.length) || 0;
+                    if (n === 0) {
+                        if (callback) callback();
+                        return;
+                    }
+                    var loaded = 0;
+                    var startPercent = 60;
+                    sources.forEach(function (src) {
+                        var img = new Image();
+                        img.onload = img.onerror = function () {
+                            loaded++;
+                            updateLoadingPercentage(Math.min(startPercent + (loaded / n) * (100 - startPercent), 100), phase);
+                            if (loaded >= n) {
+                                updateLoadingPercentage(100, phase);
+                                if (callback) callback();
+                            }
+                        };
+                        img.src = src;
+                    });
+                }
+                
                 var defaultSessionPreload = [
-                    'images/birth.png', 'images/ances.png', 'images/contactus2.png', 'images/30min.png',
+                    'images/birth.png', 'images/ltb.png', 'images/contactus2.png', 'images/30min.png',
                     'images/contactus2gameplay.png', 'images/beaver.png', 'images/colli.png', 'images/tomi.png',
                     'images/bomb.png', 'images/FS.png', 'images/lifeisjazz.png', 'images/archviz.png', 'images/mirror.png',
                     'images/2020.png', 'images/rw.png', 'images/2020eledonkey.png', 'images/surgeons.png',
@@ -342,35 +445,25 @@ header div:nth-child(2) { text-align: right; padding-right: 1em; float: right; t
                 ];
                 function preloadSessionImages(callback) {
                     if (!isSession) {
-                        callback();
+                        if (callback) callback();
                         return;
                     }
-                    function runPreload(imageSources) {
-                        var imagesToLoad = imageSources.length;
-                        var imagesLoaded = 0;
-                        var startPercent = 60;
-                        if (imagesToLoad === 0) {
-                            if (callback) callback();
-                            return;
-                        }
-                        imageSources.forEach(function (src) {
-                            var img = new Image();
-                            img.onload = img.onerror = function () {
-                                imagesLoaded++;
-                                updateLoadingPercentage(Math.min(startPercent + (imagesLoaded / imagesToLoad) * (100 - startPercent), 100));
-                                if (imagesLoaded >= imagesToLoad) {
-                                    updateLoadingPercentage(100);
-                                    if (callback) callback();
-                                }
-                            };
-                            img.src = src;
-                        });
-                    }
-                    $.getJSON('data.json').done(function (d) {
-                        runPreload((d.session && d.session.preloadImages) ? d.session.preloadImages : defaultSessionPreload);
+                    var dataJsonUrl = 'data.json' + (document.querySelector('meta[name=asset-version]') ? '?v=' + document.querySelector('meta[name=asset-version]').getAttribute('content') : '');
+                    $.getJSON(dataJsonUrl).done(function (d) {
+                        var list = (d.session && d.session.preloadImages) ? d.session.preloadImages : defaultSessionPreload;
+                        preloadImages(list, 'screens', callback);
                     }).fail(function () {
-                        runPreload(defaultSessionPreload);
+                        preloadImages(defaultSessionPreload, 'screens', callback);
                     });
+                }
+                
+                var narrativeCrystalImages = ['images/crystal_broken2_03.jpg', 'images/crystal_broken2_05.jpg', 'images/crystal_broken2_07.jpg', 'images/crystal_broken2_09.jpg'];
+                function preloadNarrativeCrystalImages(callback) {
+                    if (!isNarrative) {
+                        if (callback) callback();
+                        return;
+                    }
+                    preloadImages(narrativeCrystalImages, 'crystals', callback);
                 }
                 
                 // Function to complete page load and transition
@@ -382,7 +475,7 @@ header div:nth-child(2) { text-align: right; padding-right: 1em; float: right; t
                     $pc.find('header').first().remove();
                     
                     // Ensure we're at 100% before removing loader
-                    updateLoadingPercentage(100);
+                    updateLoadingPercentage(100, '');
                     
                     // Remove loader
                     $pc.find('.loaderContainer').remove();
@@ -433,13 +526,15 @@ header div:nth-child(2) { text-align: right; padding-right: 1em; float: right; t
                         // Don't show loader immediately - wait 1 second
                         
                         // Load HTML immediately
+                        updateLoadingPercentage(0, url.replace(/^.*\//, '').replace(/\.html$/i, '') || 'page');
                         $pc.load(url, function () {
                             // Hide content immediately when loaded (before loader is removed)
                             var $loadedContent = $pc.children().not('.loaderContainer');
                             $loadedContent.css('visibility', 'hidden');
+                            ensureLoaderVisible();
                             
-                            // HTML loaded, jump to 50%
-                            updateLoadingPercentage(50);
+                            // HTML loaded, jump to 50%; next phase is page-specific background label
+                            updateLoadingPercentage(50, backgroundPhase);
                             
                             // For connect page, prevent premature chat bubble animations
                             var isConnectPage = url.indexOf('connect.html') !== -1;
@@ -459,15 +554,23 @@ header div:nth-child(2) { text-align: right; padding-right: 1em; float: right; t
                                     // Pre-load session workimg images
                                     preloadSessionImages(function() {
                                         // Ensure we're at 100% - preloadSessionImages already sets it
-                                        updateLoadingPercentage(100);
+                                        updateLoadingPercentage(100, 'screens');
                                         // Small delay to ensure 100% is visible, then complete
+                                        setTimeout(function() {
+                                            completePageLoad();
+                                        }, 100);
+                                    });
+                                } else if (isNarrative) {
+                                    // Pre-load narrative broken crystal images
+                                    preloadNarrativeCrystalImages(function() {
+                                        updateLoadingPercentage(100, 'crystals');
                                         setTimeout(function() {
                                             completePageLoad();
                                         }, 100);
                                     });
                                 } else {
                                     // No additional images to load, jump directly to 100%
-                                    updateLoadingPercentage(100);
+                                    updateLoadingPercentage(100, backgroundPhase);
                                     // Small delay to ensure 100% is visible, then complete
                                     setTimeout(function() {
                                         completePageLoad();
@@ -483,13 +586,15 @@ header div:nth-child(2) { text-align: right; padding-right: 1em; float: right; t
                     // Don't show loader immediately - wait 1 second
                     
                     // Load HTML immediately
+                    updateLoadingPercentage(0, url.replace(/^.*\//, '').replace(/\.html$/i, '') || 'page');
                     $pc.load(url, function () {
                         // Hide content immediately when loaded
                         var $loadedContent = $pc.children().not('.loaderContainer');
                         $loadedContent.css('visibility', 'hidden');
+                        ensureLoaderVisible();
                         
-                        // HTML loaded, jump to 50%
-                        updateLoadingPercentage(50);
+                        // HTML loaded, jump to 50%; next phase is page-specific background label
+                        updateLoadingPercentage(50, backgroundPhase);
                         
                         // For connect page, prevent premature chat bubble animations
                         var isConnectPageElse = url.indexOf('connect.html') !== -1;
@@ -506,82 +611,18 @@ header div:nth-child(2) { text-align: right; padding-right: 1em; float: right; t
                         preloadPageBackground(60, function() {
                             // Background loaded (now at 60%), now handle page-specific images
                             if (isSession) {
-                                // Pre-load session workimg images
                                 preloadSessionImages(function() {
-                                    // Ensure we're at 100% - preloadSessionImages already sets it
-                                    updateLoadingPercentage(100);
-                                    // Clear the 1-second loader timeout since we're done loading
-                                    clearTimeout(loaderTimeout);
-                                    // Small delay to ensure 100% is visible, then remove loader and fade in content
-                                    setTimeout(function() {
-                                        // Remove loader if it appeared
-                                        $pc.find('.loaderContainer').remove();
-                                        $pc.find('header').first().remove();
-                                        
-                                        // Get content
-                                        var $new = $pc.children();
-                                        if ($new.length > 0) {
-                                            // Make content visible
-                                            $new.css('visibility', 'visible');
-                                            
-                                            // Remove any existing fade-in-wrap
-                                            var $existingFadeIn = $('#fade-in-wrap');
-                                            if ($existingFadeIn.length) {
-                                                $existingFadeIn.children().unwrap();
-                                                $new = $pc.children();
-                                            }
-                                            
-                                            // Wrap and set initial opacity
-                                            $new.wrapAll('<div id="fade-in-wrap"></div>');
-                                            var $in = $('#fade-in-wrap');
-                                            $in.css({ 'opacity': '0', 'transition': 'opacity 0.35s ease' });
-                                            requestAnimationFrame(function () {
-                                                $in[0].offsetHeight;
-                                                requestAnimationFrame(function () {
-                                                    $in.css('opacity', '1');
-                                                    triggerPageAnimations($new, $in, url);
-                                                });
-                                            });
-                                        }
-                                    }, 100);
+                                    updateLoadingPercentage(100, 'screens');
+                                    setTimeout(function() { completePageLoad(); }, 100);
+                                });
+                            } else if (isNarrative) {
+                                preloadNarrativeCrystalImages(function() {
+                                    updateLoadingPercentage(100, 'crystals');
+                                    setTimeout(function() { completePageLoad(); }, 100);
                                 });
                             } else {
-                                // No additional images to load, jump directly to 100%
-                                updateLoadingPercentage(100);
-                                // Clear the 1-second loader timeout since we're done loading
-                                clearTimeout(loaderTimeout);
-                                // Small delay to ensure 100% is visible, then remove loader and fade in content
-                                setTimeout(function() {
-                                    // Remove loader if it appeared
-                                    $pc.find('.loaderContainer').remove();
-                                    $pc.find('header').first().remove();
-                                    
-                                    // Get content
-                                    var $new = $pc.children();
-                                    if ($new.length > 0) {
-                                        // Make content visible
-                                        $new.css('visibility', 'visible');
-                                        
-                                        // Remove any existing fade-in-wrap
-                                        var $existingFadeIn = $('#fade-in-wrap');
-                                        if ($existingFadeIn.length) {
-                                            $existingFadeIn.children().unwrap();
-                                            $new = $pc.children();
-                                        }
-                                        
-                                        // Wrap and set initial opacity
-                                        $new.wrapAll('<div id="fade-in-wrap"></div>');
-                                        var $in = $('#fade-in-wrap');
-                                        $in.css({ 'opacity': '0', 'transition': 'opacity 0.35s ease' });
-                                        requestAnimationFrame(function () {
-                                            $in[0].offsetHeight;
-                                            requestAnimationFrame(function () {
-                                                $in.css('opacity', '1');
-                                                triggerPageAnimations($new, $in, url);
-                                            });
-                                        });
-                                    }
-                                }, 100);
+                                updateLoadingPercentage(100, backgroundPhase);
+                                setTimeout(function() { completePageLoad(); }, 100);
                             }
                         });
                     });
@@ -597,13 +638,19 @@ header div:nth-child(2) { text-align: right; padding-right: 1em; float: right; t
             loaderTimeout = setTimeout(function() {
                 var $pc = $('#page-content');
                 if (!$pc.find('.loaderContainer').length && !contentLoaded) {
-                    resetLoadingPercentage();
+                    if (maxLoadingPercent === 0) resetLoadingPercentage();
                     $pc.html('<div class="loaderContainer"><img id="loader" src="loader/black_loader.gif" /><br /><span id="loading">loading 0%</span></div>');
+                    var $loading = $pc.find('#loading');
+                    if ($loading.length && (maxLoadingPercent > 0 || currentLoadingPhase)) {
+                        var text = currentLoadingPhase ? ('loading ' + currentLoadingPhase + '... ' + maxLoadingPercent + '%') : ('loading ' + maxLoadingPercent + '%');
+                        $loading.text(text);
+                    }
                 }
             }, 1000);
             
             // Reset loading percentage to 0 for initial load
             resetLoadingPercentage();
+            updateLoadingPercentage(0, 'genesis');
             
             // Load HTML immediately
             $preloadContainer.load('genesis.html', function () {
@@ -611,14 +658,14 @@ header div:nth-child(2) { text-align: right; padding-right: 1em; float: right; t
                 // Hide preloaded content initially
                 $preloadedContent.css('visibility', 'hidden');
                 
-                // HTML loaded, jump to 50%
-                updateLoadingPercentage(50);
+                // HTML loaded, jump to 50%; next phase is transmission (genesis)
+                updateLoadingPercentage(50, 'transmission');
                 
                 // Pre-load genesis background image first
                 var bgImg = new Image();
                 bgImg.onload = function() {
                     // Background loaded, jump to 60%
-                    updateLoadingPercentage(60);
+                    updateLoadingPercentage(60, 'transmission');
                     
                     // Now check for other images
                     var $images = $preloadedContent.find('img');
@@ -627,7 +674,7 @@ header div:nth-child(2) { text-align: right; padding-right: 1em; float: right; t
                     
                     if (imagesToLoad === 0) {
                         // No images, jump directly to 100%
-                        updateLoadingPercentage(100);
+                        updateLoadingPercentage(100, '');
                         displayContent();
                     } else {
                         // Wait for all images to load and jump percentage
@@ -647,11 +694,11 @@ header div:nth-child(2) { text-align: right; padding-right: 1em; float: right; t
                             imagesLoaded++;
                             // Jump to percentage based on how many images are loaded
                             var targetPercent = startPercent + (imagesLoaded / imagesToLoad) * (100 - startPercent);
-                            updateLoadingPercentage(Math.min(targetPercent, 100));
+                            updateLoadingPercentage(Math.min(targetPercent, 100), 'genesis images');
                             
                             if (imagesLoaded >= imagesToLoad) {
                                 // All images loaded, ensure we show 100%
-                                updateLoadingPercentage(100);
+                                updateLoadingPercentage(100, 'genesis images');
                                 displayContent();
                             }
                         }
@@ -664,7 +711,7 @@ header div:nth-child(2) { text-align: right; padding-right: 1em; float: right; t
                     var imagesLoaded = 0;
                     
                     if (imagesToLoad === 0) {
-                        updateLoadingPercentage(100);
+                        updateLoadingPercentage(100, '');
                         displayContent();
                     } else {
                         var startPercent = 50;
@@ -682,10 +729,10 @@ header div:nth-child(2) { text-align: right; padding-right: 1em; float: right; t
                         function imageLoaded() {
                             imagesLoaded++;
                             var targetPercent = startPercent + (imagesLoaded / imagesToLoad) * (100 - startPercent);
-                            updateLoadingPercentage(Math.min(targetPercent, 100));
+                            updateLoadingPercentage(Math.min(targetPercent, 100), 'genesis images');
                             
                             if (imagesLoaded >= imagesToLoad) {
-                                updateLoadingPercentage(100);
+                                updateLoadingPercentage(100, 'genesis images');
                                 displayContent();
                             }
                         }
@@ -699,7 +746,7 @@ header div:nth-child(2) { text-align: right; padding-right: 1em; float: right; t
                     clearTimeout(loaderTimeout);
                     
                     // Ensure we're at 100% before removing loader
-                    updateLoadingPercentage(100);
+                    updateLoadingPercentage(100, '');
                     
                     var $pc = $('#page-content');
                     // Small delay to ensure 100% is visible, then remove loader and display content
@@ -736,6 +783,8 @@ header div:nth-child(2) { text-align: right; padding-right: 1em; float: right; t
                                 $in[0].offsetHeight;
                                 requestAnimationFrame(function () {
                                     $in.css('opacity', '1');
+                                    setTimeout(runGenesisFirstLoadWhiteFade, 80);
+                                    setTimeout(startGenesisShine, 600);
                                 });
                             });
                         }

@@ -23,8 +23,9 @@
                             <div id="videoInform"></div>
                         </div>
                     </div>
+                    <div id="workimg-pulse-wrap">
                     <div class="birth"><img style="cursor:pointer;" class="workimg" id="birth" src="images/birth.png" /></div>
-                    <div class="ances"><img style="cursor:pointer;" class="workimg" id="ances" src="images/ances.png" /></div>
+                    <div class="ltb"><img style="cursor:pointer;" class="workimg" id="ltb" src="images/ltb.png" /></div>
                     <div class="contactus2"><img style="cursor:pointer;" class="workimg" id="contactus2" src="images/contactus2.png" /></div>
                     <div class="min"><img style="cursor:pointer;" class="workimg" id="min" src="images/30min.png" /></div>
                     <div class="contactus2gameplay"><img style="cursor:pointer;" class="workimg" id="contactus2gameplay" src="images/contactus2gameplay.png" /></div>
@@ -43,6 +44,7 @@
                     <div class="vaniads"><img style="cursor:pointer;" class="workimg" id="vaniads" src="images/vaniads.png" /></div>
                     <div class="NA"><img style="cursor:pointer;" class="workimg" id="NA" src="images/NA.png" /></div>
                     <div class="giphy"><img style="cursor:pointer;" class="workimg" id="giphy" src="images/giphy.png" /></div>
+                    </div>
                 </section>
             </main>
         </div>
@@ -449,7 +451,8 @@
             xhr.send();
         }
 
-        $.getJSON('data.json').done(function (data) {
+        var dataJsonUrl = 'data.json' + (document.querySelector('meta[name=asset-version]') ? '?v=' + document.querySelector('meta[name=asset-version]').getAttribute('content') : '');
+        $.getJSON(dataJsonUrl).done(function (data) {
             info = data;
         }).fail(function () {
             info = { information: {} };
@@ -494,14 +497,13 @@
         
         // Scrambled brightness initialization effect for workimgs
         function initializeWorkimgBrightness() {
-            // Check if scrambling effect has already been shown in this session
-            if (sessionStorage.getItem('sessionScramblingShown')) {
-                return; // Skip if already shown
-            }
-            
             var $workimgs = $('.workimg');
+            // If scrambling effect has already been shown, just apply TV pulse to wrapper
+            if (sessionStorage.getItem('sessionScramblingShown')) {
+                $('#workimg-pulse-wrap').addClass('workimg-tv-pulse');
+                return;
+            }
             if ($workimgs.length === 0) return;
-            
             // Set transition for smooth blinking
             $workimgs.css({
                 '-webkit-transition': 'filter 0.15s ease',
@@ -544,7 +546,7 @@
                     'filter': 'brightness(1)'
                 });
                 
-                // After animation completes, remove inline styles to allow CSS hover to work
+                // After animation completes, remove inline styles and start TV pulse
                 setTimeout(function() {
                     $workimgs.css({
                         '-webkit-filter': '',
@@ -558,6 +560,7 @@
                         '-o-transition': '',
                         'transition': ''
                     });
+                    $('#workimg-pulse-wrap').addClass('workimg-tv-pulse');
                     // Mark scrambling effect as shown for this session
                     sessionStorage.setItem('sessionScramblingShown', '1');
                 }, 800); // Wait for 0.8s transition to complete

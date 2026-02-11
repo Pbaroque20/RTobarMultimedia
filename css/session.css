@@ -96,7 +96,7 @@ body {
     left: 270px;
 }
 
-.ances {
+.ltb {
     position: absolute;
     top: 88px;
     left: 659px;
@@ -219,6 +219,26 @@ body {
     user-drag: none;
 }
 
+/* TV-style pulsating brightness for workimgs (after scramble or when scramble already shown) */
+@-webkit-keyframes workimg-tv-pulse {
+    0%, 100% { -webkit-filter: brightness(0.99); }
+    50% { -webkit-filter: brightness(1.01); }
+}
+@-moz-keyframes workimg-tv-pulse {
+    0%, 100% { -moz-filter: brightness(0.99); }
+    50% { -moz-filter: brightness(1.01); }
+}
+@keyframes workimg-tv-pulse {
+    0%, 100% { filter: brightness(0.99); }
+    50% { filter: brightness(1.01); }
+}
+
+#workimg-pulse-wrap.workimg-tv-pulse {
+    -webkit-animation: workimg-tv-pulse 0.15s ease-in-out infinite;
+    -moz-animation: workimg-tv-pulse 0.15s ease-in-out infinite;
+    animation: workimg-tv-pulse 0.15s ease-in-out infinite;
+}
+
 /* Desktop only: brightness hover effect for workimg */
 @media (min-width: 960px) {
     .workimg {
@@ -241,6 +261,8 @@ body {
         -o-filter: brightness(1.15);
         filter: brightness(1.15);
     }
+
+    /* Hover still brightens; pulse is on wrapper so no override needed */
 }
 
 .hover {

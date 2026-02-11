@@ -4,6 +4,10 @@ This guide explains how to minify CSS and JavaScript files for production deploy
 
 **Current state:** The site loads **non-minified** CSS and JS from `index.html`. No `.min.css` or project `.min.js` files are referenced. Generated minified files were removed as unused; follow this guide to regenerate them and then update `index.html` to reference the `.min.css` / `.min.js` assets if you want to use them in production.
 
+## Cache invalidation (newer content)
+
+The site uses **cache busting** so updated assets are used after a deploy. In `index.html`: `<meta name="asset-version" content="1.0.0" />` and every CSS/JS URL has `?v=1.0.0`. The `data.json` fetch uses the same version from that meta. **When you deploy:** bump the version (e.g. `1.0.0` → `1.0.1`) in the meta and in every `?v=1.0.0` (find-replace). Browsers then request fresh CSS, JS, and data. The `.htaccess` sets long cache for assets and revalidation for HTML/JSON.
+
 ## Tools Needed
 
 ### Option 1: Online Tools (Quick & Easy)

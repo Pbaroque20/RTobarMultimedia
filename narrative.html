@@ -224,7 +224,8 @@ and deploy glTF and AR furniture content for interactive browser experience. dev
                     var touchUsed = false;
                     var clickTapModeActive = false; // Track if user has used click/tap (disables hover)
                     
-                    $.getJSON('data.json').done(function (d) {
+                    var dataJsonUrl = 'data.json' + (document.querySelector('meta[name=asset-version]') ? '?v=' + document.querySelector('meta[name=asset-version]').getAttribute('content') : '');
+                    $.getJSON(dataJsonUrl).done(function (d) {
                         if (d.narrative) {
                             var n = d.narrative;
                             $('#bio').html('<img src="' + (n.portraitUrl || 'images/portrait.png') + '" alt="Portrait" style="display: block; margin: 0 auto 1em auto; width: 38%; height: auto;" />' + (n.bioHtml || ''));

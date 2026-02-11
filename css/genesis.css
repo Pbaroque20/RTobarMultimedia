@@ -120,6 +120,53 @@ body {
     opacity: 1;
 }
 
+/* White shine sweep over genesis background (triggered after load from JS).
+   Masked by the background image alpha so shine only runs over opaque RGB pixels. */
+.genesis-shine-wrap {
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    z-index: 0;
+    -webkit-mask-image: url("../images/page1.png");
+    mask-image: url("../images/page1.png");
+    -webkit-mask-size: 960px 1102px;
+    mask-size: 960px 1102px;
+    -webkit-mask-position: 0 0;
+    mask-position: 0 0;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+}
+
+.genesis-shine-bar {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 25%;
+    top: 0;
+    background: linear-gradient(to bottom, transparent 0%, rgba(255, 255, 255, 0.35) 50%, transparent 100%);
+    -webkit-transform: translateY(-100%);
+    -ms-transform: translateY(-100%);
+    transform: translateY(-100%);
+}
+
+.genesis-shine-bar.genesis-shine-run {
+    -webkit-animation: genesis-shine 0.45s ease-out forwards;
+    animation: genesis-shine 0.45s ease-out forwards;
+}
+
+@-webkit-keyframes genesis-shine {
+    from { -webkit-transform: translateY(-100%); }
+    to { -webkit-transform: translateY(500%); }
+}
+@keyframes genesis-shine {
+    from { transform: translateY(-100%); }
+    to { transform: translateY(500%); }
+}
+
 #categories {
     position: relative;
     text-align: center;
@@ -348,6 +395,13 @@ ul {
         opacity: 0.25;
         -ms-opacity: 0.25;
         z-index: -1;
+    }
+
+    .genesis-shine-wrap {
+        -webkit-mask-size: cover;
+        mask-size: cover;
+        -webkit-mask-position: center;
+        mask-position: center;
     }
 
     .imageContainer1 header,
